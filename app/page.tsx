@@ -331,6 +331,10 @@ const handleDemoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               <label>Email Address</label>
               <input name="email" type="email" placeholder="you@yourstore.com" required />
             </div>
+            <div>
+  <label>Instructions (Optional)</label>
+  <input name="instructions" type="text" placeholder="e.g. Call us before 3 PM" />
+</div>
             <button type="submit" className="btn-green" style={{ width: '100%', padding: '18px', fontSize: '17px', marginTop: '8px', borderRadius: '8px', cursor: 'pointer', border: 'none', fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
               Request Demo →
             </button>
