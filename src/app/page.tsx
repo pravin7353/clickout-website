@@ -17,10 +17,19 @@ const handleDemoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const data = new FormData(form);
     try {
       const res = await fetch('https://formspree.io/f/xreydjeq', {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' },
-      });
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: data.get('name'),
+    store: data.get('store'),
+    city: data.get('city'),
+    phone: data.get('phone'),
+    email: data.get('email'),
+  }),
+});
       if (res.ok) {
         alert('Demo request submitted! We will contact you within 24 hours.');
         form.reset();
@@ -31,7 +40,7 @@ const handleDemoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       alert('Network error. Please try again.');
     }
   };
-  
+
   return (
     <div style={{ backgroundColor: '#080B08', color: '#F0F0F0', fontFamily: "'DM Sans', sans-serif", overflowX: 'hidden' }}>
 
