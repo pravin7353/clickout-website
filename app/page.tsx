@@ -351,7 +351,7 @@ const handleDemoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           Click<span style={{ color: '#00FF88' }}>Out</span>
         </div>
         <p style={{ fontSize: '13px', color: 'rgba(240,240,240,0.3)' }}>© 2025 ClickOut. All rights reserved.</p>
-        <a href="/login" style={{ fontSize: '13px', color: 'rgba(240,240,240,0.3)', textDecoration: 'none' }}>Store Owner Login →</a>
+        <a href="https://clickout-cfa95.web.app/#/login" style={{ fontSize: '13px', color: 'rgba(240,240,240,0.3)', textDecoration: 'none' }}>Store Owner Login →</a>
       </footer>
     </div>
   );
