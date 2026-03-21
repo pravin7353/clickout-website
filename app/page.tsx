@@ -11,19 +11,34 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleDemoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const handleDemoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    console.log({
-      name: data.get('name'),
-      store: data.get('store'),
-      city: data.get('city'),
-      phone: data.get('phone'),
-      email: data.get('email'),
-    });
-    alert('Demo request submitted! We will contact you within 24 hours.');
-    form.reset();
+    try {
+      const res = await fetch('https://formspree.io/f/xreydjeq', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: data.get('name'),
+    store: data.get('store'),
+    city: data.get('city'),
+    phone: data.get('phone'),
+    email: data.get('email'),
+  }),
+});
+      if (res.ok) {
+        alert('Demo request submitted! We will contact you within 24 hours.');
+        form.reset();
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch {
+      alert('Network error. Please try again.');
+    }
   };
 
   return (
