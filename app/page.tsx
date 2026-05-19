@@ -1,357 +1,633 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, FormEvent } from 'react';
+import { 
+  Store, ShieldCheck, CreditCard, Check, QrCode, Zap, 
+  ChevronRight, BarChart3, AlertTriangle, Fingerprint, 
+  Users, Cpu, TrendingUp, ChevronDown, Smartphone, Apple,
+  Activity, Lock
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isYearly, setIsYearly] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Contact Form State
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-const handleDemoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Contact Form Data
+  const [formData, setFormData] = useState({
+    name: '',
+    business: '',
+    email: '',
+    phone: '',
+    stores: '',
+    message: ''
+  });
+
+  const handleLoginRedirect = (e: React.FormEvent) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    try {
-      const res = await fetch('https://formspree.io/f/xreydjeq', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    name: data.get('name'),
-    store: data.get('store'),
-    city: data.get('city'),
-    phone: data.get('phone'),
-    email: data.get('email'),
-  }),
-});
-      if (res.ok) {
-        alert('Demo request submitted! We will contact you within 24 hours.');
-        form.reset();
-      } else {
-        alert('Something went wrong. Please try again.');
-      }
-    } catch {
-      alert('Network error. Please try again.');
+    window.location.href = 'https://clickout-cfa95.web.app/#/login';
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const handleContactSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        setToastMessage('Your request has been sent successfully.');
+        setFormData({ name: '', business: '', email: '', phone: '', stores: '', message: '' });
+        setTimeout(() => setToastMessage(''), 4000);
+      } else {
+        setToastMessage('Failed to send request. Please try again.');
+        setTimeout(() => setToastMessage(''), 4000);
+      }
+    } catch (error) {
+      setToastMessage('An error occurred. Please try again.');
+      setTimeout(() => setToastMessage(''), 4000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const faqs = [
+    { q: "How does ClickOut work?", a: "Customers scan, shop, pay, and exit securely without standing in billing queues." },
+    { q: "Is ClickOut secure?", a: "Yes. Every session is encrypted with real-time fraud protection and QR verification." },
+    { q: "Can stores track live shoppers?", a: "Yes. ClickOut provides live customer analytics, VIP tracking, and ghost visitor monitoring." },
+    { q: "Which payment methods are supported?", a: "UPI, Debit/Credit Cards, Wallets, and Cash Counter verification." },
+    { q: "Does ClickOut support multiple store branches?", a: "Yes. The Command Center is built for enterprise multi-store operations." },
+    { q: "How fast is the checkout process?", a: "Customers can complete shopping and exit verification within seconds." }
+  ];
+
   return (
-    <div style={{ backgroundColor: '#080B08', color: '#F0F0F0', fontFamily: "'DM Sans', sans-serif", overflowX: 'hidden' }}>
-
-      {/* Google Font Import */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+    <div className="min-h-screen bg-[#0d0d0d] text-[#EBEBE8] overflow-x-hidden selection:bg-[#00C853]/30">
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap');
         html { scroll-behavior: smooth; }
-        .green { color: #00FF88; }
-        .btn-green {
-          background: #00FF88;
-          color: #080B08;
-          border: none;
-          padding: 14px 32px;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 15px;
-          cursor: pointer;
-          transition: transform 0.2s, box-shadow 0.2s;
-          font-family: 'DM Sans', sans-serif;
-          text-decoration: none;
-          display: inline-block;
+        * { font-family: 'Inter', sans-serif; }
+        .font-modern { font-family: 'Outfit', sans-serif; }
+        
+        .warm-input {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s ease;
         }
-        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,255,136,0.3); }
-        .btn-outline {
-          background: transparent;
-          color: #F0F0F0;
-          border: 1.5px solid rgba(240,240,240,0.3);
-          padding: 14px 32px;
-          border-radius: 8px;
-          font-weight: 500;
-          font-size: 15px;
-          cursor: pointer;
-          transition: border-color 0.2s, color 0.2s;
-          font-family: 'DM Sans', sans-serif;
-          text-decoration: none;
-          display: inline-block;
-        }
-        .btn-outline:hover { border-color: #00FF88; color: #00FF88; }
-        .card {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 16px;
-          padding: 32px;
-        }
-        .pain-card {
-          background: rgba(255,60,60,0.06);
-          border: 1px solid rgba(255,60,60,0.15);
-          border-radius: 16px;
-          padding: 28px;
-        }
-        .feature-row {
-          display: flex;
-          align-items: flex-start;
-          gap: 16px;
-          margin-bottom: 24px;
-        }
-        .feature-icon {
-          width: 44px;
-          height: 44px;
-          background: rgba(0,255,136,0.1);
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 20px;
-          flex-shrink: 0;
-        }
-        input, select {
-          width: 100%;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 8px;
-          padding: 14px 16px;
-          color: #F0F0F0;
-          font-size: 15px;
-          font-family: 'DM Sans', sans-serif;
+        .warm-input:focus {
+          border-color: #00ff66;
+          box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
           outline: none;
-          transition: border-color 0.2s;
         }
-        input:focus { border-color: #00FF88; }
-        input::placeholder { color: rgba(240,240,240,0.35); }
-        label { display: block; font-size: 13px; color: rgba(240,240,240,0.55); margin-bottom: 8px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
-        @media (max-width: 768px) {
-          .grid-3 { grid-template-columns: 1fr !important; }
-          .grid-2 { grid-template-columns: 1fr !important; }
-          .hero-title { font-size: 42px !important; }
-          .hero-btns { flex-direction: column !important; align-items: stretch !important; }
-          .nav-cta { display: none !important; }
-          .owner-grid { grid-template-columns: 1fr !important; }
+        .warm-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(16px);
         }
-      `}</style>
+      `}} />
 
-      {/* ── NAVBAR ── */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '0 5%',
-        height: '68px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(8,11,8,0.92)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
-        transition: 'all 0.3s ease',
-      }}>
-        <div style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, letterSpacing: '-0.5px' }}>
-          Click<span style={{ color: '#00FF88' }}>Out</span>
+      {/* TOAST NOTIFICATION */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-8 right-8 z-[100] bg-[#111] border border-[#00ff66]/30 px-6 py-4 rounded-2xl shadow-[0_10px_40px_rgba(0,255,102,0.15)] flex items-center gap-3"
+          >
+            <div className="w-8 h-8 rounded-full bg-[#00ff66]/20 flex items-center justify-center">
+              <Check size={16} className="text-[#00ff66]" />
+            </div>
+            <p className="text-white text-sm font-medium">{toastMessage}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* FIXED NAVBAR */}
+      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 bg-[#0d0d0d]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="text-2xl font-modern font-bold tracking-wide cursor-pointer" onClick={() => scrollToSection('command-center')}>
+          <span className="text-white">Click</span><span className="text-[#00ff66]">Out</span>
         </div>
-        <a href="#owner-section" className="btn-outline nav-cta" style={{ padding: '10px 24px', fontSize: '14px' }}>
-          For Store Owners ↓
-        </a>
+        <div className="hidden md:flex gap-8 text-[14px] text-[#A6A5A0] font-medium items-center">
+          <button onClick={() => scrollToSection('skip-billing-queue')} className="hover:text-white transition">Customer App</button>
+          <button onClick={() => scrollToSection('pricing')} className="hover:text-white transition">Pricing</button>
+          <button onClick={() => scrollToSection('contact-sales')} className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-white transition border border-white/10">Contact sales</button>
+        </div>
       </nav>
 
-      {/* ── HERO ── */}
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '120px 5% 80px', position: 'relative' }}>
-        {/* Background glow */}
-        <div style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      {/* PREMIUM SAAS COMMAND CENTER HERO SECTION */}
+      <main id="command-center" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#0d0d0d] pt-32 pb-24">
+        <div className="absolute inset-0 w-full h-full bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[800px] h-[400px] bg-[#00ff66]/10 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-[#10b981]/15 blur-[150px] rounded-full pointer-events-none" />
 
-        <div style={{ maxWidth: '860px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-          <div style={{ display: 'inline-block', background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.2)', borderRadius: '100px', padding: '8px 20px', fontSize: '13px', color: '#00FF88', fontWeight: 500, marginBottom: '32px', letterSpacing: '0.5px' }}>
-            🚀 NOW LIVE IN MUMBAI
-          </div>
-
-          <h1 className="hero-title" style={{ fontFamily: "'Syne', sans-serif", fontSize: '72px', fontWeight: 800, lineHeight: 1.05, letterSpacing: '-2px', marginBottom: '28px' }}>
-            Skip The Queue.<br />
-            <span style={{ color: '#00FF88' }}>Scan. Pay. Walk Out.</span>
-          </h1>
-
-          <p style={{ fontSize: '19px', color: 'rgba(240,240,240,0.6)', lineHeight: 1.7, maxWidth: '560px', margin: '0 auto 48px', fontWeight: 300 }}>
-            Shop smarter at your favourite malls and supermarkets. No waiting. No cashier. Just freedom.
-          </p>
-
-          <div className="hero-btns" style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '56px' }}>
-            <a href="#" className="btn-green" style={{ fontSize: '16px', padding: '16px 36px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              App Store
-            </a>
-            <a href="#" className="btn-green" style={{ fontSize: '16px', padding: '16px 36px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.18.96.04l13.07-7.53-2.75-2.75-11.28 10.24zm-1.15-20.2C1.84 3.83 2 4.12 2 4.46v15.08c0 .34-.16.63-.97.9l11.13-10.15L2.03 3.56zM20.12 10.3l-2.86-1.65L14.2 12l3.06 3.06 2.86-1.65c.82-.47.82-1.64 0-2.11zM4.14.24L17.21 7.77l-2.75 2.75L3.18.28C3.5.14 3.84.07 4.14.24z"/></svg>
-              Google Play
-            </a>
-          </div>
-
-          <p style={{ fontSize: '13px', color: 'rgba(240,240,240,0.3)', letterSpacing: '0.5px' }}>
-            Available at select stores in Mumbai · Free to download
-          </p>
-        </div>
-      </section>
-
-      {/* ── HOW IT WORKS ── */}
-      <section style={{ padding: '80px 5%', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <p style={{ color: '#00FF88', fontSize: '13px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px' }}>Simple by design</p>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '42px', fontWeight: 800, letterSpacing: '-1px' }}>3 Steps to Freedom</h2>
-          </div>
-
-          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px' }}>
-            {[
-              { step: '01', emoji: '📱', title: 'Scan', desc: 'Open ClickOut app. Scan any product barcode with your phone camera.' },
-              { step: '02', emoji: '💳', title: 'Pay', desc: 'Pay instantly via UPI, card, or wallet. Safe, fast, and secure.' },
-              { step: '03', emoji: '🚶', title: 'Walk Out', desc: 'Show your exit QR pass to the guard. No queue. No counter. Done.' },
-            ].map((item) => (
-              <div key={item.step} className="card" style={{ textAlign: 'center', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '20px', right: '20px', fontSize: '12px', color: 'rgba(240,240,240,0.2)', fontWeight: 700, fontFamily: "'Syne', sans-serif" }}>{item.step}</div>
-                <div style={{ fontSize: '42px', marginBottom: '20px' }}>{item.emoji}</div>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, marginBottom: '12px', color: '#00FF88' }}>{item.title}</h3>
-                <p style={{ color: 'rgba(240,240,240,0.55)', lineHeight: 1.7, fontSize: '15px' }}>{item.desc}</p>
+        <div className="w-full max-w-[1400px] mx-auto px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+            
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="flex flex-col items-start text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00ff66]/10 border border-[#00ff66]/20 mb-8 backdrop-blur-md shadow-[0_0_15px_rgba(0,255,102,0.1)]">
+                <div className="w-2 h-2 rounded-full bg-[#00ff66] animate-pulse shadow-[0_0_8px_#00ff66]" />
+                <span className="text-[#00ff66] text-xs font-bold tracking-widest uppercase">Live in Mumbai</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ── CONSUMER PAIN POINTS ── */}
-      <section style={{ padding: '80px 5%' }}>
-        <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <p style={{ color: 'rgba(255,80,80,0.8)', fontSize: '13px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px' }}>We feel your pain</p>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '42px', fontWeight: 800, letterSpacing: '-1px' }}>We Know The Struggle</h2>
-          </div>
+              <h1 className="text-6xl md:text-[80px] font-bold text-white mb-6 tracking-tight leading-[1.05] font-modern">
+                Control fast,<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff66] to-[#10b981]">scale faster.</span>
+              </h1>
 
-          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px', marginBottom: '64px' }}>
-            {[
-              { emoji: '⏱️', title: '20 min billing queues', desc: 'Weekend grocery run becomes a 2-hour ordeal because of slow billing counters.' },
-              { emoji: '🧾', title: 'Cashier errors in your bill', desc: 'Wrong item scanned, duplicate charges — and you only notice at home.' },
-              { emoji: '😤', title: 'Weekend rush nightmare', desc: 'Peak hours turn simple shopping into a frustrating, exhausting experience.' },
-            ].map((item) => (
-              <div key={item.title} className="pain-card">
-                <div style={{ fontSize: '36px', marginBottom: '16px' }}>{item.emoji}</div>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '18px', fontWeight: 700, marginBottom: '10px' }}>{item.title}</h3>
-                <p style={{ color: 'rgba(240,240,240,0.5)', lineHeight: 1.7, fontSize: '14px' }}>{item.desc}</p>
+              <p className="text-xl md:text-2xl text-[#a1a1aa] mb-10 max-w-xl leading-relaxed font-light">
+                Command in dashboard, execute in store.<br />
+                The ultimate retail operating system.
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.02, translateY: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => window.location.href = 'https://clickout-cfa95.web.app/#/login'}
+                className="group relative inline-flex items-center gap-3 px-8 py-5 bg-gradient-to-b from-[#00ff66] to-[#10b981] rounded-2xl text-black font-bold text-lg shadow-[0_0_30px_rgba(0,255,102,0.3)] hover:shadow-[0_0_50px_rgba(0,255,102,0.5)] transition-all duration-300 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <span className="relative z-10">Enter Command Center</span>
+                <ChevronRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mt-8 text-sm text-[#a1a1aa] font-medium">
+                <div className="flex items-center gap-2"><Check size={16} className="text-[#00ff66]" /> Secure Enterprise Access</div>
+                <div className="flex items-center gap-2"><Check size={16} className="text-[#00ff66]" /> Real-time Store Intelligence</div>
+                <div className="flex items-center gap-2"><Check size={16} className="text-[#00ff66]" /> AI Fraud Protection</div>
               </div>
-            ))}
-          </div>
+            </motion.div>
 
-          {/* Transition bridge */}
-          <div style={{ textAlign: 'center', padding: '40px', background: 'rgba(0,255,136,0.04)', border: '1px dashed rgba(0,255,136,0.2)', borderRadius: '16px' }}>
-            <p style={{ fontSize: '13px', color: 'rgba(240,240,240,0.4)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' }}>psst...</p>
-            <p style={{ fontSize: '20px', fontWeight: 500, color: '#00FF88' }}>
-              Are you a Mall Manager or Store Owner? ↓
-            </p>
-            <p style={{ fontSize: '15px', color: 'rgba(240,240,240,0.45)', marginTop: '8px' }}>
-              ClickOut is not just for shoppers — it's a complete retail operating system.
-            </p>
-            <a href="#owner-section" style={{ display: 'inline-block', marginTop: '20px', color: '#00FF88', textDecoration: 'none', fontSize: '14px', fontWeight: 600, borderBottom: '1px solid rgba(0,255,136,0.4)', paddingBottom: '2px' }}>
-              See what ClickOut does for your business →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── OWNER SECTION ── */}
-      <section id="owner-section" style={{ padding: '100px 5%', background: 'rgba(0,255,136,0.02)', borderTop: '1px solid rgba(0,255,136,0.08)' }}>
-        <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-            <div style={{ display: 'inline-block', background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.25)', borderRadius: '100px', padding: '8px 20px', fontSize: '13px', color: '#00FF88', fontWeight: 600, marginBottom: '24px', letterSpacing: '1px', textTransform: 'uppercase' }}>
-              For Mall Owners & Retail Chains
-            </div>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '48px', fontWeight: 800, letterSpacing: '-1.5px', marginBottom: '20px' }}>
-              Run Your Retail Store<br />
-              <span style={{ color: '#00FF88' }}>Like a Pro.</span>
-            </h2>
-            <p style={{ fontSize: '18px', color: 'rgba(240,240,240,0.5)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
-              ClickOut is a complete multi-tenant retail operating system — billing, inventory, fraud detection, and AI-powered growth — all in one.
-            </p>
-          </div>
-
-          {/* Features */}
-          <div className="owner-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '64px' }}>
-            {[
-              { icon: '🧠', title: 'AI Growth Radar', desc: 'Detect customer churn before it happens. Get AI-powered alerts on sales patterns, peak hours, and revenue leaks.' },
-              { icon: '🧾', title: 'Smart Billing Engine', desc: 'Zero billing errors. Real-time transaction logs. Support for UPI, card, wallet, and cash — all in one dashboard.' },
-              { icon: '📦', title: 'Inventory Control', desc: 'Live stock tracking across all your counters. Low stock alerts. Expiry management. Supplier order automation.' },
-              { icon: '🛡️', title: 'Fraud Detection', desc: 'Real-time guard verification. Exit QR scanning. Alert system for suspicious transaction patterns.' },
-            ].map((f) => (
-              <div key={f.title} className="card">
-                <div className="feature-row">
-                  <div className="feature-icon">{f.icon}</div>
-                  <div>
-                    <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '18px', fontWeight: 700, marginBottom: '8px' }}>{f.title}</h3>
-                    <p style={{ color: 'rgba(240,240,240,0.5)', lineHeight: 1.7, fontSize: '14px' }}>{f.desc}</p>
+            <motion.div initial={{ opacity: 0, scale: 0.95, rotateY: 10, rotateX: 5 }} animate={{ opacity: 1, scale: 1, rotateY: -5, rotateX: 2 }} transition={{ duration: 1.2, ease: "easeOut" }} className="relative w-full h-auto lg:h-[650px] mt-16 lg:mt-0" style={{ perspective: '2000px' }}>
+              <motion.div animate={{ y: [-10, 10, -10] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} className="w-full h-full bg-[#111111]/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,1)] flex flex-col overflow-hidden relative z-10">
+                <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 bg-white/[0.02]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full bg-[#ff4d4d]" />
+                    <div className="w-3 h-3 rounded-full bg-[#ffcc00]" />
+                    <div className="w-3 h-3 rounded-full bg-[#00ff66]" />
+                    <span className="ml-4 text-white/50 text-xs font-semibold tracking-widest uppercase hidden sm:block">Store Command Center</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1 bg-[#00ff66]/10 rounded-md border border-[#00ff66]/20">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#00ff66] animate-pulse" />
+                    <span className="text-[#00ff66] text-[10px] font-bold tracking-widest hidden sm:block">SYSTEM SECURE: NO ANOMALIES</span>
+                    <span className="text-[#00ff66] text-[10px] font-bold tracking-widest sm:hidden">SECURE</span>
                   </div>
                 </div>
+
+                <div className="flex-1 p-4 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-4 overflow-y-auto">
+                  <div className="md:col-span-4 bg-white/5 rounded-2xl p-5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-colors">
+                    <div className="flex items-center gap-2 text-[#a1a1aa] text-xs font-medium mb-4"><BarChart3 size={14} /> LIVE REVENUE</div>
+                    <div>
+                      <div className="text-3xl font-bold text-white mb-1 font-modern">₹84,500</div>
+                      <div className="text-[#00ff66] text-sm font-semibold flex items-center gap-1"><TrendingUp size={14}/> +12% vs last hour</div>
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-4 bg-white/5 rounded-2xl p-5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-colors">
+                    <div className="flex items-center gap-2 text-[#a1a1aa] text-xs font-medium mb-4"><ShieldCheck size={14} /> DIRECT UPI AUTH</div>
+                    <div>
+                      <div className="text-3xl font-bold text-white mb-1 font-modern">142</div>
+                      <div className="text-[#a1a1aa] text-sm">txns verified instantly</div>
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-4 bg-[#ff4d4d]/5 rounded-2xl p-5 border border-[#ff4d4d]/20 flex flex-col justify-between relative overflow-hidden group">
+                    <div className="absolute -right-4 -top-4 w-16 h-16 bg-[#ff4d4d]/10 blur-xl rounded-full" />
+                    <div className="flex items-center gap-2 text-[#ff4d4d] text-xs font-medium mb-4"><AlertTriangle size={14} /> FRAUD CONTROL</div>
+                    <div className="space-y-2 relative z-10">
+                      <div className="flex items-center justify-between text-xs text-white/80 bg-black/40 px-3 py-2 rounded-lg"><span>QR Bailout</span><span className="text-[#00ff66]">Active</span></div>
+                      <div className="flex items-center justify-between text-xs text-white/80 bg-black/40 px-3 py-2 rounded-lg"><span>Risk Engine</span><span className="text-[#00ff66]">Active</span></div>
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-7 bg-white/5 rounded-2xl p-5 border border-white/5 flex flex-col justify-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <div className="flex items-center gap-2 text-[#a1a1aa] text-xs font-medium mb-3"><Users size={14} /> COMMAND ROSTER</div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="bg-white/5 border border-white/5 rounded-lg p-2 text-center text-xs text-white hover:bg-white/10 transition-colors cursor-pointer">Cashier</div>
+                          <div className="bg-white/5 border border-white/5 rounded-lg p-2 text-center text-xs text-white hover:bg-white/10 transition-colors cursor-pointer">Guard</div>
+                          <div className="bg-white/5 border border-white/5 rounded-lg p-2 text-center text-xs text-white hover:bg-white/10 transition-colors cursor-pointer">Auditor</div>
+                          <div className="bg-white/5 border border-white/5 rounded-lg p-2 text-center text-xs text-white hover:bg-white/10 transition-colors cursor-pointer">IDT</div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 text-[#a1a1aa] text-xs font-medium mb-3"><Fingerprint size={14} /> TRACK CUSTOMERS</div>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center"><span className="text-xs text-white/60">Live Shoppers</span><span className="text-xs text-white font-bold bg-white/10 px-2 py-0.5 rounded">48</span></div>
+                          <div className="flex justify-between items-center"><span className="text-xs text-[#ffcc00]/80">VIP Customers</span><span className="text-xs text-[#ffcc00] font-bold bg-[#ffcc00]/10 px-2 py-0.5 rounded">12</span></div>
+                          <div className="flex justify-between items-center"><span className="text-xs text-[#ff4d4d]/80">Ghost Visitors</span><span className="text-xs text-[#ff4d4d] font-bold bg-[#ff4d4d]/10 px-2 py-0.5 rounded">2</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-5 bg-white/5 rounded-2xl p-5 border border-white/5 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 text-[#a1a1aa] text-xs font-medium mb-4"><Cpu size={14} /> PROCUREMENT ENGINE</div>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex justify-between text-[10px] text-white/50 uppercase mb-2"><span>Inventory Sync</span><span>78% Optimal</span></div>
+                        <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden"><div className="w-[78%] h-full bg-gradient-to-r from-[#00ff66] to-[#10b981]" /></div>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-2 py-1.5 bg-white/5 rounded-md border border-white/10 text-[10px] text-white flex items-center gap-1"><Check size={10} className="text-[#00ff66]"/> Barcode Sync</span>
+                        <span className="px-2 py-1.5 bg-[#ff4d4d]/10 rounded-md border border-[#ff4d4d]/20 text-[10px] text-[#ff4d4d] flex items-center gap-1"><AlertTriangle size={10}/> Low Stock (5)</span>
+                        <span className="px-2 py-1.5 bg-[#00ff66]/10 rounded-md border border-[#00ff66]/20 text-[10px] text-[#00ff66]">Vendor AI Active</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="absolute -z-10 top-1/4 right-0 w-32 h-32 bg-[#00ff66]/30 rounded-full blur-[80px] animate-pulse" />
+              <div className="absolute -z-10 bottom-1/4 left-10 w-40 h-40 bg-[#10b981]/30 rounded-full blur-[80px]" />
+            </motion.div>
+
+          </div>
+        </div>
+      </main>
+
+      {/* PREMIUM SAAS HOW IT WORKS SECTION */}
+      <section id="skip-billing-queue" className="w-full py-32 relative overflow-hidden bg-[#0d0d0d] border-t border-[#1a1a1a]">
+        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
+        
+        <div className="max-w-[1400px] mx-auto px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00ff66]/10 border border-[#00ff66]/20 mb-6 backdrop-blur-md">
+                <div className="w-2 h-2 rounded-full bg-[#00ff66] animate-pulse shadow-[0_0_8px_#00ff66]" />
+                <span className="text-[#00ff66] text-xs font-bold tracking-wider">LIVE & SECURE</span>
               </div>
-            ))}
+
+              <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1] font-modern">
+                Skip the billing <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff66] to-[#10b981]">queue.</span>
+              </h2>
+              <p className="text-xl text-[#A0A09C] mb-8 max-w-lg leading-relaxed">
+                Scan, shop, pay and walk out securely in seconds using ClickOut.
+              </p>
+
+              {/* DOWNLOAD BUTTONS */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <a href="#" className="flex items-center justify-center gap-3 bg-white hover:bg-gray-200 text-black px-6 py-3.5 rounded-xl transition-all font-semibold shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M17.523 15.3414C17.5024 12.193 20.0827 10.6384 20.1982 10.5658C18.6657 8.32456 16.3359 8.00693 15.5255 7.91508C13.5683 7.71261 11.6669 9.07663 10.6627 9.07663C9.64214 9.07663 8.08386 7.93557 6.46736 7.96205C4.3411 7.99042 2.37077 9.18844 1.28581 11.0829C-0.923838 14.9272 0.720336 20.597 2.87186 23.7042C3.92395 25.2177 5.14371 26.9205 6.74567 26.8617C8.28629 26.7997 8.87532 25.867 10.7423 25.867C12.5936 25.867 13.1251 26.8617 14.7303 26.8324C16.3861 26.7997 17.4208 25.2974 18.4552 23.7828C19.6586 22.0223 20.1557 20.3129 20.1834 20.2227C20.1479 20.2076 17.545 19.2081 17.523 15.3414ZM14.4984 5.34292C15.3459 4.31682 15.918 2.89885 15.7621 1.48706C14.5422 1.53631 13.0232 2.29917 12.1466 3.31349C11.3619 4.20521 10.6728 5.65487 10.8521 7.04273C12.2155 7.14815 13.626 6.38466 14.4984 5.34292Z" transform="scale(0.85)"/></svg>
+                  Download for iOS
+                </a>
+                <a href="#" className="flex items-center justify-center gap-3 bg-[#111] hover:bg-[#222] border border-white/10 text-white px-6 py-3.5 rounded-xl transition-all font-semibold shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(0,255,102,0.1)]">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#00ff66]"><path d="M17.52 11.23l-13-7.5C3.89 3.37 3 3.75 3 4.48v15.04c0 .74.89 1.12 1.52.75l13-7.5c.64-.37.64-1.17 0-1.54zm-2.88 1.15L5.4 17.7V6.3l9.24 5.33l-1.4 1.4-7.84-4.54v7.02l7.84-4.53 1.4 1.4z"/></svg>
+                  Download for Android
+                </a>
+              </div>
+
+              {/* Glassmorphism Card for Steps */}
+              <div className="relative p-8 md:p-10 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] group hover:bg-white/[0.03] transition-colors duration-500">
+                <div className="absolute left-[3.25rem] top-10 bottom-32 w-0.5 bg-gradient-to-b from-[#00ff66]/50 via-white/10 to-transparent z-0 hidden md:block" />
+                <div className="space-y-6 relative z-10">
+                  {[
+                    { num: 1, title: "Scan Store QR", desc: "Scan the secure store QR code and enter instantly." },
+                    { num: 2, title: "Scan Product Barcode", desc: "Use your phone camera to scan products while shopping." },
+                    { num: 3, title: "Add to Cart", desc: "Products are added to your digital cart in real-time." },
+                    { num: 4, title: "Checkout & Pay", desc: "Pay securely using UPI, Card or Cash." },
+                    { num: 5, title: "Get Exit QR", desc: "Receive a secure verification QR after payment." },
+                    { num: 6, title: "Verify & Exit", desc: "Show QR to security and exit in seconds." }
+                  ].map((step, idx) => (
+                    <motion.div key={idx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1, duration: 0.5 }} className="flex gap-6 group/step cursor-default">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-full border border-white/10 bg-[#111] flex items-center justify-center text-white font-bold text-sm group-hover/step:border-[#00ff66] group-hover/step:text-[#00ff66] group-hover/step:shadow-[0_0_15px_rgba(0,255,102,0.2)] transition-all duration-300 relative z-10">{step.num}</div>
+                      <div className="flex-1 pb-6 md:pb-2">
+                        <div className="flex items-center gap-3 mb-1">
+                          <h3 className="text-white font-semibold text-lg group-hover/step:text-[#00ff66] transition-colors">{step.title}</h3>
+                          <Check size={16} className="text-[#00ff66] opacity-0 group-hover/step:opacity-100 transition-opacity duration-300" />
+                        </div>
+                        <p className="text-[#8A8A86] text-sm leading-relaxed">{step.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-white/5 grid grid-cols-2 gap-y-4 gap-x-2">
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-[#A0A09C]"><Lock size={16} className="text-[#00ff66]" /> Encrypted Session</div>
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-[#A0A09C]"><ShieldCheck size={16} className="text-[#00ff66]" /> Fraud Protected</div>
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-[#A0A09C]"><Activity size={16} className="text-[#00ff66]" /> Real-time Verify</div>
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-[#A0A09C]"><Zap size={16} className="text-[#00ff66]" /> Instant Checkout</div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative h-[700px] w-full flex items-center justify-center hidden lg:flex">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#00ff66]/10 blur-[100px] rounded-full" />
+
+              <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} className="absolute right-8 top-16 w-[280px] h-[580px] rounded-[2.5rem] bg-[#111] border-[8px] border-[#222] shadow-[20px_20px_60px_rgba(0,0,0,0.8)] opacity-60 scale-90 rotate-[-8deg] overflow-hidden">
+                <div className="w-full h-full bg-[#1a1a1a] p-6 relative">
+                  <div className="w-full h-8 flex justify-between items-center opacity-40">
+                    <div className="w-12 h-3 bg-white/20 rounded" />
+                    <div className="flex gap-1"><div className="w-3 h-3 bg-white/20 rounded-sm"/><div className="w-3 h-3 bg-white/20 rounded-sm"/></div>
+                  </div>
+                  <div className="mt-8 space-y-4">
+                    <div className="w-full h-40 rounded-2xl bg-white/5 animate-pulse" />
+                    <div className="w-2/3 h-6 rounded bg-white/5 animate-pulse" />
+                    <div className="w-full h-20 rounded-2xl bg-white/5 animate-pulse" />
+                    <div className="w-full h-20 rounded-2xl bg-white/5 animate-pulse" />
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }} className="absolute left-8 top-24 w-[300px] h-[620px] rounded-[3rem] bg-black border-[10px] border-[#2a2a2a] shadow-[-20px_30px_60px_rgba(0,0,0,0.9)] z-10 rotate-[3deg] overflow-hidden">
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 w-28 h-8 bg-black rounded-full z-20 flex items-center justify-between px-2">
+                   <div className="w-2 h-2 rounded-full bg-[#00ff66] opacity-50 animate-pulse" />
+                   <div className="w-3 h-3 rounded-full bg-[#111] border border-white/10" />
+                </div>
+                
+                <div className="w-full h-full bg-[#0d0d0d] relative flex flex-col">
+                  <div className="absolute top-0 w-full h-28 bg-gradient-to-b from-[#1E1D1A] to-transparent z-10" />
+                  <div className="pt-20 px-6 flex-1 flex flex-col relative z-0">
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center"><Store size={20} className="text-[#00ff66]" /></div>
+                      <div className="text-white font-bold tracking-widest text-sm font-modern">CLICKOUT</div>
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center"><QrCode size={18} className="text-white" /></div>
+                    </div>
+                    
+                    <div className="w-full aspect-square rounded-[2rem] border-2 border-dashed border-[#00ff66]/40 relative flex items-center justify-center mb-8 overflow-hidden bg-[#00ff66]/[0.02]">
+                      <div className="absolute inset-0 bg-gradient-to-b from-[#00ff66]/0 via-[#00ff66]/10 to-[#00ff66]/0 animate-[scan_3s_ease-in-out_infinite]" />
+                      <div className="w-3/4 h-0.5 bg-[#00ff66] absolute top-1/2 -translate-y-1/2 shadow-[0_0_15px_#00ff66]" />
+                    </div>
+
+                    <div className="flex-1 space-y-3">
+                      <div className="w-full p-4 rounded-2xl bg-white/5 flex items-center justify-between border border-white/5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-transparent" />
+                          <div><div className="w-20 h-3 bg-white/20 rounded mb-2" /><div className="w-12 h-2 bg-white/10 rounded" /></div>
+                        </div>
+                        <div className="text-[#00ff66] font-bold">₹249</div>
+                      </div>
+                      <div className="w-full p-4 rounded-2xl bg-white/5 flex items-center justify-between border border-white/5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-transparent" />
+                          <div><div className="w-24 h-3 bg-white/20 rounded mb-2" /><div className="w-10 h-2 bg-white/10 rounded" /></div>
+                        </div>
+                        <div className="text-[#00ff66] font-bold">₹89</div>
+                      </div>
+                    </div>
+
+                    <div className="w-full h-14 bg-[#00ff66] rounded-2xl mb-8 flex items-center justify-center font-bold text-black shadow-[0_0_20px_rgba(0,255,102,0.3)] hover:scale-[1.02] transition-transform cursor-pointer">
+                      Pay ₹338
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, delay: 1 }} className="absolute top-32 right-0 z-20 px-4 py-3 rounded-2xl bg-[#1E1D1A]/80 backdrop-blur-xl border border-white/10 flex items-center gap-3 shadow-2xl">
+                <div className="w-8 h-8 rounded-full bg-[#00ff66]/20 flex items-center justify-center"><Check size={16} className="text-[#00ff66]" /></div>
+                <div><div className="text-white text-xs font-bold">Verified</div><div className="text-[#A0A09C] text-[10px]">Inside Store</div></div>
+              </motion.div>
+
+              <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 2 }} className="absolute bottom-40 -left-6 z-20 px-4 py-3 rounded-2xl bg-[#0A0A0A]/90 backdrop-blur-xl border border-[#00ff66]/30 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,255,102,0.15)]">
+                <div className="w-8 h-8 rounded-full bg-[#00ff66] flex items-center justify-center"><CreditCard size={16} className="text-black" /></div>
+                <div><div className="text-white text-xs font-bold">Payment Successful</div><div className="text-[#00ff66] text-[10px] font-medium">Gate Pass Generated</div></div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+        <style dangerouslySetInnerHTML={{__html: `@keyframes scan { 0% { transform: translateY(-100%); } 50% { transform: translateY(100%); } 100% { transform: translateY(-100%); } }`}} />
+      </section>
+
+      {/* PRICING SECTION */}
+      <section id="pricing" className="max-w-[1400px] mx-auto px-8 py-24 border-t border-white/5">
+        <div className="text-center mb-16">
+          <h2 className="font-modern text-5xl mb-6 text-white font-semibold">Explore Plans</h2>
+          <div className="inline-flex bg-white/5 border border-white/10 rounded-full p-1 backdrop-blur-lg">
+            <button 
+              onClick={() => setIsYearly(false)}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${!isYearly ? 'bg-white/10 text-white shadow-lg' : 'text-[#85847E] hover:text-white'}`}
+            >
+              Monthly
+            </button>
+            <button 
+              onClick={() => setIsYearly(true)}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${isYearly ? 'bg-white/10 text-white shadow-lg' : 'text-[#85847E] hover:text-white'}`}
+            >
+              Yearly <span className="text-[#00ff66] text-[10px] bg-[#00ff66]/10 px-2 py-0.5 rounded-full border border-[#00ff66]/20">20% OFF</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {/* MINI */}
+          <div className="warm-card h-full p-8 rounded-3xl flex flex-col hover:border-white/20 transition-all hover:translate-y-[-4px]">
+            <h3 className="font-modern text-xl mb-1 text-white font-semibold">Mini</h3>
+            <p className="text-[#85847E] text-sm mb-6">For independent retail stores & services</p>
+            <div className="text-4xl font-modern text-white mb-2 font-bold">₹{isYearly ? Math.floor(99 * 0.8) : 99}</div>
+            <p className="text-[#85847E] text-xs mb-8 uppercase tracking-wide font-semibold">Per month {isYearly && 'billed yearly'}</p>
+            <div className="space-y-3 mb-8 flex-1">
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> 1 Terminal License</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> 100 Transactions / month</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Real-Time UPI & QR Settlement</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Product & Service Ledger Access</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Smart Inventory Visibility</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Basic Revenue Dashboard</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> IDT Deposit Validation</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Cashier & Guard Verification</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Isolated Tenant Accounting</div>
+              
+              <div className="pt-4 border-t border-white/5 mt-4">
+                <span className="text-[10px] text-[#00ff66] font-bold tracking-wider uppercase mb-1 block">Modules Included</span>
+                <span className="text-xs text-[#A0A09C] leading-relaxed">Dashboard Core, Product Control, Service Control, IDT Deposits</span>
+              </div>
+            </div>
+            <button onClick={() => scrollToSection('command-center')} className="w-full bg-white/5 hover:bg-white/10 hover:border-[#00ff66]/50 border border-white/10 text-white py-3 rounded-xl text-sm font-semibold transition-all hover:shadow-[0_0_15px_rgba(0,255,102,0.15)] hover:-translate-y-0.5 mt-auto">Start Mini</button>
           </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <a href="#demo-form" className="btn-green" style={{ fontSize: '17px', padding: '18px 48px' }}>
-              Book a Free Demo →
-            </a>
-            <p style={{ marginTop: '16px', fontSize: '13px', color: 'rgba(240,240,240,0.3)' }}>No credit card required · 30-min onboarding call</p>
+          {/* BASIC */}
+          <div className="warm-card h-full p-8 rounded-3xl flex flex-col border-[#00ff66]/30 shadow-[0_0_30px_rgba(0,255,102,0.05)] relative hover:translate-y-[-4px] transition-transform">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#00ff66] to-[#10b981] text-black text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-[0_0_15px_rgba(0,255,102,0.5)]">Most Popular</div>
+            <h3 className="font-modern text-xl mb-1 text-white font-semibold">Basic</h3>
+            <p className="text-[#85847E] text-sm mb-6">For scaling shops & growing supermarkets</p>
+            <div className="text-4xl font-modern text-white mb-2 font-bold">₹{isYearly ? Math.floor(299 * 0.8) : 299}</div>
+            <p className="text-[#85847E] text-xs mb-8 uppercase tracking-wide font-semibold">Per month {isYearly && 'billed yearly'}</p>
+            <div className="space-y-3 mb-8 flex-1">
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> 3 Terminal Licenses</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> 1,000 Smart Transactions / mo.</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Customer Intelligence Reports</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Refund Monitoring Engine</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Growth Radar Analytics</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Staff Command Management</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Promotion & Offer Engine</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Financial Leakage Detection</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Procurement Lite Access</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Advanced Revenue Insights</div>
+              
+              <div className="pt-4 border-t border-white/5 mt-auto">
+                <span className="text-[10px] text-[#00ff66] font-bold tracking-wider uppercase mb-1 block">Modules Included</span>
+                <span className="text-xs text-[#A0A09C] leading-relaxed">Everything in MINI, Super Manager, Growth Radar, Refund Engine, Fraud Detection Basic, Procurement Lite</span>
+              </div>
+            </div>
+            <button onClick={() => scrollToSection('command-center')} className="w-full bg-gradient-to-b from-[#00ff66] to-[#10b981] hover:brightness-110 hover:-translate-y-0.5 text-black py-3 rounded-xl text-sm font-semibold transition-all shadow-[0_0_20px_rgba(0,255,102,0.2)] hover:shadow-[0_0_25px_rgba(0,255,102,0.4)] mt-auto">Start Basic</button>
           </div>
+
+          {/* GROWTH */}
+          <div className="warm-card h-full p-8 rounded-3xl flex flex-col hover:border-[#00ff66]/30 transition-all hover:translate-y-[-4px] group">
+            <h3 className="font-modern text-xl mb-1 text-white font-semibold group-hover:text-[#00ff66] transition-colors">Growth</h3>
+            <p className="text-[#85847E] text-sm mb-6">For enterprise retail operations</p>
+            <div className="text-4xl font-modern text-white mb-2 font-bold">₹{isYearly ? Math.floor(699 * 0.8) : 699}</div>
+            <p className="text-[#85847E] text-xs mb-8 uppercase tracking-wide font-semibold">Per month {isYearly && 'billed yearly'}</p>
+            <div className="space-y-3 mb-8 flex-1">
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> 10 Terminal Licenses</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Unlimited Transaction Processing</div>
+              <div className="flex items-start gap-3 text-[13px] text-white font-medium"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> AI Fraud Intelligence</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Vendor Intelligence Directory</div>
+              <div className="flex items-start gap-3 text-[13px] text-white font-medium"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Multi-Store Analytics</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Super Auditor Suite</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Smart Guard Monitoring</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> QR Bailout Protection</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> AI Promotion Optimization</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Enterprise Procurement System</div>
+              <div className="flex items-start gap-3 text-[13px] text-white font-medium"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Operational Intelligence Layer</div>
+
+              <div className="pt-4 border-t border-white/5 mt-auto">
+                <span className="text-[10px] text-[#00ff66] font-bold tracking-wider uppercase mb-1 block">Modules Included</span>
+                <span className="text-xs text-[#A0A09C] leading-relaxed">Everything in BASIC, Procurement Full, Super Auditor, Super Guard, Risk Engine AI, Fraud Control Advanced, QR Bailout</span>
+              </div>
+            </div>
+            <button onClick={() => scrollToSection('command-center')} className="w-full bg-white/5 hover:bg-white/10 hover:border-[#00ff66]/50 border border-white/10 text-white py-3 rounded-xl text-sm font-semibold transition-all hover:shadow-[0_0_15px_rgba(0,255,102,0.15)] hover:-translate-y-0.5 mt-auto">Start Growth</button>
+          </div>
+
+          {/* ENTERPRISE */}
+          <div className="warm-card h-full p-8 rounded-3xl flex flex-col bg-gradient-to-b from-white/[0.05] to-transparent border-white/10 hover:-translate-y-1 transition-transform">
+            <h3 className="font-modern text-xl mb-1 text-white font-semibold">Enterprise</h3>
+            <p className="text-[#85847E] text-sm mb-6">For large chains & custom deployments</p>
+            <div className="text-4xl font-modern text-white mb-2 font-bold">Custom</div>
+            <p className="text-[#85847E] text-xs mb-8 uppercase tracking-wide font-semibold">Contact us for tailored pricing</p>
+            <div className="space-y-3 mb-8 flex-1">
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Unlimited Terminals</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Dedicated Infrastructure</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Custom API Integrations</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> White Label Deployment</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Centralized Command Center</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Enterprise Risk Automation</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Dedicated Account Manager</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Real-Time AI Intelligence Suite</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Advanced Compliance & Audit Controls</div>
+              <div className="flex items-start gap-3 text-[13px] text-[#D4D4D2]"><Check size={16} className="text-[#00ff66] mt-0.5 shrink-0" /> Custom Transaction Pricing</div>
+
+              <div className="pt-4 border-t border-white/5 mt-auto">
+                <span className="text-[10px] text-[#00ff66] font-bold tracking-wider uppercase mb-1 block">Includes</span>
+                <span className="text-xs text-[#A0A09C] leading-relaxed">Full ClickOut Ecosystem, Custom Modules, Enterprise SLA Support</span>
+              </div>
+            </div>
+            <button onClick={() => scrollToSection('contact-sales')} className="w-full bg-white hover:bg-gray-200 hover:-translate-y-0.5 text-black py-3 rounded-xl text-sm font-semibold transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] mt-auto">Schedule Demo</button>
+          </div>
+        </div>
+
+        {/* TRUST BADGES STRIP */}
+        <div className="mt-16 flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-12 border-t border-white/5 pt-12">
+          <div className="flex items-center gap-2 text-sm text-[#A0A09C] font-medium"><Check size={16} className="text-[#00ff66]" /> GST Ready</div>
+          <div className="flex items-center gap-2 text-sm text-[#A0A09C] font-medium"><Check size={16} className="text-[#00ff66]" /> Multi-Store Secure</div>
+          <div className="flex items-center gap-2 text-sm text-[#A0A09C] font-medium"><Check size={16} className="text-[#00ff66]" /> AI Fraud Detection</div>
+          <div className="flex items-center gap-2 text-sm text-[#A0A09C] font-medium"><Check size={16} className="text-[#00ff66]" /> Real-Time Analytics</div>
+          <div className="flex items-center gap-2 text-sm text-[#A0A09C] font-medium"><Check size={16} className="text-[#00ff66]" /> Cloud Synced</div>
         </div>
       </section>
 
-      {/* ── DEMO FORM ── */}
-      <section id="demo-form" style={{ padding: '100px 5%', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <p style={{ color: '#00FF88', fontSize: '13px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px' }}>Get started</p>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '40px', fontWeight: 800, letterSpacing: '-1px', marginBottom: '16px' }}>Let's Get You Started</h2>
-            <p style={{ color: 'rgba(240,240,240,0.45)', fontSize: '16px', lineHeight: 1.7 }}>Fill in your details. Our team will reach out within 24 hours.</p>
-          </div>
+      {/* CONTACT SALES SECTION */}
+      <section id="contact-sales" className="w-full py-32 relative overflow-hidden border-t border-white/5">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00ff66]/5 blur-[150px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-[800px] mx-auto px-8 relative z-10 text-center">
+          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight font-modern">Talk to ClickOut Sales</h2>
+          <p className="text-xl text-[#A0A09C] mb-12">Build the future of smart retail with ClickOut Command Center.</p>
 
-          <form onSubmit={handleDemoSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <form onSubmit={handleContactSubmit} className="bg-white/[0.02] border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label>Full Name</label>
-                <input name="name" type="text" placeholder="Pravin Shah" required />
+                <label className="block text-sm font-medium text-[#A0A09C] mb-2">Full Name</label>
+                <input required type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20" placeholder="John Doe" />
               </div>
               <div>
-                <label>Store / Mall Name</label>
-                <input name="store" type="text" placeholder="Phoenix Mall" required />
-              </div>
-            </div>
-            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-              <div>
-                <label>City</label>
-                <input name="city" type="text" placeholder="Mumbai" required />
-              </div>
-              <div>
-                <label>Phone Number</label>
-                <input name="phone" type="tel" placeholder="+91 98765 43210" required />
+                <label className="block text-sm font-medium text-[#A0A09C] mb-2">Business Name</label>
+                <input required type="text" value={formData.business} onChange={(e) => setFormData({...formData, business: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20" placeholder="Acme Retail" />
               </div>
             </div>
-            <div>
-              <label>Email Address</label>
-              <input name="email" type="email" placeholder="you@yourstore.com" required />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-[#A0A09C] mb-2">Email Address</label>
+                <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20" placeholder="john@acme.com" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#A0A09C] mb-2">Phone Number</label>
+                <input required type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20" placeholder="+91 98765 43210" />
+              </div>
             </div>
-            <div>
-  <label>Instructions (Optional)</label>
-  <input name="instructions" type="text" placeholder="e.g. Call us before 3 PM" />
-</div>
-            <button type="submit" className="btn-green" style={{ width: '100%', padding: '18px', fontSize: '17px', marginTop: '8px', borderRadius: '8px', cursor: 'pointer', border: 'none', fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
-              Request Demo →
+
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-[#A0A09C] mb-2">Number of Stores</label>
+              <select required value={formData.stores} onChange={(e) => setFormData({...formData, stores: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20 appearance-none">
+                <option value="" disabled>Select scale</option>
+                <option value="1-5">1 - 5 Stores</option>
+                <option value="6-20">6 - 20 Stores</option>
+                <option value="21-50">21 - 50 Stores</option>
+                <option value="50+">50+ Stores</option>
+              </select>
+            </div>
+
+            <div className="mb-10">
+              <label className="block text-sm font-medium text-[#A0A09C] mb-2">Message</label>
+              <textarea required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20 resize-none" placeholder="How can we help your business grow?" />
+            </div>
+
+            <button type="submit" disabled={isSubmitting} className="w-full bg-gradient-to-r from-[#00ff66] to-[#10b981] hover:brightness-110 text-black font-bold py-4 rounded-xl text-lg transition-all shadow-[0_0_20px_rgba(0,255,102,0.2)] disabled:opacity-70">
+              {isSubmitting ? 'Sending Request...' : 'Contact Sales'}
             </button>
-            <p style={{ textAlign: 'center', fontSize: '13px', color: 'rgba(240,240,240,0.3)' }}>
-              We respect your privacy. No spam, ever.
-            </p>
           </form>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer style={{ padding: '32px 5%', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
-        <div style={{ fontFamily: "'Syne', sans-serif", fontSize: '18px', fontWeight: 800 }}>
-          Click<span style={{ color: '#00FF88' }}>Out</span>
+      {/* FAQ SECTION */}
+      <section id="faq" className="max-w-[900px] mx-auto px-8 py-24 border-t border-white/5">
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16 font-modern">Frequently Asked Questions</h2>
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden hover:bg-white/[0.04] transition-colors">
+              <button onClick={() => setOpenFaq(openFaq === idx ? null : idx)} className="w-full flex items-center justify-between p-6 text-left">
+                <span className="text-white font-medium text-lg">{faq.q}</span>
+                <motion.div animate={{ rotate: openFaq === idx ? 180 : 0 }} transition={{ duration: 0.3 }} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shrink-0">
+                  <ChevronDown size={16} className={openFaq === idx ? "text-[#00ff66]" : "text-white/50"} />
+                </motion.div>
+              </button>
+              <AnimatePresence>
+                {openFaq === idx && (
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+                    <p className="px-6 pb-6 text-[#A0A09C] leading-relaxed">{faq.a}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
         </div>
-        <p style={{ fontSize: '13px', color: 'rgba(240,240,240,0.3)' }}>© 2025 ClickOut. All rights reserved.</p>
-        <a href="https://clickout-cfa95.web.app/#/login" style={{ fontSize: '13px', color: 'rgba(240,240,240,0.3)', textDecoration: 'none' }}>Store Owner Login →</a>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="w-full border-t border-white/5 px-8 py-12 bg-black/50">
+        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center text-[13px] text-[#85847E]">
+          <div className="text-xl font-modern font-bold mb-4 md:mb-0 cursor-pointer" onClick={() => scrollToSection('command-center')}>
+            <span className="text-white">Click</span><span className="text-[#00ff66]">Out</span>
+          </div>
+          <p>© 2026 ClickOut Retail Systems. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
