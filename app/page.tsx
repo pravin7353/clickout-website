@@ -126,6 +126,7 @@ export default function Home() {
         <div className="hidden md:flex gap-8 text-[14px] text-[#A6A5A0] font-medium items-center">
           <button onClick={() => scrollToSection('skip-billing-queue')} className="hover:text-white transition">Customer App</button>
           <button onClick={() => scrollToSection('pricing')} className="hover:text-white transition">Pricing</button>
+          <a href="/blog" className="hover:text-white transition font-semibold text-[#00ff66]">Blog</a>
           <button onClick={() => scrollToSection('contact-sales')} className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-white transition border border-white/10">Contact sales</button>
         </div>
       </nav>

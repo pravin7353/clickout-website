@@ -5,6 +5,7 @@ import { StoreTenant, StoreUser, Transaction } from '@/types/schema';
 // 1. Core Collections
 export const STORES_COLLECTION = 'stores';
 export const GLOBAL_USERS_COLLECTION = 'users';
+export const BLOGS_COLLECTION = 'blogs'; // SEO Blog Collection
 
 // 2. Scalable Helper Functions (Ensures Tenant Isolation in Queries)
 export const getStoreRef = (storeId: string): DocumentReference => {
