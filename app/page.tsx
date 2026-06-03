@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, FormEvent } from 'react';
+import Link from 'next/link';
 import { 
   Store, ShieldCheck, CreditCard, Check, QrCode, Zap, 
   ChevronRight, BarChart3, AlertTriangle, Fingerprint, 
@@ -621,13 +622,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="w-full border-t border-white/5 px-8 py-12 bg-black/50">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center text-[13px] text-[#85847E]">
-          <div className="text-xl font-modern font-bold mb-4 md:mb-0 cursor-pointer" onClick={() => scrollToSection('command-center')}>
-            <span className="text-white">Click</span><span className="text-[#00ff66]">Out</span>
+      {/* GLOBAL FOOTER */}
+      <footer className="w-full border-t border-gray-800 bg-black mt-20">
+        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm text-center md:text-left">
+            © {new Date().getFullYear()} ClickOut. All rights reserved.
+          </p>
+          <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
           </div>
-          <p>© 2026 ClickOut Retail Systems. All rights reserved.</p>
         </div>
       </footer>
     </div>
