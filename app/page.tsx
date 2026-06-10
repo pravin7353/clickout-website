@@ -679,13 +679,19 @@ export default function Home() {
           <p className="text-gray-500 text-sm text-center md:text-left">
             © {new Date().getFullYear()} ClickOut. All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center">
-            <Link href="/about" className="hover:text-white transition-colors">About</Link>
-            <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
-            <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center mb-2">
+              <span className="text-white font-semibold">Features:</span>
+              <Link href="/features/self-checkout" className="hover:text-[#00ff66] transition-colors">Self-Checkout</Link>
+            </div>
+            <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center">
+              <Link href="/about" className="hover:text-white transition-colors">About</Link>
+              <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
+              <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
+            </div>
           </div>
         </div>
       </footer>
