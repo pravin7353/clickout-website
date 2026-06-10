@@ -7,11 +7,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.clickout.in'; // <-- Update this to your live domain
 
   // 1. Static Pages
-  const staticRoutes = ['', '/blog', '/privacy', '/terms', '/refund'].map((route) => ({
+  const staticRoutes = [
+    '', '/blog', '/privacy', '/terms', '/refund',
+    '/pricing', '/about', '/contact', '/faq', '/glossary', '/help',
+    '/features', '/features/self-checkout', '/features/inventory-management',
+    '/features/employee-verification', '/features/analytics',
+    '/features/fraud-prevention', '/features/customer-retention',
+    '/features/gatepass-validation', '/features/multi-store',
+    '/industries', '/industries/supermarkets', '/industries/retail-chains',
+    '/industries/warehouses', '/industries/independent-stores',
+    '/compare/clickout-vs-pos-software',
+    '/compare/clickout-vs-traditional-billing'
+  ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency: (route === '' ? 'daily' : 'weekly') as "daily" | "weekly",
+    priority: route === '' ? 1.0 : route.includes('features') ? 0.9 : 0.8,
   }));
 
   // 2. Dynamic Blog Pages

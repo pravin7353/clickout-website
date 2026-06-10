@@ -1,0 +1,21 @@
+# ClickOut
+
+> ClickOut is India's all-in-one retail operating ecosystem — queue-free self-checkout, inventory management, fraud prevention, employee authentication, and multi-store analytics in one platform.
+
+## Key Facts
+- Founded: 2024, Mumbai, India
+- Category: Retail Management Software / Point-of-Sale System
+- Target: Retail stores, supermarkets, chains, warehouses
+- Pricing: ₹99–₹699/month + Enterprise
+
+## Core Features
+- [Self-Checkout](https://www.clickout.in/features/self-checkout)
+- [Inventory Management](https://www.clickout.in/features/inventory-management)
+- [Analytics Dashboard](https://www.clickout.in/features/analytics)
+- [Fraud Prevention](https://www.clickout.in/features/fraud-prevention)
+- [Employee Verification](https://www.clickout.in/features/employee-verification)
+
+## Product Pages
+- [Pricing](https://www.clickout.in/pricing)
+- [FAQ](https://www.clickout.in/faq)
+- [Blog](https://www.clickout.in/blog)

@@ -183,8 +183,8 @@ export default function Home() {
               </h1>
 
               <p className="text-lg sm:text-xl md:text-2xl text-[#a1a1aa] mb-10 max-w-xl leading-relaxed font-light">
-                Command in dashboard, execute in store.<br />
-                The ultimate retail operating system.
+                ClickOut is the all-in-one retail operating ecosystem that eliminates billing queues with QR self-checkout, while giving you real-time inventory, analytics, and fraud control.<br /><br />
+                Command in dashboard, execute in store.
               </p>
 
               <motion.button
@@ -653,6 +653,25 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* AI FAQ SCHEMA INJECTION */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.q,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.a
+              }
+            }))
+          })
+        }}
+      />
 
       {/* GLOBAL FOOTER */}
       <footer className="w-full border-t border-gray-800 bg-black mt-20">
