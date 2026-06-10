@@ -681,8 +681,10 @@ export default function Home() {
           </p>
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center mb-2">
-              <span className="text-white font-semibold">Features:</span>
+              <span className="text-white font-semibold">Features & Industries:</span>
               <Link href="/features/self-checkout" className="hover:text-[#00ff66] transition-colors">Self-Checkout</Link>
+              <Link href="/features/inventory-management" className="hover:text-[#00ff66] transition-colors">Inventory</Link>
+              <Link href="/industries/supermarkets" className="hover:text-[#00ff66] transition-colors">Supermarkets</Link>
             </div>
             <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center">
               <Link href="/about" className="hover:text-white transition-colors">About</Link>
