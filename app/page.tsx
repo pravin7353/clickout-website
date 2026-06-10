@@ -134,8 +134,9 @@ export default function Home() {
           <div className="hidden md:flex gap-8 text-[14px] text-[#A6A5A0] font-medium items-center">
             <button onClick={() => scrollToSection('skip-billing-queue')} className="hover:text-white transition">Customer App</button>
             <button onClick={() => scrollToSection('pricing')} className="hover:text-white transition">Pricing</button>
+            <Link href="/ecosystem" className="hover:text-[#00ff66] transition">Ecosystem</Link>
             <a href="/blog" className="hover:text-white transition font-semibold text-[#00ff66]">Blog</a>
-            <button onClick={() => scrollToSection('contact-sales')} className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-white transition border border-white/10">Contact sales</button>
+            <a href="https://clickout-cfa95.web.app/#/login" target="_blank" rel="noopener noreferrer" className="bg-[#00ff66]/10 hover:bg-[#00ff66]/20 px-5 py-2 rounded-lg text-[#00ff66] transition border border-[#00ff66]/30 font-medium tracking-wide">Login</a>
           </div>
 
           {/* Mobile Toggle Button */}
@@ -155,8 +156,9 @@ export default function Home() {
             >
               <button onClick={() => scrollToSection('skip-billing-queue')} className="text-[#A6A5A0] hover:text-white text-left font-medium">Customer App</button>
               <button onClick={() => scrollToSection('pricing')} className="text-[#A6A5A0] hover:text-white text-left font-medium">Pricing</button>
+              <Link href="/ecosystem" className="text-[#A6A5A0] hover:text-[#00ff66] text-left font-medium">Ecosystem</Link>
               <a href="/blog" className="text-[#00ff66] hover:text-white text-left font-semibold">Blog</a>
-              <button onClick={() => scrollToSection('contact-sales')} className="bg-white/5 hover:bg-white/10 px-4 py-3 rounded-lg text-white text-center font-medium border border-white/10 mt-2">Contact sales</button>
+              <a href="https://admin.clickout.in" target="_blank" rel="noopener noreferrer" className="bg-[#00ff66]/10 hover:bg-[#00ff66]/20 px-4 py-3 rounded-lg text-[#00ff66] text-center font-medium border border-[#00ff66]/30 mt-2">Admin Login</a>
             </motion.div>
           )}
         </AnimatePresence>
