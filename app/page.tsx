@@ -680,6 +680,9 @@ export default function Home() {
             © {new Date().getFullYear()} ClickOut. All rights reserved.
           </p>
           <div className="flex flex-wrap gap-4 text-sm text-gray-500 justify-center">
+            <Link href="/about" className="hover:text-white transition-colors">About</Link>
+            <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
+            <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link href="/refund" className="hover:text-white transition-colors">Refund Policy</Link>
