@@ -22,6 +22,9 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
+  // Custom Dropdown State
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   // Contact Form Data
   const [formData, setFormData] = useState({
     name: '',
@@ -609,15 +612,58 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6 relative">
               <label className="block text-sm font-medium text-[#A0A09C] mb-2">Number of Stores</label>
-              <select required value={formData.stores} onChange={(e) => setFormData({...formData, stores: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl text-white bg-black/20 appearance-none">
-                <option value="" disabled>Select scale</option>
-                <option value="1-5">1 - 5 Stores</option>
-                <option value="6-20">6 - 20 Stores</option>
-                <option value="21-50">21 - 50 Stores</option>
-                <option value="50+">50+ Stores</option>
-              </select>
+              
+              {/* Custom Select Input */}
+              <div 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className={`w-full px-4 py-3 rounded-xl cursor-pointer flex justify-between items-center transition-all duration-200 
+                  bg-[#121212] border ${isDropdownOpen ? 'border-[#00ff66] shadow-[0_0_10px_rgba(0,255,102,0.1)]' : 'border-[#2a2a2a] hover:border-[#3a3a3a]'}`}
+              >
+                <span className={formData.stores ? "text-white" : "text-[#7a7a7a]"}>
+                  {formData.stores === '1-5' ? '1 - 5 Stores' : 
+                   formData.stores === '6-20' ? '6 - 20 Stores' : 
+                   formData.stores === '21-50' ? '21 - 50 Stores' : 
+                   formData.stores === '50+' ? '50+ Stores' : 
+                   'Select scale'}
+                </span>
+                
+                {/* Dropdown Arrow SVG */}
+                <svg 
+                  className={`w-5 h-5 text-[#A0A09C] transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+
+              {/* Custom Dropdown Menu */}
+              {isDropdownOpen && (
+                <div className="absolute z-50 w-full mt-2 bg-[#121212] border border-[#2a2a2a] rounded-xl shadow-2xl overflow-hidden py-2">
+                  {['1-5', '6-20', '21-50', '50+'].map((val) => {
+                    const label = val === '1-5' ? '1 - 5 Stores' : 
+                                  val === '6-20' ? '6 - 20 Stores' : 
+                                  val === '21-50' ? '21 - 50 Stores' : '50+ Stores';
+                    
+                    return (
+                      <div
+                        key={val}
+                        onClick={() => {
+                          setFormData({ ...formData, stores: val });
+                          setIsDropdownOpen(false);
+                        }}
+                        className={`px-4 py-3 cursor-pointer transition-colors duration-150
+                          ${formData.stores === val 
+                            ? 'bg-[#00ff66]/10 text-[#00ff66] font-medium' 
+                            : 'text-[#D4D4D2] hover:bg-white/5 hover:text-white'}`}
+                      >
+                        {label}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <div className="mb-10">
