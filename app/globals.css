@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Option B: Premium Light Mode */
+  --bg-base: #fdfcf8;
+  --bg-nav: rgba(253, 252, 248, 0.95);
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --border-color: #eae8e0;
+  --text-primary: #1c1b19;
+  --text-secondary: #7a7873;
+  --accent: #00c853; 
+  --accent-hover: #00a843;
+  --accent-bg: rgba(0, 200, 83, 0.08);
+  --shadow-main: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.dark {
+  /* Option A: Claude-Style Warm Dark Mode */
+  --bg-base: #1a1917;
+  --bg-nav: rgba(26, 25, 23, 0.95);
+  --bg-card: #232220;
+  --bg-input: #2a2825;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #edecea;
+  --text-secondary: #a09e9a;
+  --accent: #e8d5b0; 
+  --accent-hover: #d4b886;
+  --accent-bg: rgba(232, 213, 176, 0.1);
+  --shadow-main: 0 4px 24px rgba(0,0,0,0.4);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.warm-input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.warm-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+  outline: none;
 }
