@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default function SelfCheckoutPage() {
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-[#EBEBE8]">
+    <div className="min-h-screen transition-colors duration-300" style={{background:'var(--bg-base)', color:'var(--text-primary)'}}>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 bg-[#0d0d0d]/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 backdrop-blur-xl border-b" style={{background:'var(--bg-nav)', borderColor:'var(--border-color)'}}>
         <Link href="/" className="text-2xl font-modern font-bold tracking-wide">
-          <span className="text-white">Click</span><span className="text-[#00ff66]">Out</span>
+          <span style={{color:'var(--text-primary)'}}>Click</span><span style={{color:'var(--accent)'}}>Out</span>
         </Link>
-        <Link href="/" className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-white text-sm transition border border-white/10">
+        <Link href="/" className="px-4 py-2 rounded-lg text-sm transition" style={{background:'var(--bg-card)', color:'var(--text-primary)', border:'1px solid var(--border-color)'}}>
           Back to Home
         </Link>
       </nav>
@@ -24,46 +24,46 @@ export default function SelfCheckoutPage() {
         <div className="max-w-[800px] mx-auto space-y-16">
           
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight font-modern">QR Self-Checkout by ClickOut</h1>
-            <p className="text-xl text-[#00ff66] font-light">Eliminate billing queues permanently.</p>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight font-modern" style={{color:'var(--text-primary)'}}>QR Self-Checkout by ClickOut</h1>
+            <p className="text-xl font-light" style={{color:'var(--accent)'}}>Eliminate billing queues permanently.</p>
           </div>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">What Is ClickOut Self-Checkout?</h2>
-            <p className="text-[#a1a1aa] leading-relaxed">
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>What Is ClickOut Self-Checkout?</h2>
+            <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
               ClickOut Self-Checkout is a QR-based system that allows retail customers to scan products with their smartphone as they shop, pay digitally, and exit through a gatepass verification — all without standing in a billing queue.
             </p>
           </section>
 
           <section className="space-y-6">
-            <h2 className="text-2xl font-semibold text-white">How It Works (Step-by-Step)</h2>
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>How It Works (Step-by-Step)</h2>
             <div className="grid gap-4">
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <span className="text-[#00ff66] font-bold mr-2">1.</span>
-                <strong className="text-white">Enter & Scan QR:</strong> <span className="text-[#a1a1aa]">Customer scans the store's entry QR code to start a secure shopping session.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <span className="font-bold mr-2" style={{color:'var(--accent)'}}>1.</span>
+                <strong style={{color:'var(--text-primary)'}}>Enter & Scan QR:</strong> <span style={{color:'var(--text-secondary)'}}>Customer scans the store's entry QR code to start a secure shopping session.</span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <span className="text-[#00ff66] font-bold mr-2">2.</span>
-                <strong className="text-white">Shop & Scan Products:</strong> <span className="text-[#a1a1aa]">Customer scans each product's barcode using the ClickOut mobile app.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <span className="font-bold mr-2" style={{color:'var(--accent)'}}>2.</span>
+                <strong style={{color:'var(--text-primary)'}}>Shop & Scan Products:</strong> <span style={{color:'var(--text-secondary)'}}>Customer scans each product's barcode using the ClickOut mobile app.</span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <span className="text-[#00ff66] font-bold mr-2">3.</span>
-                <strong className="text-white">Review Cart:</strong> <span className="text-[#a1a1aa]">Cart updates in real-time; customer sees running total.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <span className="font-bold mr-2" style={{color:'var(--accent)'}}>3.</span>
+                <strong style={{color:'var(--text-primary)'}}>Review Cart:</strong> <span style={{color:'var(--text-secondary)'}}>Cart updates in real-time; customer sees running total.</span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <span className="text-[#00ff66] font-bold mr-2">4.</span>
-                <strong className="text-white">Pay Digitally:</strong> <span className="text-[#a1a1aa]">Pay via UPI, debit/credit card, or CASH.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <span className="font-bold mr-2" style={{color:'var(--accent)'}}>4.</span>
+                <strong style={{color:'var(--text-primary)'}}>Pay Digitally:</strong> <span style={{color:'var(--text-secondary)'}}>Pay via UPI, debit/credit card, or CASH.</span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <span className="text-[#00ff66] font-bold mr-2">5.</span>
-                <strong className="text-white">Exit Verification:</strong> <span className="text-[#a1a1aa]">Security guard scans exit QR code to verify purchase — customer walks out in seconds.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <span className="font-bold mr-2" style={{color:'var(--accent)'}}>5.</span>
+                <strong style={{color:'var(--text-primary)'}}>Exit Verification:</strong> <span style={{color:'var(--text-secondary)'}}>Security guard scans exit QR code to verify purchase — customer walks out in seconds.</span>
               </div>
             </div>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">Key Benefits</h2>
-            <ul className="list-disc pl-5 text-[#a1a1aa] space-y-2">
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>Key Benefits</h2>
+            <ul className="list-disc pl-5 space-y-2" style={{color:'var(--text-secondary)'}}>
               <li>Eliminates checkout queues entirely</li>
               <li>Reduces billing staff requirements</li>
               <li>Prevents shoplifting with exit verification</li>
@@ -73,12 +73,12 @@ export default function SelfCheckoutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">Security & Payments</h2>
-            <p className="text-[#a1a1aa] leading-relaxed">
-              <strong className="text-white">Security:</strong> Every self-checkout session is protected by encrypted QR tokens, transaction verification, Risk Engine fraud scoring, and gatepass exit validation. Ghost Visitor Detection flags customers who enter but do not complete checkout.
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>Security & Payments</h2>
+            <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
+              <strong style={{color:'var(--text-primary)'}}>Security:</strong> Every self-checkout session is protected by encrypted QR tokens, transaction verification, Risk Engine fraud scoring, and gatepass exit validation. Ghost Visitor Detection flags customers who enter but do not complete checkout.
             </p>
-            <p className="text-[#a1a1aa] leading-relaxed">
-              <strong className="text-white">Supported Payments:</strong> UPI, Debit Cards, Credit Cards, Digital Wallets (Paytm, PhonePe, GPay), Cash Counter verification.
+            <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
+              <strong style={{color:'var(--text-primary)'}}>Supported Payments:</strong> UPI, Debit Cards, Credit Cards, Digital Wallets (Paytm, PhonePe, GPay), Cash Counter verification.
             </p>
           </section>
 
@@ -86,9 +86,9 @@ export default function SelfCheckoutPage() {
       </main>
 
       {/* FOOTER */}
-      <footer className="w-full border-t border-gray-800 bg-black mt-20">
+      <footer className="w-full mt-20 border-t" style={{background:'var(--bg-footer)', borderColor:'var(--border-color)'}}>
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ClickOut. All rights reserved.</p>
+          <p className="text-sm" style={{color:'var(--text-muted)'}}>© {new Date().getFullYear()} ClickOut. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -4,6 +4,8 @@ import { collection, addDoc, serverTimestamp, getDocs, doc, deleteDoc, updateDoc
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, auth, storage } from '@/lib/firebase/client';
+import { useTheme } from 'next-themes';
+import { Sun, Moon } from 'lucide-react';
 
 type BlockType = 'text' | 'image' | 'table' | 'card';
 
@@ -24,6 +26,10 @@ export default function AdminDashboard() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
+  // Theme State
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
   // View State: 'list' or 'editor'
   const [view, setView] = useState<'list' | 'editor'>('list');
   const [blogList, setBlogList] = useState<any[]>([]);
@@ -34,11 +40,12 @@ export default function AdminDashboard() {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [metaDesc, setMetaDesc] = useState('');
-  const [authorName, setAuthorName] = useState('Admin'); // NEW: Author Field
+  const [authorName, setAuthorName] = useState('Admin');
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [isPublishing, setIsPublishing] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) fetchBlogs();
@@ -51,7 +58,7 @@ export default function AdminDashboard() {
     try {
       const q = query(collection(db, 'blogs'), orderBy('createdAt', 'desc'));
       const snapshot = await getDocs(q);
-      setBlogList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as any))); // <-- Added 'as any'
+      setBlogList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as any)));
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {
@@ -153,12 +160,12 @@ export default function AdminDashboard() {
   // 1. LOGIN UI
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center p-10">
-        <form onSubmit={handleLogin} className="bg-[#111] p-8 rounded-2xl w-full max-w-md flex flex-col gap-4 border border-[#333]">
-          <h1 className="text-2xl font-bold text-[#00ff66] mb-4">Admin Login</h1>
-          <input required type="email" placeholder="Email" className="p-3 bg-black border border-gray-700 rounded text-white" value={email} onChange={e => setEmail(e.target.value)} />
-          <input required type="password" placeholder="Password" className="p-3 bg-black border border-gray-700 rounded text-white" value={password} onChange={e => setPassword(e.target.value)} />
-          <button type="submit" className="bg-[#00ff66] text-black font-bold p-3 rounded">Login</button>
+      <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-10 transition-colors duration-300">
+        <form onSubmit={handleLogin} className="bg-[var(--bg-card)] p-8 rounded-2xl w-full max-w-md flex flex-col gap-4 border border-[var(--border-color)] shadow-[var(--shadow-main)]">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-4">Admin Login</h1>
+          <input required type="email" placeholder="Email" className="p-3 bg-[var(--bg-input)] border border-[var(--border-color)] rounded text-[var(--text-primary)] outline-none focus:border-[var(--accent)]" value={email} onChange={e => setEmail(e.target.value)} />
+          <input required type="password" placeholder="Password" className="p-3 bg-[var(--bg-input)] border border-[var(--border-color)] rounded text-[var(--text-primary)] outline-none focus:border-[var(--accent)]" value={password} onChange={e => setPassword(e.target.value)} />
+          <button type="submit" className="bg-[var(--accent)] text-[#1a1917] font-bold p-3 rounded hover:brightness-110 shadow-md">Login</button>
         </form>
       </div>
     );
@@ -167,36 +174,41 @@ export default function AdminDashboard() {
   // 2. DASHBOARD LIST VIEW
   if (view === 'list') {
     return (
-      <div className="min-h-screen bg-[#0d0d0d] text-white p-10">
+      <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] p-10 transition-colors duration-300">
         <div className="max-w-6xl mx-auto flex flex-col gap-6">
-          <div className="flex justify-between items-center border-b border-gray-800 pb-4">
-            <h1 className="text-3xl font-bold text-[#00ff66]">Blog Dashboard</h1>
-            <div className="flex gap-4">
-              <button onClick={() => { setEditId(null); setView('editor'); }} className="bg-[#00ff66] text-black px-4 py-2 rounded font-bold">+ Create New</button>
-              <button onClick={() => signOut(auth)} className="text-red-500 border border-red-500 px-4 py-2 rounded">Logout</button>
+          <div className="flex justify-between items-center border-b border-[var(--border-color)] pb-4">
+            <h1 className="text-3xl font-bold text-[var(--text-primary)]">Blog Dashboard</h1>
+            <div className="flex items-center gap-4">
+              {mounted && (
+                <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
+                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+              )}
+              <button onClick={() => { setEditId(null); setView('editor'); }} className="bg-[var(--accent)] text-[#1a1917] px-4 py-2 rounded font-bold shadow-md hover:brightness-110">+ Create New</button>
+              <button onClick={() => signOut(auth)} className="text-red-500 border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 px-4 py-2 rounded transition-colors">Logout</button>
             </div>
           </div>
 
-          {isLoadingBlogs ? <p className="text-[#00ff66]">Loading blogs...</p> : (
-            <div className="bg-[#111] rounded-xl border border-gray-800 overflow-hidden">
+          {isLoadingBlogs ? <p className="text-[var(--text-secondary)] animate-pulse">Loading blogs...</p> : (
+            <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border-color)] shadow-[var(--shadow-main)] overflow-hidden">
               <table className="w-full text-left">
-                <thead className="bg-[#1a1a1a] border-b border-gray-800">
+                <thead className="bg-[var(--bg-nav)] border-b border-[var(--border-color)] text-[var(--text-secondary)]">
                   <tr>
-                    <th className="p-4">Title</th>
-                    <th className="p-4">Status</th>
-                    <th className="p-4">Author</th>
-                    <th className="p-4 text-right">Actions</th>
+                    <th className="p-4 font-medium">Title</th>
+                    <th className="p-4 font-medium">Status</th>
+                    <th className="p-4 font-medium">Author</th>
+                    <th className="p-4 text-right font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {blogList.map(blog => (
-                    <tr key={blog.id} className="border-b border-gray-800/50 hover:bg-[#1a1a1a]">
-                      <td className="p-4 font-semibold text-[#00ff66]">{blog.title}</td>
-                      <td className="p-4">{blog.isDraft ? <span className="text-yellow-500 bg-yellow-500/10 px-2 py-1 rounded text-xs">Draft</span> : <span className="text-green-500 bg-green-500/10 px-2 py-1 rounded text-xs">Published</span>}</td>
-                      <td className="p-4 text-gray-400">{blog.authorName || 'Admin'}</td>
+                    <tr key={blog.id} className="border-b border-[var(--border-color)] hover:bg-[var(--bg-base)] transition-colors">
+                      <td className="p-4 font-semibold text-[var(--text-primary)]">{blog.title}</td>
+                      <td className="p-4">{blog.isDraft ? <span className="text-yellow-600 bg-yellow-500/10 border border-yellow-500/20 px-2 py-1 rounded text-xs">Draft</span> : <span className="text-[var(--accent)] bg-[var(--accent-bg)] border border-[var(--accent-border)] px-2 py-1 rounded text-xs">Published</span>}</td>
+                      <td className="p-4 text-[var(--text-secondary)]">{blog.authorName || 'Admin'}</td>
                       <td className="p-4 text-right flex justify-end gap-3">
-                        <button onClick={() => handleEditBlog(blog)} className="text-blue-400 hover:text-blue-300">Edit</button>
-                        <button onClick={() => handleDeleteBlog(blog.id)} className="text-red-500 hover:text-red-400">Delete</button>
+                        <button onClick={() => handleEditBlog(blog)} className="text-blue-500 hover:text-blue-600 font-medium">Edit</button>
+                        <button onClick={() => handleDeleteBlog(blog.id)} className="text-red-500 hover:text-red-600 font-medium">Delete</button>
                       </td>
                     </tr>
                   ))}
@@ -211,51 +223,56 @@ export default function AdminDashboard() {
 
   // 3. EDITOR VIEW
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-white p-10">
+    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] p-10 transition-colors duration-300">
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
-        <div className="flex justify-between items-center border-b border-gray-800 pb-4">
+        <div className="flex justify-between items-center border-b border-[var(--border-color)] pb-4">
           <div className="flex items-center gap-4">
-            <button onClick={resetEditor} className="text-gray-400 hover:text-white">← Back</button>
-            <h1 className="text-3xl font-bold text-[#00ff66]">{editId ? 'Edit Blog' : 'Create Rich Blog'}</h1>
+            <button onClick={resetEditor} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">← Back</button>
+            <h1 className="text-3xl font-bold text-[var(--text-primary)]">{editId ? 'Edit Blog' : 'Create Rich Blog'}</h1>
           </div>
+          {mounted && (
+            <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4 bg-[#111] p-6 rounded-xl border border-[#333]">
-          <input required placeholder="Blog Title" className="col-span-2 p-3 bg-black border border-gray-700 rounded outline-none focus:border-[#00ff66]" value={title} onChange={e => setTitle(e.target.value)} />
-          <input required placeholder="URL Slug (e.g., best-pos)" className="p-3 bg-black border border-gray-700 rounded outline-none focus:border-[#00ff66]" value={slug} onChange={e => setSlug(e.target.value)} />
-          <input required placeholder="Author Name" className="p-3 bg-black border border-gray-700 rounded outline-none focus:border-[#00ff66]" value={authorName} onChange={e => setAuthorName(e.target.value)} />
-          <textarea required placeholder="Meta Description" className="col-span-2 p-3 bg-black border border-gray-700 rounded outline-none focus:border-[#00ff66] h-20" value={metaDesc} onChange={e => setMetaDesc(e.target.value)} />
+        <div className="grid grid-cols-2 gap-4 bg-[var(--bg-card)] p-6 rounded-xl border border-[var(--border-color)] shadow-[var(--shadow-main)]">
+          <input required placeholder="Blog Title" className="col-span-2 p-3 bg-[var(--bg-input)] border border-[var(--border-color)] rounded outline-none focus:border-[var(--accent)] text-[var(--text-primary)]" value={title} onChange={e => setTitle(e.target.value)} />
+          <input required placeholder="URL Slug (e.g., best-pos)" className="p-3 bg-[var(--bg-input)] border border-[var(--border-color)] rounded outline-none focus:border-[var(--accent)] text-[var(--text-primary)]" value={slug} onChange={e => setSlug(e.target.value)} />
+          <input required placeholder="Author Name" className="p-3 bg-[var(--bg-input)] border border-[var(--border-color)] rounded outline-none focus:border-[var(--accent)] text-[var(--text-primary)]" value={authorName} onChange={e => setAuthorName(e.target.value)} />
+          <textarea required placeholder="Meta Description" className="col-span-2 p-3 bg-[var(--bg-input)] border border-[var(--border-color)] rounded outline-none focus:border-[var(--accent)] text-[var(--text-primary)] h-20 resize-y" value={metaDesc} onChange={e => setMetaDesc(e.target.value)} />
         </div>
 
         <div className="flex flex-col gap-4">
           {blocks.map((block, index) => (
-            <div key={block.id} className="relative bg-[#1a1a1a] p-4 rounded-xl border border-gray-700 group">
+            <div key={block.id} className="relative bg-[var(--bg-card)] p-4 rounded-xl border border-[var(--border-color)] shadow-sm group">
               <div className="absolute right-4 top-4 flex gap-2 opacity-50 group-hover:opacity-100 transition-opacity z-10">
-                <button onClick={() => moveBlock(index, 'up')} className="bg-gray-800 p-1 rounded hover:bg-[#00ff66] hover:text-black">↑</button>
-                <button onClick={() => moveBlock(index, 'down')} className="bg-gray-800 p-1 rounded hover:bg-[#00ff66] hover:text-black">↓</button>
-                <button onClick={() => removeBlock(block.id)} className="bg-red-500/20 text-red-500 p-1 rounded hover:bg-red-500 hover:text-white">✕</button>
+                <button onClick={() => moveBlock(index, 'up')} className="bg-[var(--bg-base)] border border-[var(--border-color)] text-[var(--text-primary)] p-1.5 rounded hover:bg-[var(--accent)] hover:text-[#1a1917] hover:border-[var(--accent)] transition-colors">↑</button>
+                <button onClick={() => moveBlock(index, 'down')} className="bg-[var(--bg-base)] border border-[var(--border-color)] text-[var(--text-primary)] p-1.5 rounded hover:bg-[var(--accent)] hover:text-[#1a1917] hover:border-[var(--accent)] transition-colors">↓</button>
+                <button onClick={() => removeBlock(block.id)} className="bg-red-500/10 text-red-500 p-1.5 rounded border border-red-500/20 hover:bg-red-500 hover:text-white transition-colors">✕</button>
               </div>
 
               {block.type === 'text' && (
                 <div className="flex flex-col gap-2 pt-6">
-                  <select className="bg-black border border-gray-700 p-2 rounded w-32" value={block.format} onChange={(e) => updateBlock(block.id, { format: e.target.value as any })}>
+                  <select className="bg-[var(--bg-input)] border border-[var(--border-color)] text-[var(--text-primary)] p-2 rounded w-32 outline-none focus:border-[var(--accent)]" value={block.format} onChange={(e) => updateBlock(block.id, { format: e.target.value as any })}>
                     <option value="p">Paragraph</option>
                     <option value="h1">Heading 1</option>
                     <option value="h2">Heading 2</option>
                     <option value="ul">Bullet List</option>
                   </select>
-                  <textarea placeholder="Type here..." className="w-full bg-black border border-gray-700 rounded p-3 min-h-[100px]" value={block.content} onChange={(e) => updateBlock(block.id, { content: e.target.value })} />
+                  <textarea placeholder="Type here..." className="w-full bg-[var(--bg-input)] border border-[var(--border-color)] text-[var(--text-primary)] outline-none focus:border-[var(--accent)] rounded p-3 min-h-[100px]" value={block.content} onChange={(e) => updateBlock(block.id, { content: e.target.value })} />
                 </div>
               )}
 
               {block.type === 'image' && (
                 <div className="flex flex-col gap-2 pt-6">
                   {block.url ? (
-                    <img src={block.url} alt="Preview" className="h-40 object-contain bg-black rounded border border-gray-700" />
+                    <img src={block.url} alt="Preview" className="h-40 object-contain bg-[var(--bg-base)] rounded border border-[var(--border-color)]" />
                   ) : (
-                    <input type="file" accept="image/*" onChange={(e) => e.target.files && handleImageUpload(block.id, e.target.files[0])} className="p-4 border border-dashed border-gray-600 rounded text-gray-400 cursor-pointer hover:border-[#00ff66]" />
+                    <input type="file" accept="image/*" onChange={(e) => e.target.files && handleImageUpload(block.id, e.target.files[0])} className="p-4 border border-dashed border-[var(--border-strong)] rounded text-[var(--text-secondary)] cursor-pointer hover:border-[var(--accent)] transition-colors" />
                   )}
-                  <input placeholder="Image Alt Text (SEO)" className="w-full bg-black border border-gray-700 rounded p-2 mt-2" value={block.alt || ''} onChange={(e) => updateBlock(block.id, { alt: e.target.value })} />
+                  <input placeholder="Image Alt Text (SEO)" className="w-full bg-[var(--bg-input)] border border-[var(--border-color)] text-[var(--text-primary)] outline-none focus:border-[var(--accent)] rounded p-2 mt-2" value={block.alt || ''} onChange={(e) => updateBlock(block.id, { alt: e.target.value })} />
                 </div>
               )}
 
@@ -265,7 +282,7 @@ export default function AdminDashboard() {
                     <div key={rIdx} className="flex gap-2 min-w-max">
                       {row.cells.map((cell, cIdx) => (
                         <div key={cIdx} className="flex flex-col gap-1 relative group/cell">
-                          <input className={`p-2 bg-black border border-gray-700 rounded w-48 ${rIdx === 0 ? 'text-[#00ff66] font-bold' : 'text-gray-300'}`} value={cell}
+                          <input className={`p-2 bg-[var(--bg-input)] border border-[var(--border-color)] outline-none focus:border-[var(--accent)] rounded w-48 ${rIdx === 0 ? 'text-[var(--text-primary)] font-bold bg-[var(--bg-base)]' : 'text-[var(--text-secondary)]'}`} value={cell}
                             onChange={(e) => {
                               const newRows = block.tableRows!.map(r => ({ cells: [...r.cells] }));
                               newRows[rIdx].cells[cIdx] = e.target.value;
@@ -282,7 +299,7 @@ export default function AdminDashboard() {
                                   });
                                   updateBlock(block.id, { tableRows: newRows });
                                 }}
-                                className="absolute -top-6 right-0 text-xs text-red-500 opacity-0 group-hover/cell:opacity-100 transition-opacity"
+                                className="absolute -top-6 right-0 text-xs text-red-500 opacity-0 group-hover/cell:opacity-100 transition-opacity font-medium"
                              >
                                Del Col
                              </button>
@@ -296,7 +313,7 @@ export default function AdminDashboard() {
                       const newRows = block.tableRows!.map(r => ({ cells: [...r.cells] }));
                       newRows.push({ cells: Array(newRows[0].cells.length).fill('') });
                       updateBlock(block.id, { tableRows: newRows });
-                    }} className="text-sm text-gray-400 hover:text-[#00ff66] text-left">+ Add Row</button>
+                    }} className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors font-medium text-left">+ Add Row</button>
                     <button onClick={() => {
                       const newRows = block.tableRows!.map(r => {
                         const newCells = [...r.cells];
@@ -304,33 +321,33 @@ export default function AdminDashboard() {
                         return { cells: newCells };
                       });
                       updateBlock(block.id, { tableRows: newRows });
-                    }} className="text-sm text-gray-400 hover:text-[#00ff66] text-left">+ Add Column</button>
+                    }} className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors font-medium text-left">+ Add Column</button>
                   </div>
                 </div>
               )}
 
               {block.type === 'card' && (
-                <div className="flex flex-col gap-3 pt-6 border-l-4 border-[#00ff66] pl-4">
-                  <input placeholder="Card Title" className="p-2 bg-black border border-gray-700 rounded text-[#00ff66] font-bold" value={block.cardTitle || ''} onChange={(e) => updateBlock(block.id, { cardTitle: e.target.value })} />
-                  <textarea placeholder="Card Description..." className="p-2 bg-black border border-gray-700 rounded h-20" value={block.cardDesc || ''} onChange={(e) => updateBlock(block.id, { cardDesc: e.target.value })} />
+                <div className="flex flex-col gap-3 pt-6 border-l-4 border-[var(--accent)] pl-4 ml-2">
+                  <input placeholder="Card Title" className="p-2 bg-[var(--bg-input)] border border-[var(--border-color)] outline-none focus:border-[var(--accent)] rounded text-[var(--text-primary)] font-bold" value={block.cardTitle || ''} onChange={(e) => updateBlock(block.id, { cardTitle: e.target.value })} />
+                  <textarea placeholder="Card Description..." className="p-2 bg-[var(--bg-input)] border border-[var(--border-color)] outline-none focus:border-[var(--accent)] text-[var(--text-secondary)] rounded h-20 resize-y" value={block.cardDesc || ''} onChange={(e) => updateBlock(block.id, { cardDesc: e.target.value })} />
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        <div className="flex gap-4 justify-center py-6">
-          <button onClick={() => addBlock('text')} className="bg-[#111] hover:bg-[#222] border border-gray-700 px-4 py-2 rounded-lg text-sm">+ Text</button>
-          <button onClick={() => addBlock('image')} className="bg-[#111] hover:bg-[#222] border border-gray-700 px-4 py-2 rounded-lg text-sm">+ Image</button>
-          <button onClick={() => addBlock('table')} className="bg-[#111] hover:bg-[#222] border border-gray-700 px-4 py-2 rounded-lg text-sm">+ Table</button>
-          <button onClick={() => addBlock('card')} className="bg-[#111] hover:bg-[#222] border border-gray-700 px-4 py-2 rounded-lg text-sm">+ Card</button>
+        <div className="flex flex-wrap gap-4 justify-center py-6">
+          <button onClick={() => addBlock('text')} className="bg-[var(--bg-card)] hover:bg-[var(--bg-base)] border border-[var(--border-color)] text-[var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-sm">+ Text Block</button>
+          <button onClick={() => addBlock('image')} className="bg-[var(--bg-card)] hover:bg-[var(--bg-base)] border border-[var(--border-color)] text-[var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-sm">+ Image Block</button>
+          <button onClick={() => addBlock('table')} className="bg-[var(--bg-card)] hover:bg-[var(--bg-base)] border border-[var(--border-color)] text-[var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-sm">+ Table Block</button>
+          <button onClick={() => addBlock('card')} className="bg-[var(--bg-card)] hover:bg-[var(--bg-base)] border border-[var(--border-color)] text-[var(--text-primary)] px-5 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-sm">+ Info Card</button>
         </div>
 
         <div className="flex gap-4 w-full">
-          <button onClick={() => handleSave(true)} disabled={isPublishing} className="w-1/3 bg-[#222] border border-gray-700 text-white font-bold p-4 rounded-xl hover:bg-[#333] text-lg disabled:opacity-50">
+          <button onClick={() => handleSave(true)} disabled={isPublishing} className="w-1/3 bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-primary)] font-bold p-4 rounded-xl hover:bg-[var(--bg-base)] shadow-sm text-lg transition-colors disabled:opacity-50">
             Save as Draft
           </button>
-          <button onClick={() => handleSave(false)} disabled={isPublishing} className="w-2/3 bg-[#00ff66] text-black font-bold p-4 rounded-xl hover:bg-green-500 text-lg disabled:opacity-50">
+          <button onClick={() => handleSave(false)} disabled={isPublishing} className="w-2/3 bg-[var(--accent)] text-[#1a1917] font-bold p-4 rounded-xl hover:brightness-110 shadow-[0_4px_14px_var(--accent-bg)] text-lg transition-all disabled:opacity-50">
             {isPublishing ? 'Saving...' : 'Publish Post'}
           </button>
         </div>

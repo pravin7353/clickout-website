@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default function SupermarketsPage() {
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-[#EBEBE8]">
+    <div className="min-h-screen transition-colors duration-300" style={{background:'var(--bg-base)', color:'var(--text-primary)'}}>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 bg-[#0d0d0d]/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 backdrop-blur-xl border-b" style={{background:'var(--bg-nav)', borderColor:'var(--border-color)'}}>
         <Link href="/" className="text-2xl font-modern font-bold tracking-wide">
-          <span className="text-white">Click</span><span className="text-[#00ff66]">Out</span>
+          <span style={{color:'var(--text-primary)'}}>Click</span><span style={{color:'var(--accent)'}}>Out</span>
         </Link>
-        <Link href="/" className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-white text-sm transition border border-white/10">
+        <Link href="/" className="px-4 py-2 rounded-lg text-sm transition" style={{background:'var(--bg-card)', color:'var(--text-primary)', border:'1px solid var(--border-color)'}}>
           Back to Home
         </Link>
       </nav>
@@ -24,39 +24,39 @@ export default function SupermarketsPage() {
         <div className="max-w-[800px] mx-auto space-y-16">
           
           <div className="space-y-4">
-            <div className="inline-block px-3 py-1 bg-[#00ff66]/10 text-[#00ff66] text-xs font-bold tracking-wider rounded-full border border-[#00ff66]/20 mb-4">INDUSTRY SOLUTIONS</div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight font-modern">ClickOut for Supermarkets</h1>
-            <p className="text-xl text-[#a1a1aa] font-light">Built for high-volume Indian retail.</p>
+            <div className="inline-block px-3 py-1 text-xs font-bold tracking-wider rounded-full border mb-4" style={{background:'var(--accent-bg)', color:'var(--accent)', borderColor:'var(--accent-border)'}}>INDUSTRY SOLUTIONS</div>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight font-modern" style={{color:'var(--text-primary)'}}>ClickOut for Supermarkets</h1>
+            <p className="text-xl font-light" style={{color:'var(--text-secondary)'}}>Built for high-volume Indian retail.</p>
           </div>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">The Supermarket Challenge</h2>
-            <p className="text-[#a1a1aa] leading-relaxed">
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>The Supermarket Challenge</h2>
+            <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
               Supermarkets face a unique intersection of high customer volumes, large SKU counts, multiple staff roles, and intense pressure on margins. The traditional checkout model — where every customer queues at a staffed billing counter — creates bottlenecks that drive customers away and limit throughput.
             </p>
           </section>
 
           <section className="space-y-6">
-            <h2 className="text-2xl font-semibold text-white">How ClickOut Transforms Operations</h2>
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>How ClickOut Transforms Operations</h2>
             <div className="space-y-4">
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <strong className="text-[#00ff66] block mb-1">For Customers:</strong> 
-                <span className="text-[#a1a1aa]">Skip the billing queue entirely. Scan items as you shop, pay on your phone, and walk out in seconds through a quick exit verification.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <strong className="block mb-1" style={{color:'var(--accent)'}}>For Customers:</strong> 
+                <span style={{color:'var(--text-secondary)'}}>Skip the billing queue entirely. Scan items as you shop, pay on your phone, and walk out in seconds through a quick exit verification.</span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <strong className="text-[#00ff66] block mb-1">For Store Managers:</strong> 
-                <span className="text-[#a1a1aa]">Watch live revenue, active shoppers, VIP customer presence, inventory levels, and fraud alerts — all in one Command Center dashboard.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <strong className="block mb-1" style={{color:'var(--accent)'}}>For Store Managers:</strong> 
+                <span style={{color:'var(--text-secondary)'}}>Watch live revenue, active shoppers, VIP customer presence, inventory levels, and fraud alerts — all in one Command Center dashboard.</span>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 p-5 rounded-xl">
-                <strong className="text-[#00ff66] block mb-1">For Security Staff:</strong> 
-                <span className="text-[#a1a1aa]">Gatepass validation with QR scanning replaces manual receipt checking. Ghost Visitor Detection flags non-paying customers automatically.</span>
+              <div className="p-5 rounded-xl border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)'}}>
+                <strong className="block mb-1" style={{color:'var(--accent)'}}>For Security Staff:</strong> 
+                <span style={{color:'var(--text-secondary)'}}>Gatepass validation with QR scanning replaces manual receipt checking. Ghost Visitor Detection flags non-paying customers automatically.</span>
               </div>
             </div>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">Supermarket-Specific Features</h2>
-            <ul className="list-disc pl-5 text-[#a1a1aa] space-y-2">
+            <h2 className="text-2xl font-semibold" style={{color:'var(--text-primary)'}}>Supermarket-Specific Features</h2>
+            <ul className="list-disc pl-5 space-y-2" style={{color:'var(--text-secondary)'}}>
               <li>Multi-lane self-checkout support for high-volume hours</li>
               <li>Bulk product barcode management (10,000+ SKUs)</li>
               <li>Category-level analytics and performance tracking</li>
@@ -69,9 +69,9 @@ export default function SupermarketsPage() {
       </main>
 
       {/* FOOTER */}
-      <footer className="w-full border-t border-gray-800 bg-black mt-20">
+      <footer className="w-full mt-20 border-t" style={{background:'var(--bg-footer)', borderColor:'var(--border-color)'}}>
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm">© {new Date().getFullYear()} ClickOut. All rights reserved.</p>
+          <p className="text-sm" style={{color:'var(--text-muted)'}}>© {new Date().getFullYear()} ClickOut. All rights reserved.</p>
         </div>
       </footer>
     </div>

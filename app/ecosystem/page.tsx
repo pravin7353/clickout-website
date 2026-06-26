@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 export default function EcosystemPage() {
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-[#EBEBE8] overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden transition-colors duration-300" style={{background:'var(--bg-base)', color:'var(--text-primary)'}}>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 bg-[#0d0d0d]/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 backdrop-blur-xl border-b" style={{background:'var(--bg-nav)', borderColor:'var(--border-color)'}}>
         <Link href="/" className="text-2xl font-modern font-bold tracking-wide">
-          <span className="text-white">Click</span><span className="text-[#00ff66]">Out</span>
+          <span style={{color:'var(--text-primary)'}}>Click</span><span style={{color:'var(--accent)'}}>Out</span>
         </Link>
-        <Link href="/" className="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-white text-sm transition border border-white/10">
+        <Link href="/" className="px-4 py-2 rounded-lg text-sm transition" style={{background:'var(--bg-card)', color:'var(--text-primary)', border:'1px solid var(--border-color)'}}>
           Back to Home
         </Link>
       </nav>
@@ -26,9 +26,9 @@ export default function EcosystemPage() {
           
           {/* Header Section */}
           <div className="text-center space-y-6 max-w-3xl mx-auto mb-20">
-            <div className="inline-block px-3 py-1 bg-[#00ff66]/10 text-[#00ff66] text-xs font-bold tracking-wider rounded-full border border-[#00ff66]/20">THE COMPLETE SUITE</div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight font-modern">One Ecosystem. <br />Five Applications.</h1>
-            <p className="text-xl text-[#a1a1aa] font-light leading-relaxed">
+            <div className="inline-block px-3 py-1 text-xs font-bold tracking-wider rounded-full border" style={{background:'var(--accent-bg)', color:'var(--accent)', borderColor:'var(--accent-border)'}}>THE COMPLETE SUITE</div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight font-modern" style={{color:'var(--text-primary)'}}>One Ecosystem. <br />Five Applications.</h1>
+            <p className="text-xl font-light leading-relaxed" style={{color:'var(--text-secondary)'}}>
               ClickOut isn't just a self-checkout feature. It is a highly engineered, interconnected suite of five independent applications working in perfect sync to automate every square foot of your retail store.
             </p>
           </div>
@@ -37,7 +37,7 @@ export default function EcosystemPage() {
           <div className="space-y-16">
             
             {/* 1. ClickOut Admin (WITH NEXT.JS IMAGES) */}
-            <div className="bg-gradient-to-r from-[#00ff66]/[0.02] to-transparent border border-[#00ff66]/10 p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden group">
+            <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden group border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#00ff66] to-[#10b981]"></div>
               
               <div className="z-10">
@@ -45,9 +45,9 @@ export default function EcosystemPage() {
                   <div className="w-2 h-2 rounded-full bg-[#00ff66] animate-pulse shadow-[0_0_8px_#00ff66]" />
                   <span className="text-[#00ff66] text-xs font-bold tracking-wider">FOR STORE OWNERS</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">1. ClickOut Admin</h2>
-                <p className="text-[#a1a1aa] mb-8 text-lg leading-relaxed">The Master Command Center. Get a bird's-eye view of your entire retail operation, track live shoppers, and automate procurement seamlessly.</p>
-                <ul className="space-y-4 text-sm text-[#D4D4D2]">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{color:'var(--text-primary)'}}>1. ClickOut Admin</h2>
+                <p className="mb-8 text-lg leading-relaxed" style={{color:'var(--text-secondary)'}}>The Master Command Center. Get a bird's-eye view of your entire retail operation, track live shoppers, and automate procurement seamlessly.</p>
+                <ul className="space-y-4 text-sm" style={{color:'var(--text-secondary)'}}>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Live Intelligence:</strong> Real-time revenue tracking, staffing radar, and active VIP shoppers.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Super Auditor:</strong> Perform 'Order Autopsies' with AI Fraud Scores and global audit ledgers.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Quantum Offers:</strong> AI-driven promotion engine and dynamic bundle pricing.</li>
@@ -82,15 +82,15 @@ export default function EcosystemPage() {
             </div>
 
             {/* 2. Customer App (WITH NEXT.JS IMAGES) */}
-            <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
               <div className="z-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff4d4d]/10 border border-[#ff4d4d]/20 mb-6">
                   <div className="w-2 h-2 rounded-full bg-[#ff4d4d] animate-pulse" />
                   <span className="text-[#ff4d4d] text-xs font-bold tracking-wider">FOR SHOPPERS</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">2. ClickOut Customer</h2>
-                <p className="text-[#a1a1aa] mb-8 text-lg leading-relaxed">The Queue-Killer Shopping Interface. Scan products, apply digital combos, and generate your exit gatepass without standing in line.</p>
-                <ul className="space-y-4 text-sm text-[#D4D4D2]">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{color:'var(--text-primary)'}}>2. ClickOut Customer</h2>
+                <p className="mb-8 text-lg leading-relaxed" style={{color:'var(--text-secondary)'}}>The Queue-Killer Shopping Interface. Scan products, apply digital combos, and generate your exit gatepass without standing in line.</p>
+                <ul className="space-y-4 text-sm" style={{color:'var(--text-secondary)'}}>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Instant Entry:</strong> Scan Store QR to enter an isolated shopping session.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Smart Cart:</strong> Real-time barcode scanning with dynamic combo and discount locking.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Digital Checkout:</strong> Pay via UPI/Cards or generate a Hybrid "Cash QR".</li>
@@ -121,15 +121,15 @@ export default function EcosystemPage() {
 
             {/* ... Other Apps (We will fill these next) ... */}
             {/* 3. ClickOut Cashier (WITH NEXT.JS IMAGES) */}
-            <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
+            <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
               <div className="z-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/20 mb-6">
                   <div className="w-2 h-2 rounded-full bg-[#00e5ff] animate-pulse" />
                   <span className="text-[#00e5ff] text-xs font-bold tracking-wider">FOR CASH COUNTERS</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">3. ClickOut Cashier</h2>
-                <p className="text-[#a1a1aa] mb-8 text-lg leading-relaxed">The Hybrid Bridge for Offline Payments. India still runs on cash, and we ensure cash-paying customers don't break your automated ecosystem.</p>
-                <ul className="space-y-4 text-sm text-[#D4D4D2]">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{color:'var(--text-primary)'}}>3. ClickOut Cashier</h2>
+                <p className="mb-8 text-lg leading-relaxed" style={{color:'var(--text-secondary)'}}>The Hybrid Bridge for Offline Payments. India still runs on cash, and we ensure cash-paying customers don't break your automated ecosystem.</p>
+                <ul className="space-y-4 text-sm" style={{color:'var(--text-secondary)'}}>
                   <li className="flex items-start gap-3"><span className="text-[#00e5ff] mt-0.5">✓</span> <strong>Scan Cash QR:</strong> Instantly scan the "Pay by Cash" QR generated on the customer's phone.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00e5ff] mt-0.5">✓</span> <strong>One-Tap Approval:</strong> Collect the cash and hit approve to instantly push the digital Gatepass to the customer.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00e5ff] mt-0.5">✓</span> <strong>Live Analytics:</strong> Track daily cash collections, pending approvals, and successful scans in real-time.</li>
@@ -146,7 +146,7 @@ export default function EcosystemPage() {
               </div>
             </div>
             {/* 4. ClickOut Security (WITH NEXT.JS IMAGES) */}
-            <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
+            <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
               
               {/* Left Side: Overlapping Phones */}
               <div className="order-2 lg:order-1 relative h-[450px] w-full flex justify-center items-center mt-10 lg:mt-0">
@@ -169,9 +169,9 @@ export default function EcosystemPage() {
                   <div className="w-2 h-2 rounded-full bg-[#ffcc00] animate-pulse" />
                   <span className="text-[#ffcc00] text-xs font-bold tracking-wider">FOR GUARDS & SECURITY</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">4. ClickOut Security</h2>
-                <p className="text-[#a1a1aa] mb-8 text-lg leading-relaxed">The ultimate gatekeeper. AI-driven theft prevention that replaces manual receipt checking with lightning-fast QR validation.</p>
-                <ul className="space-y-4 text-sm text-[#D4D4D2]">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{color:'var(--text-primary)'}}>4. ClickOut Security</h2>
+                <p className="mb-8 text-lg leading-relaxed" style={{color:'var(--text-secondary)'}}>The ultimate gatekeeper. AI-driven theft prevention that replaces manual receipt checking with lightning-fast QR validation.</p>
+                <ul className="space-y-4 text-sm" style={{color:'var(--text-secondary)'}}>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Instant Verification:</strong> Scan customer exit QRs to instantly verify payment status and cart contents.</li>
                   <li className="flex items-start gap-3"><span className="text-[#ffcc00] mt-0.5">✓</span> <strong>AI Spot Audits:</strong> Automatically flags high-value or suspicious carts for mandatory physical verification.</li>
                   <li className="flex items-start gap-3"><span className="text-[#ff4d4d] mt-0.5">✓</span> <strong>Ghost Visitor Alerts:</strong> Detects and stops unpaid or incomplete checkout attempts at the door.</li>
@@ -179,7 +179,7 @@ export default function EcosystemPage() {
               </div>
             </div>
             {/* 5. ClickOut IDT (WITH NEXT.JS IMAGES) */}
-            <div className="bg-gradient-to-r from-white/[0.02] to-transparent border border-white/5 p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
+            <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
               
               {/* Left Side: Overlapping Phones */}
               <div className="order-2 lg:order-1 relative h-[450px] w-full flex justify-center items-center mt-10 lg:mt-0">
@@ -202,9 +202,9 @@ export default function EcosystemPage() {
                   <div className="w-2 h-2 rounded-full bg-[#00ff66] animate-pulse" />
                   <span className="text-[#00ff66] text-xs font-bold tracking-wider">FOR STORE STAFF</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">5. ClickOut IDT</h2>
-                <p className="text-[#a1a1aa] mb-8 text-lg leading-relaxed">The Inventory Deposit Terminal. Empower your staff to digitize physical products at lightning speed using AI and mobile cameras, with zero manual typing.</p>
-                <ul className="space-y-4 text-sm text-[#D4D4D2]">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{color:'var(--text-primary)'}}>5. ClickOut IDT</h2>
+                <p className="mb-8 text-lg leading-relaxed" style={{color:'var(--text-secondary)'}}>The Inventory Deposit Terminal. Empower your staff to digitize physical products at lightning speed using AI and mobile cameras, with zero manual typing.</p>
+                <ul className="space-y-4 text-sm" style={{color:'var(--text-secondary)'}}>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Rapid Scanning:</strong> Turn any standard smartphone into an enterprise-grade barcode scanner.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>AI Auto-Fill:</strong> Simply scan a product packet and let AI extract product details, MRP, and weight instantly.</li>
                   <li className="flex items-start gap-3"><span className="text-[#00ff66] mt-0.5">✓</span> <strong>Direct Admin Sync:</strong> Pushes scanned inventory directly to the Admin Dashboard for a secure 1-click approval.</li>

@@ -7,6 +7,8 @@ import ContactSales from '@/components/sections/ContactSales';
 import { Check, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
+import Hero from '@/components/sections/Hero';
+import CustomerApp from '@/components/sections/CustomerApp';
 
 export default function Home() {
   const [isYearly, setIsYearly] = useState(false);
@@ -30,20 +32,8 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* =========================================
-            HERO SECTION: QUEUE KILLER (COMING SOON)
-            (As requested: Layout prepared, left empty for future implementation)
-            ========================================= */}
-        <section id="hero" className="min-h-screen flex flex-col items-center justify-center pt-32 pb-24 relative overflow-hidden">
-          <div className="text-center z-10 max-w-4xl mx-auto px-6">
-            <h1 className="text-6xl md:text-8xl font-bold font-modern tracking-tight mb-6">
-              Queue <span className="text-[var(--accent)]">Killer</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-light">
-              (Interactive Hero Experience Under Development)
-            </p>
-          </div>
-        </section>
+        <Hero />
+        <CustomerApp />
 
         {/* =========================================
             PRICING SECTION
