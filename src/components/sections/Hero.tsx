@@ -165,10 +165,10 @@ export default function Hero() {
                     className="mb-6 flex flex-col items-center gap-2"
                   >
                     <p className="text-2xl md:text-3xl font-bold font-modern" style={{ color: 'var(--text-primary)' }}>
-                      This isn't checkout.
+                      Yeh checkout nahi hai.
                     </p>
                     <p className="text-xl md:text-2xl font-light" style={{ color: 'var(--text-secondary)' }}>
-                      It's waiting.
+                      Yeh intezaar hai.
                     </p>
                   </motion.div>
                 )}
@@ -181,7 +181,7 @@ export default function Hero() {
                     className="text-xs font-bold tracking-[0.2em] uppercase mb-10"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Your customers. Every day.
+                    Roz ka dard. Roz ki line.
                   </motion.p>
                 )}
                 {phase === 'waving' && (
@@ -409,7 +409,7 @@ export default function Hero() {
                 </span>
               </motion.div>
 
-              {/* Queue. Removed. */}
+              {/* Line. Khatam. */}
               <div className="flex flex-col items-center gap-1">
                 <motion.h1
                   initial={{ opacity: 0, y: 24 }}
@@ -418,7 +418,7 @@ export default function Hero() {
                   className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-[1]"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Queue.
+                  Line.
                 </motion.h1>
                 <motion.h1
                   initial={{ opacity: 0, y: 24 }}
@@ -427,7 +427,7 @@ export default function Hero() {
                   className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-[1]"
                   style={{ color: 'var(--accent)' }}
                 >
-                  Removed.
+                  Khatam.
                 </motion.h1>
               </div>
 
@@ -439,8 +439,8 @@ export default function Hero() {
                 className="text-sm font-semibold tracking-[0.15em] uppercase"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Welcome to ClickOut.
-              </motion.p>
+                ClickOut mein aapka swagat hai.              
+                </motion.p>
 
               <motion.p
                 initial={{ opacity: 0 }}
@@ -449,7 +449,7 @@ export default function Hero() {
                 className="text-base md:text-lg max-w-md leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                QR self-checkout. Real-time fraud control. Zero billing queues.
+                Phone se scan karo. UPI se pay karo. Line mein kyu khade rehna.              
               </motion.p>
 
               <motion.div
@@ -461,7 +461,7 @@ export default function Hero() {
                   onClick={() => window.location.href = 'https://clickout-cfa95.web.app/#/login'}
                   className="py-4 text-lg px-8"
                 >
-                  Enter Command Center <ChevronRight size={20} />
+                  14-Din Free Trial Shuru Karein <ChevronRight size={20} />
                 </Button>
               </motion.div>
 

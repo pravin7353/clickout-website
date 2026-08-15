@@ -67,29 +67,37 @@ export default function ContactSales() {
       </AnimatePresence>
 
       <div className="max-w-[800px] mx-auto px-6 md:px-8 relative z-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6 font-modern">Talk to ClickOut Sales</h2>
-        <p className="text-lg text-[var(--text-secondary)] mb-12">Build the future of smart retail with ClickOut Command Center.</p>
+        <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4 font-modern">Hamari Sales Team Se Baat Karein</h2>
+        <p className="text-lg text-[var(--text-secondary)] mb-8">Aapki dukaan ke liye best plan chunne mein madad — bilkul free.</p>
+        <div className="flex flex-wrap justify-center gap-4 mb-10">
+          <a href="https://wa.me/919323137353?text=Namaste!%20Main%20ClickOut%20ke%20baare%20mein%20jaanna%20chahta%20hoon.%20Meri%20dukaan%20hai." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] text-white font-medium hover:scale-105 transition-transform">
+            <span>💬</span> WhatsApp Pe Message Karo
+          </a>
+          <a href="tel:9323137353" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-primary)] font-medium hover:border-[var(--accent)] transition-colors">
+            <span>📞</span> Call Karein
+          </a>
+        </div>
 
         <form onSubmit={handleSubmit} className="bg-[var(--bg-card)] border border-[var(--border-color)] shadow-[var(--shadow-main)] rounded-3xl p-6 md:p-12 text-left">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Full Name</label>
-              <input required type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="John Doe" />
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Aapka Naam *</label>
+              <input required type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="Ramesh Gupta" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Business Name</label>
-              <input required type="text" value={formData.business} onChange={(e) => setFormData({...formData, business: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="Acme Retail" />
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Dukaan / Business Ka Naam *</label>
+              <input required type="text" value={formData.business} onChange={(e) => setFormData({...formData, business: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="Gupta General Store" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Email</label>
-              <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="john@acme.com" />
+              <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="ramesh@email.com" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Phone</label>
-              <input required type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="+91 98765 43210" />
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Phone Number *</label>
+              <input required type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="warm-input w-full px-4 py-3 rounded-xl" placeholder="98765 43210" />
             </div>
           </div>
 
@@ -111,14 +119,14 @@ export default function ContactSales() {
           </div>
 
           <div className="mb-10">
-            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Message</label>
-            <textarea required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} className="warm-input w-full px-4 py-3 rounded-xl resize-none" placeholder="How can we help?" />
+                          <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Aapka Sawal / Message</label>
+              <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} className="warm-input w-full px-4 py-3 rounded-xl resize-none" placeholder="Bataiye aapki dukaan mein kya problem hai, hum madad karenge..." />
           </div>
 
           <Button type="submit" disabled={isSubmitting} className="w-full py-4 text-lg">
             {isSubmitting ? (
               <><svg className="animate-spin h-5 w-5 text-[#1a1917]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...</>
-            ) : 'Contact Sales'}
+            ) : 'Form Submit Karein'}
           </Button>
         </form>
       </div>

@@ -2,53 +2,74 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Smartphone, ScanLine, ShoppingCart, CreditCard, ShieldCheck, Zap } from 'lucide-react';
 
+// Google Play Icon
 const PlayStoreIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
     <path d="M3.18 23.76c.37.2.8.2 1.16-.01l13.68-7.93-3.07-3.07-11.77 11.01zm-1.05-19.7C2.05 4.3 2 4.57 2 4.86v14.28c0 .29.05.56.13.8l.07.07 8-8v-.18L2.2 3.99l-.07.07zM20.49 10.7l-2.78-1.61-3.07 3.07 3.07 3.07 2.8-1.63c.8-.46.8-1.84-.02-2.9zM4.34.25L18.02 8.18l-3.07 3.07L7.41 3.73 4.34.25z"/>
+  </svg>
+);
+
+// Proper Apple Logo SVG
+const AppleIcon = () => (
+  <svg viewBox="0 0 384 512" fill="currentColor" className="w-5 h-5">
+    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 50.3-11.4 69.5-34.3z"/>
   </svg>
 );
 
 const STEPS = [
   {
-    icon: '📷',
+    id: 'scan',
+    icon: <ScanLine size={28} />,
     label: 'Scan Product',
     sub: 'Point camera at barcode',
-    color: 'var(--text-secondary)',
+    detail: 'Maggi Noodles ₹14',
+    accent: false,
   },
   {
-    icon: '🛒',
+    id: 'cart',
+    icon: <ShoppingCart size={28} />,
     label: 'Cart Ready',
     sub: '3 items · ₹856',
-    color: 'var(--text-secondary)',
+    detail: 'Maggi ×2, Cola ×1',
+    accent: false,
   },
   {
-    icon: '💳',
+    id: 'pay',
+    icon: <CreditCard size={28} />,
     label: 'UPI Payment',
     sub: 'Pay instantly',
-    color: 'var(--text-secondary)',
+    detail: 'Google Pay / PhonePe',
+    accent: false,
   },
   {
-    icon: '✅',
+    id: 'done',
+    icon: <ShieldCheck size={28} />,
     label: 'Payment Done',
     sub: 'Transaction verified',
-    color: 'var(--accent)',
+    detail: 'Ref: #CKT-8842',
+    accent: true,
   },
   {
-    icon: '🚪',
+    id: 'pass',
+    icon: <Zap size={28} />,
     label: 'Exit Pass',
     sub: 'Show QR at gate',
-    color: 'var(--accent)',
+    detail: 'Valid for 10 mins',
+    accent: true,
   },
   {
-    icon: '✔',
+    id: 'verified',
+    icon: <Smartphone size={28} />,
     label: 'Gate Verified',
     sub: 'Thank you, come again!',
-    color: 'var(--accent)',
+    detail: 'Exit approved ✓',
+    accent: true,
   },
 ];
 
-const STEP_DURATION = 1800; // ms per step
+const STEP_DURATION = 2000;
 
 function PhoneDemo() {
   const [step, setStep] = useState(0);
@@ -65,147 +86,270 @@ function PhoneDemo() {
 
   return (
     <div
-      className="relative w-[260px] h-[480px] rounded-[2.8rem] flex flex-col overflow-hidden shadow-2xl flex-shrink-0"
+      className="relative w-[260px] h-[500px] rounded-[2.8rem] flex flex-col overflow-hidden shadow-2xl flex-shrink-0"
       style={{
         background: 'var(--bg-card)',
-        border: '6px solid var(--border-strong)',
+        border: '6px solid var(--border-strong, #333)',
+        boxShadow: '0 25px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)',
       }}
     >
       {/* Notch */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 rounded-b-2xl z-10"
-        style={{ background: 'var(--border-strong)' }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 rounded-b-2xl z-20"
+        style={{ background: 'var(--border-strong, #333)' }}
       />
 
       {/* Status bar */}
-      <div className="flex justify-between items-center px-5 pt-7 pb-2">
-        <span className="text-[9px] font-bold" style={{ color: 'var(--text-muted)' }}>9:41</span>
-        <span className="text-[9px] font-bold" style={{ color: 'var(--text-muted)' }}>●●●</span>
+      <div className="flex justify-between items-center px-6 pt-8 pb-2 z-10">
+        <span className="text-[10px] font-bold" style={{ color: 'var(--text-muted)' }}>9:41</span>
+        <div className="flex items-center gap-1">
+          <span className="text-[8px]" style={{ color: 'var(--text-muted)' }}>●●●</span>
+          <span className="text-[8px]" style={{ color: 'var(--text-muted)' }}>📶</span>
+          <span className="text-[8px]" style={{ color: 'var(--text-muted)' }}>🔋</span>
+        </div>
       </div>
 
       {/* App header */}
       <div
-        className="px-4 py-2 flex items-center justify-between border-b"
+        className="px-4 py-2.5 flex items-center justify-between border-b z-10"
         style={{ borderColor: 'var(--border-color)' }}
       >
-        <span className="text-[11px] font-bold tracking-wide" style={{ color: 'var(--text-primary)' }}>
-          ClickOut
-        </span>
+        <div className="flex items-center gap-2">
+          <div 
+            className="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold"
+            style={{ background: 'var(--accent)', color: '#1a1917' }}
+          >
+            C
+          </div>
+          <span className="text-[12px] font-bold tracking-wide" style={{ color: 'var(--text-primary)' }}>
+            ClickOut
+          </span>
+        </div>
         <div
-          className="text-[9px] font-semibold px-2 py-0.5 rounded-full"
+          className="text-[9px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1"
           style={{
             background: 'var(--accent-bg)',
             color: 'var(--accent)',
           }}
         >
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
           LIVE
         </div>
       </div>
 
-      {/* Progress dots */}
-      <div className="flex items-center justify-center gap-1.5 pt-3 pb-1">
-        {STEPS.map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              width: i === step ? 16 : 5,
-              background: i <= step ? 'var(--accent)' : 'var(--border-color)',
-            }}
-            transition={{ duration: 0.3 }}
-            className="h-1.5 rounded-full"
-          />
-        ))}
+      {/* Progress bar */}
+      <div className="px-5 pt-4 pb-2 z-10">
+        <div className="flex items-center gap-1.5">
+          {STEPS.map((_, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                flex: i === step ? 2 : 1,
+                background: i <= step ? 'var(--accent)' : 'var(--border-color)',
+              }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              className="h-1 rounded-full"
+            />
+          ))}
+        </div>
+        <div className="flex justify-between mt-1.5">
+          <span className="text-[8px] font-medium" style={{ color: 'var(--text-muted)' }}>
+            Step {step + 1} of {STEPS.length}
+          </span>
+          <span className="text-[8px] font-medium" style={{ color: 'var(--accent)' }}>
+            {isSuccess ? '✓ Complete' : 'In Progress...'}
+          </span>
+        </div>
       </div>
 
       {/* Main content area */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 gap-4 relative overflow-hidden">
+      <div className="flex-1 flex flex-col items-center justify-center px-5 gap-4 relative overflow-hidden z-10">
 
-        {/* Background tint on success */}
+        {/* Success glow background */}
         <motion.div
-          className="absolute inset-0"
-          animate={{ opacity: isSuccess ? 1 : 0 }}
-          transition={{ duration: 0.5 }}
-          style={{ background: 'var(--accent-bg)' }}
+          className="absolute inset-0 pointer-events-none"
+          animate={{ opacity: isSuccess ? 0.15 : 0 }}
+          transition={{ duration: 0.6 }}
+          style={{ background: 'radial-gradient(circle at center, var(--accent), transparent 70%)' }}
         />
 
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, y: 18, scale: 0.9 }}
+            initial={{ opacity: 0, y: 24, scale: 0.88 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -18, scale: 0.9 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="flex flex-col items-center gap-3 relative z-10"
+            exit={{ opacity: 0, y: -24, scale: 0.88 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex flex-col items-center gap-4 relative z-10 w-full"
           >
-            {/* Icon */}
-            <div
-              className="w-18 h-18 rounded-2xl flex items-center justify-center text-3xl shadow-sm"
+            {/* Icon circle */}
+            <motion.div
+              animate={{ 
+                scale: [1, 1.05, 1],
+                boxShadow: isSuccess 
+                  ? '0 0 30px rgba(0,200,83,0.3)' 
+                  : '0 0 0px rgba(0,0,0,0)'
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl"
               style={{
                 background: isSuccess ? 'var(--accent-bg)' : 'var(--bg-base)',
-                border: `1.5px solid ${isSuccess ? 'var(--accent-border)' : 'var(--border-color)'}`,
+                border: `2px solid ${isSuccess ? 'var(--accent)' : 'var(--border-color)'}`,
+                color: isSuccess ? 'var(--accent)' : 'var(--text-primary)',
               }}
             >
               {current.icon}
-            </div>
+            </motion.div>
 
-            {/* Label */}
+            {/* Labels */}
             <div className="text-center">
               <p
-                className="text-sm font-bold leading-tight"
+                className="text-[15px] font-bold leading-tight"
                 style={{ color: isSuccess ? 'var(--accent)' : 'var(--text-primary)' }}
               >
                 {current.label}
               </p>
-              <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-[11px] mt-1 font-medium" style={{ color: 'var(--text-secondary)' }}>
                 {current.sub}
+              </p>
+              <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                {current.detail}
               </p>
             </div>
 
-            {/* QR for exit pass step */}
+            {/* QR Code for exit pass */}
             {step === 4 && (
               <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
+                initial={{ scale: 0.3, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="grid grid-cols-4 gap-0.5 mt-1"
+                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                className="p-3 rounded-xl border-2"
+                style={{ borderColor: 'var(--accent)', background: 'var(--bg-base)' }}
               >
-                {Array.from({ length: 16 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-3 h-3 rounded-[2px]"
-                    style={{
-                      background: [0,1,4,5,8,10,11,14,15].includes(i)
-                        ? 'var(--accent)'
-                        : 'var(--border-color)',
-                    }}
-                  />
-                ))}
+                <div className="grid grid-cols-5 gap-1">
+                  {Array.from({ length: 25 }).map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: i * 0.02 }}
+                      className="w-3 h-3 rounded-sm"
+                      style={{
+                        background: [0,1,2,4,5,6,10,12,14,15,16,18,20,22,23,24].includes(i)
+                          ? 'var(--accent)'
+                          : 'var(--border-color)',
+                      }}
+                    />
+                  ))}
+                </div>
+                <p className="text-[8px] text-center mt-2 font-bold tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                  EXIT QR • GATE 2
+                </p>
               </motion.div>
+            )}
+
+            {/* Product card for scan step */}
+            {step === 0 && (
+              <motion.div
+                initial={{ x: 50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                className="w-full p-3 rounded-xl border flex items-center gap-3"
+                style={{ borderColor: 'var(--border-color)', background: 'var(--bg-base)' }}
+              >
+                <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-lg">
+                  🍜
+                </div>
+                <div className="flex-1">
+                  <p className="text-[11px] font-bold" style={{ color: 'var(--text-primary)' }}>Maggi Noodles</p>
+                  <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>70g • Masala</p>
+                </div>
+                <span className="text-[12px] font-bold" style={{ color: 'var(--accent)' }}>₹14</span>
+              </motion.div>
+            )}
+
+            {/* Cart items for cart step */}
+            {step === 1 && (
+              <div className="w-full space-y-2">
+                {[
+                  { name: 'Maggi Noodles', qty: 2, price: 28, icon: '🍜' },
+                  { name: 'Coca Cola 1L', qty: 1, price: 68, icon: '🥤' },
+                  { name: 'Parle-G 800g', qty: 1, price: 45, icon: '🍪' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ x: 30, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="w-full p-2.5 rounded-xl border flex items-center gap-3"
+                    style={{ borderColor: 'var(--border-color)', background: 'var(--bg-base)' }}
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm">
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-[10px] font-bold" style={{ color: 'var(--text-primary)' }}>{item.name}</p>
+                      <p className="text-[8px]" style={{ color: 'var(--text-muted)' }}>Qty: {item.qty}</p>
+                    </div>
+                    <span className="text-[11px] font-bold" style={{ color: 'var(--text-primary)' }}>₹{item.price}</span>
+                  </motion.div>
+                ))}
+                <div className="flex justify-between pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                  <span className="text-[10px] font-bold" style={{ color: 'var(--text-primary)' }}>Total</span>
+                  <span className="text-[12px] font-bold" style={{ color: 'var(--accent)' }}>₹856</span>
+                </div>
+              </div>
+            )}
+
+            {/* UPI options for pay step */}
+            {step === 2 && (
+              <div className="w-full space-y-2">
+                {['Google Pay', 'PhonePe', 'Paytm'].map((app, i) => (
+                  <motion.div
+                    key={app}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.15 }}
+                    className="w-full p-3 rounded-xl border flex items-center gap-3 cursor-pointer"
+                    style={{ borderColor: i === 0 ? 'var(--accent)' : 'var(--border-color)', background: 'var(--bg-base)' }}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-xs">
+                      {app === 'Google Pay' ? 'G' : app === 'PhonePe' ? 'P' : 'P'}
+                    </div>
+                    <span className="text-[11px] font-bold flex-1" style={{ color: 'var(--text-primary)' }}>{app}</span>
+                    {i === 0 && <span className="text-[8px] px-2 py-0.5 rounded-full font-bold" style={{ background: 'var(--accent-bg)', color: 'var(--accent)' }}>DEFAULT</span>}
+                  </motion.div>
+                ))}
+              </div>
             )}
           </motion.div>
         </AnimatePresence>
       </div>
 
       {/* Bottom CTA bar */}
-      <div className="px-4 pb-5 pt-2">
+      <div className="px-5 pb-6 pt-2 z-10">
         <motion.div
           animate={{
             background: isSuccess ? 'var(--accent)' : 'var(--text-primary)',
           }}
           transition={{ duration: 0.4 }}
-          className="w-full h-10 rounded-xl flex items-center justify-center"
+          className="w-full h-11 rounded-xl flex items-center justify-center gap-2"
         >
+          {isSuccess && <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-sm">✓</motion.span>}
           <span
-            className="text-xs font-bold"
+            className="text-xs font-bold tracking-wide"
             style={{ color: isSuccess ? '#1a1917' : 'var(--bg-base)' }}
           >
-            {step === 0 ? 'Start Scanning' :
+            {step === 0 ? 'Scan Barcode' :
              step === 1 ? 'Review Cart' :
              step === 2 ? 'Pay ₹856' :
-             step === 3 ? 'Paid ✓' :
+             step === 3 ? 'Payment Successful' :
              step === 4 ? 'Show at Gate' :
-             'Done ✓'}
+             'Exit Approved'}
           </span>
         </motion.div>
+        <p className="text-[8px] text-center mt-2 font-medium" style={{ color: 'var(--text-muted)' }}>
+          {isSuccess ? '🔒 Secured by ClickOut Fraud Engine' : '🔒 End-to-end encrypted'}
+        </p>
       </div>
     </div>
   );
@@ -214,50 +358,85 @@ function PhoneDemo() {
 export default function CustomerApp() {
   return (
     <section
-      className="w-full py-20 border-t"
+      id="customer-app"
+      className="w-full py-24 border-t"
       style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
     >
-      <div className="max-w-[1100px] mx-auto px-6 md:px-8">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+        
+        {/* Section Label */}
+        <div className="text-center mb-12">
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 border"
+            style={{
+              background: 'var(--accent-bg)',
+              borderColor: 'var(--accent-border)',
+              color: 'var(--accent)',
+            }}
+          >
+            <Smartphone size={14} />
+            <span className="text-[11px] font-bold tracking-widest uppercase">Customer Shopping App</span>
+          </div>
+          <h2
+            className="text-3xl md:text-5xl font-bold tracking-tight mb-4"
+            style={{ color: 'var(--text-primary)' }}
+          >
+            Your customers shop in <span style={{ color: 'var(--accent)' }}>17 seconds</span>
+          </h2>
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+            No queues. No waiting. Just scan, pay, and walk out. The ClickOut Customer App turns every shopper's phone into a self-checkout terminal.
+          </p>
+        </div>
+
         <div
-          className="flex flex-col md:flex-row items-center justify-between gap-16 p-10 md:p-16 rounded-[2rem]"
+          className="flex flex-col lg:flex-row items-center justify-between gap-16 p-10 md:p-16 rounded-[2.5rem]"
           style={{
             background: 'var(--bg-base)',
             border: '1px solid var(--border-color)',
           }}
         >
-          {/* Left — text */}
-          <div className="flex-1 text-center md:text-left max-w-md">
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-md mb-6"
-              style={{
-                background: 'var(--accent-bg)',
-                border: '1px solid var(--accent-border)',
-              }}
-            >
-              <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>
-                For Shoppers
-              </span>
-            </div>
-
-            <h2
-              className="text-3xl md:text-4xl font-bold font-modern tracking-tight mb-4 leading-[1.15]"
+          {/* Left — text content */}
+          <div className="flex-1 text-center lg:text-left max-w-lg">
+            
+            <h3
+              className="text-2xl md:text-3xl font-bold mb-4 leading-tight"
               style={{ color: 'var(--text-primary)' }}
             >
-              Give your customers the power to skip the line.
-            </h2>
+              Skip the line. Shop smarter.
+            </h3>
 
-            <p className="text-base mb-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              17 second checkout using only their phone.
-            </p>
-            <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              While you manage the store from the Command Center, your customers enjoy a frictionless, secure self-checkout on their own devices.
+            <p className="text-base mb-6 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              While you manage the store from the <strong>ClickOut Admin Command Center</strong>, your customers enjoy a frictionless, secure self-checkout experience on their own devices.
             </p>
 
-            {/* Google Play only */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 justify-center md:justify-start mb-8">
+            {/* How it works steps */}
+            <div className="space-y-4 mb-8">
+              {[
+                { num: '01', title: 'Scan Product Barcode', desc: 'Customer opens app, points camera at any product barcode' },
+                { num: '02', title: 'Review & Pay via UPI', desc: 'Cart auto-builds. One-tap UPI payment (GPay, PhonePe, Paytm)' },
+                { num: '03', title: 'Get Exit QR Pass', desc: 'Digital gatepass generated. Guard scans at exit. Done!' },
+              ].map((item) => (
+                <div key={item.num} className="flex gap-4 items-start">
+                  <span 
+                    className="text-[11px] font-bold px-2.5 py-1 rounded-lg shrink-0 mt-0.5"
+                    style={{ background: 'var(--accent-bg)', color: 'var(--accent)' }}
+                  >
+                    {item.num}
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{item.title}</p>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Download Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start mb-8">
+              {/* Google Play */}
               <a
                 href="#"
-                className="flex items-center gap-3 px-5 py-3 rounded-xl font-semibold transition-all duration-300 w-full sm:w-auto justify-center"
+                className="flex items-center gap-3 px-5 py-3 rounded-xl font-semibold transition-all duration-300 w-full sm:w-auto justify-center hover:scale-[1.02] hover:shadow-lg"
                 style={{
                   background: 'var(--text-primary)',
                   color: 'var(--bg-base)',
@@ -270,30 +449,40 @@ export default function CustomerApp() {
                 </div>
               </a>
 
-              {/* iOS coming soon badge */}
+              {/* App Store - Coming Soon */}
               <div
-                className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm w-full sm:w-auto justify-center"
+                className="flex items-center gap-3 px-5 py-3 rounded-xl w-full sm:w-auto justify-center opacity-60"
                 style={{
                   background: 'var(--bg-card)',
                   border: '1px solid var(--border-color)',
                   color: 'var(--text-muted)',
                 }}
               >
-                <span>🍎</span>
-                <span className="text-xs">iOS Coming Soon</span>
+                <AppleIcon />
+                <div className="text-left">
+                  <div className="text-[9px] uppercase tracking-wider leading-none mb-0.5">Download on the</div>
+                  <div className="text-sm leading-none font-bold">App Store</div>
+                </div>
+                <span 
+                  className="text-[9px] font-bold px-2 py-0.5 rounded-full ml-2"
+                  style={{ background: 'var(--accent-bg)', color: 'var(--accent)' }}
+                >
+                  SOON
+                </span>
               </div>
             </div>
 
-            {/* 3 chips */}
-            <div className="flex flex-wrap items-center gap-3 justify-center md:justify-start">
+            {/* Trust chips */}
+            <div className="flex flex-wrap items-center gap-2 justify-center lg:justify-start">
               {[
                 { icon: '⚡', label: '17 sec checkout' },
-                { icon: '🔒', label: 'Secure & Verified' },
+                { icon: '🔒', label: 'Fraud Protected' },
                 { icon: '📷', label: 'QR Powered' },
+                { icon: '💰', label: 'UPI Instant' },
               ].map(chip => (
                 <div
                   key={chip.label}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold"
                   style={{
                     background: 'var(--bg-card)',
                     border: '1px solid var(--border-color)',
@@ -310,9 +499,12 @@ export default function CustomerApp() {
           {/* Right — phone demo */}
           <div className="flex-shrink-0 flex flex-col items-center gap-4">
             <PhoneDemo />
-            <p className="text-[10px] tracking-widest uppercase font-semibold" style={{ color: 'var(--text-muted)' }}>
-              Live demo · Auto-playing
-            </p>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+              <p className="text-[10px] tracking-widest uppercase font-semibold" style={{ color: 'var(--text-muted)' }}>
+                Live demo • Auto-playing
+              </p>
+            </div>
           </div>
         </div>
       </div>

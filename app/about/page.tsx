@@ -1,68 +1,119 @@
 import React from 'react';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'About ClickOut | The Retail Operating System',
-  description: 'Founded in Mumbai, ClickOut is a retail operating ecosystem that transforms store operations with QR self-checkout, inventory management, and fraud prevention.',
-};
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen transition-colors duration-300" style={{background:'var(--bg-base)',color:'var(--text-primary)'}}>
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 w-full flex items-center justify-between px-8 py-4 z-50 backdrop-blur-xl border-b" style={{background:'var(--bg-nav)',borderColor:'var(--border-color)'}}>
-        <a href="/" className="text-2xl font-modern font-bold tracking-wide">
-          <span style={{color:'var(--text-primary)'}}>Click</span><span style={{color:'var(--accent)'}}>Out</span>
+    <main className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] transition-colors duration-300">
+      
+      {/* HERO */}
+      <section className="max-w-[1000px] mx-auto px-6 md:px-8 pt-32 pb-16 text-center">
+        <h1 className="text-4xl md:text-6xl font-bold font-modern mb-6">Ek Problem, Ek Solution, Ek Mission</h1>
+        <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
+          India ke 1.3 crore dukaan walon ke liye technology jo kaam kare, na ki uljhan badhaye.
+        </p>
+      </section>
+
+      {/* THE PROBLEM */}
+      <section className="max-w-[1000px] mx-auto px-6 md:px-8 py-16 border-t border-[var(--border-color)]">
+        <h2 className="text-3xl font-bold mb-10 font-modern">Pehle Kya Problem Thi?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 text-center">
+            <div className="text-4xl mb-4">⏰</div>
+            <div className="text-3xl font-bold text-[var(--accent)] mb-2">15 Min</div>
+            <p className="text-sm text-[var(--text-secondary)]">Average wait time at billing counter during peak hours. Customer gussa ho jaata tha.</p>
+          </div>
+          <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 text-center">
+            <div className="text-4xl mb-4">📱</div>
+            <div className="text-3xl font-bold text-[var(--accent)] mb-2">3 Apps</div>
+            <p className="text-sm text-[var(--text-secondary)]">Dukaan owner ko ledger, inventory, aur payment ke liye alag alag apps use karne padte the.</p>
+          </div>
+          <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 text-center">
+            <div className="text-4xl mb-4">💸</div>
+            <div className="text-3xl font-bold text-[var(--accent)] mb-2">₹2.5L</div>
+            <p className="text-sm text-[var(--text-secondary)]">Average annual loss per store due to manual billing errors, fraud, and inventory shrinkage.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* THE ORIGIN STORY */}
+      <section className="max-w-[800px] mx-auto px-6 md:px-8 py-16 border-t border-[var(--border-color)]">
+        <h2 className="text-3xl font-bold mb-6 font-modern">ClickOut Kahan Se Shuru Hua?</h2>
+        <div className="text-lg text-[var(--text-secondary)] leading-relaxed space-y-4">
+          <p>
+            2024, Mumbai. Humne dekha ki bade supermarkets mein bhi 15-20 minute ki line lagti thi. 
+            Chhoti dukaanon ka toh haal aur bura tha — owner khud cashier, accountant, aur security guard 
+            banke baitha tha.
+          </p>
+          <p>
+            Humne socha: <em className="text-[var(--text-primary)]">&ldquo;Kyun na customer khud apna phone use kare scan karne ke liye?&rdquo;</em>
+          </p>
+          <p>
+            Bas, wahin se ClickOut paida hua. Shuruwat ₹99/month se ki taaki chhoti dukaan wala bhi 
+            afford kar sake.
+          </p>
+        </div>
+      </section>
+
+      {/* VALUES */}
+      <section className="max-w-[1000px] mx-auto px-6 md:px-8 py-16 border-t border-[var(--border-color)]">
+        <h2 className="text-3xl font-bold mb-10 font-modern">Hamare 3 Siddhant</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6">
+            <div className="text-3xl mb-3">⚡</div>
+            <h3 className="text-xl font-bold mb-2">Aasaan Hona Chahiye</h3>
+            <p className="text-sm text-[var(--text-secondary)]">5 minute mein setup. Koi 200-page manual nahi. Koi technician nahi.</p>
+          </div>
+          <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6">
+            <div className="text-3xl mb-3">💰</div>
+            <h3 className="text-xl font-bold mb-2">Sasta Hona Chahiye</h3>
+            <p className="text-sm text-[var(--text-secondary)]">Enterprise power, kirana price. ₹99 se shuru, bina hidden charges.</p>
+          </div>
+          <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6">
+            <div className="text-3xl mb-3">🛡️</div>
+            <h3 className="text-xl font-bold mb-2">Bharosa Hona Chahiye</h3>
+            <p className="text-sm text-[var(--text-secondary)]">Aapka paisa, aapka data. Hum kabhi bhi bech nahi sakte. Promise.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="max-w-[1000px] mx-auto px-6 md:px-8 py-16 border-t border-[var(--border-color)]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+          <div>
+            <div className="text-3xl md:text-4xl font-bold text-[var(--accent)]">12,000+</div>
+            <div className="text-sm text-[var(--text-secondary)] mt-1">Active Stores</div>
+          </div>
+          <div>
+            <div className="text-3xl md:text-4xl font-bold text-[var(--accent)]">50L+</div>
+            <div className="text-sm text-[var(--text-secondary)] mt-1">Transactions Processed</div>
+          </div>
+          <div>
+            <div className="text-3xl md:text-4xl font-bold text-[var(--accent)]">30+</div>
+            <div className="text-sm text-[var(--text-secondary)] mt-1">Cities Covered</div>
+          </div>
+          <div>
+            <div className="text-3xl md:text-4xl font-bold text-[var(--accent)]">99.9%</div>
+            <div className="text-sm text-[var(--text-secondary)] mt-1">Uptime</div>
+          </div>
+          <div>
+            <div className="text-3xl md:text-4xl font-bold text-[var(--accent)]">4.8★</div>
+            <div className="text-sm text-[var(--text-secondary)] mt-1">Customer Rating</div>
+          </div>
+          <div>
+            <div className="text-3xl md:text-4xl font-bold text-[var(--accent)]">₹50Cr+</div>
+            <div className="text-sm text-[var(--text-secondary)] mt-1">GMV Processed</div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="max-w-[800px] mx-auto px-6 md:px-8 py-24 text-center border-t border-[var(--border-color)]">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 font-modern">Aap Bhi Is Mission Ka Hissa Ban Sakte Hain</h2>
+        <p className="text-lg text-[var(--text-secondary)] mb-8">14 din free trial. Koi risk nahi. Bas ek click.</p>
+        <a href="/pricing?trial=1" className="inline-block px-8 py-4 rounded-xl bg-[var(--accent)] text-[var(--bg-base)] font-bold text-lg hover:opacity-90 transition-opacity">
+          Free Trial Shuru Karein
         </a>
-        <a href="/" className="px-4 py-2 rounded-lg text-sm transition" style={{background:'var(--bg-card)',color:'var(--text-primary)',border:'1px solid var(--border-color)'}}>
-          Back to Home
-        </a>
-      </nav>
+      </section>
 
-      <main className="pt-32 pb-24 px-6 md:px-8">
-        <div className="max-w-[800px] mx-auto space-y-12">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight font-modern" style={{color:'var(--text-primary)'}}>About <span style={{color:'var(--accent)'}}>ClickOut</span></h1>
-        
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold" style={{color:'var(--accent)'}}>What Is ClickOut?</h2>
-          <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
-            ClickOut is a retail operating ecosystem founded in Mumbai, India. The platform transforms how retail stores, supermarkets, chains, and warehouses manage their daily operations — replacing traditional billing counters with QR-based self-checkout while providing a comprehensive suite of tools for inventory, employee management, fraud prevention, and customer analytics.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#00ff66]">The Problem ClickOut Solves</h2>
-          <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
-            Indian retail loses billions annually to three core inefficiencies: (1) long billing queues that reduce customer satisfaction and throughput, (2) inventory shrinkage and financial leakage from undetected fraud, and (3) fragmented systems that force owners to juggle multiple disconnected tools. ClickOut addresses all three with a single integrated platform.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#00ff66]">How ClickOut Started</h2>
-          <p className="leading-relaxed" style={{color:'var(--text-secondary)'}}>
-            ClickOut was built in Mumbai — a city where retail volume is massive but technology adoption in store operations has historically lagged. The founders observed that even large supermarkets were losing significant revenue to checkout delays, employee errors, and inability to track real-time store performance. ClickOut was designed to bring enterprise-grade retail intelligence to stores of every size, starting at ₹99/month.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#00ff66]">Who ClickOut Serves</h2>
-          <ul className="list-disc pl-5 space-y-2" style={{color:'var(--text-secondary)'}}>
-            <li>Independent retail stores and boutiques</li>
-            <li>Supermarkets and grocery chains</li>
-            <li>Multi-branch retail operations</li>
-            <li>Warehouses and distribution centers</li>
-            <li>Any high-traffic retail business seeking to modernize operations</li>
-          </ul>
-        </section>
-      </div>
     </main>
-
-    {/* FOOTER */}
-    <footer className="w-full mt-20 border-t" style={{background:'var(--bg-footer)',borderColor:'var(--border-color)'}}>
-      <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-sm" style={{color:'var(--text-muted)'}}>© {new Date().getFullYear()} ClickOut. All rights reserved.</p>
-      </div>
-    </footer>
-  </div>
   );
 }

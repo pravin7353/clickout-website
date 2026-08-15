@@ -13,6 +13,7 @@
   --accent-hover: #00a843;
   --accent-bg: rgba(0, 200, 83, 0.08);
   --shadow-main: 0 4px 16px rgba(0,0,0,0.06);
+  --text-muted: #a09e9a;
 }
 
 .dark {
@@ -28,6 +29,7 @@
   --accent-hover: #d4b886;
   --accent-bg: rgba(232, 213, 176, 0.1);
   --shadow-main: 0 4px 24px rgba(0,0,0,0.4);
+  --text-muted: #7a7873;
 }
 
 @theme inline {
