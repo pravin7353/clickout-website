@@ -59,9 +59,17 @@ export default function Navbar() {
           {/* Admin Panel Link */}
           <Link 
             href="/admin-panel" 
-            className={`px-3 py-1.5 rounded-lg transition-colors ${isActive('/admin-panel') ? 'text-[var(--accent)] bg-[var(--accent-bg)] font-semibold' : 'hover:text-[var(--text-primary)]'}`}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${isActive('/admin-panel') ? 'text-(--accent) bg-(--accent-bg) font-semibold' : 'hover:text-foreground'}`}
           >
             {lang === 'hi' ? 'Admin Guide' : 'Admin Guide'}
+          </Link>
+          
+          {/* Investor Page Link */}
+          <Link 
+            href="/investor" 
+            className={`px-3 py-1.5 rounded-lg transition-colors ${isActive('/investor') ? 'text-(--accent) bg-(--accent-bg) font-semibold' : 'hover:text-foreground'}`}
+          >
+            {lang === 'hi' ? 'Investors' : 'Investors'}
           </Link>
           
           {/* Language Toggle */}
@@ -124,8 +132,13 @@ export default function Navbar() {
               {t('nav.blog') as string}
             </Link>
             <Link href="/admin-panel" onClick={() => setMobileMenuOpen(false)} 
-              className={`px-3 py-2 rounded-lg text-left font-medium ${isActive('/admin-panel') ? 'text-[var(--accent)] bg-[var(--accent-bg)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>
+              className={`px-3 py-2 rounded-lg text-left font-medium ${isActive('/admin-panel') ? 'text-(--accent) bg-(--accent-bg)' : 'text-(--text-secondary) hover:text-foreground'}`}>
               {lang === 'hi' ? 'Admin Guide' : 'Admin Guide'}
+            </Link>
+            
+            <Link href="/investor" onClick={() => setMobileMenuOpen(false)} 
+              className={`px-3 py-2 rounded-lg text-left font-medium ${isActive('/investor') ? 'text-(--accent) bg-(--accent-bg)' : 'text-(--text-secondary) hover:text-foreground'}`}>
+              {lang === 'hi' ? 'Investors' : 'Investors'}
             </Link>
             
             {mounted && (
