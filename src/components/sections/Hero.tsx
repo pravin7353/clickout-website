@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useLanguage } from '@/context/LanguageContext';
 
 const TOTAL_PEOPLE = 8;
 const WAVE_STAGGER = 180; // ms between each person reacting to wave
@@ -67,6 +68,7 @@ type PersonState = 'queue' | 'phone' | 'gone';
 type Phase = 'building' | 'waiting' | 'waving' | 'cleared';
 
 export default function Hero() {
+  const { lang } = useLanguage();
   const [phase, setPhase] = useState<Phase>('building');
   const [visibleCount, setVisibleCount] = useState(0);
   const [personStates, setPersonStates] = useState<PersonState[]>(
@@ -165,10 +167,10 @@ export default function Hero() {
                     className="mb-6 flex flex-col items-center gap-2"
                   >
                     <p className="text-2xl md:text-3xl font-bold font-modern" style={{ color: 'var(--text-primary)' }}>
-                      Yeh checkout nahi hai.
+                      {lang === 'en' ? 'This is not checkout.' : 'Yeh checkout nahi hai.'}
                     </p>
                     <p className="text-xl md:text-2xl font-light" style={{ color: 'var(--text-secondary)' }}>
-                      Yeh intezaar hai.
+                      {lang === 'en' ? 'This is waiting.' : 'Yeh intezaar hai.'}
                     </p>
                   </motion.div>
                 )}
@@ -181,7 +183,7 @@ export default function Hero() {
                     className="text-xs font-bold tracking-[0.2em] uppercase mb-10"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Roz ka dard. Roz ki line.
+                    {lang === 'en' ? 'Everyday pain. Everyday queue.' : 'Roz ka dard. Roz ki line.'}
                   </motion.p>
                 )}
                 {phase === 'waving' && (
@@ -287,7 +289,7 @@ export default function Hero() {
                                 }}
                               >
                                 <div className="w-1 h-1 rounded-full bg-red-400 animate-pulse" />
-                                14 min wait
+                                {lang === 'en' ? '14 min wait' : '14 min ka wait'}
                               </motion.div>
                             )}
                           </motion.div>
@@ -327,7 +329,7 @@ export default function Hero() {
                     className="mt-10 flex flex-col items-center gap-3"
                   >
                     <p className="text-[11px] tracking-widest uppercase font-semibold" style={{ color: 'var(--text-muted)' }}>
-                      Remove the queue
+                      {lang === 'en' ? 'Remove the queue' : 'Line khatam karein'}
                     </p>
                     {/* Swipe pill */}
                     <div
@@ -351,7 +353,7 @@ export default function Hero() {
                         className="absolute w-full text-center text-xs font-semibold tracking-wide z-0 pointer-events-none"
                         style={{ color: 'var(--text-muted)', opacity: 1 - swipeProgress * 1.5 }}
                       >
-                        Swipe →
+                        {lang === 'en' ? 'Swipe →' : 'Swipe karein →'}
                       </span>
                       {/* Thumb */}
                       <motion.div
@@ -418,7 +420,7 @@ export default function Hero() {
                   className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-[1]"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Line.
+                  {lang === 'en' ? 'Queues.' : 'Line.'}
                 </motion.h1>
                 <motion.h1
                   initial={{ opacity: 0, y: 24 }}
@@ -427,7 +429,7 @@ export default function Hero() {
                   className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-[1]"
                   style={{ color: 'var(--accent)' }}
                 >
-                  Khatam.
+                  {lang === 'en' ? 'Eliminated.' : 'Khatam.'}
                 </motion.h1>
               </div>
 
@@ -436,20 +438,20 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.1 }}
-                className="text-sm font-semibold tracking-[0.15em] uppercase"
+                className="text-sm font-semibold tracking-[0.15em] uppercase text-center"
                 style={{ color: 'var(--text-muted)' }}
               >
-                ClickOut mein aapka swagat hai.              
-                </motion.p>
+                {lang === 'en' ? 'Welcome to ClickOut.' : 'ClickOut mein aapka swagat hai.'}
+              </motion.p>
 
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.4 }}
-                className="text-base md:text-lg max-w-md leading-relaxed"
+                className="text-base md:text-lg max-w-md leading-relaxed text-center"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                Phone se scan karo. UPI se pay karo. Line mein kyu khade rehna.              
+                {lang === 'en' ? 'Scan with your phone. Pay via UPI. Why wait in line?' : 'Phone se scan karo. UPI se pay karo. Line mein kyu khade rehna.'}
               </motion.p>
 
               <motion.div
@@ -461,7 +463,7 @@ export default function Hero() {
                   onClick={() => window.location.href = 'https://clickout-cfa95.web.app/#/login'}
                   className="py-4 text-lg px-8"
                 >
-                  14-Din Free Trial Shuru Karein <ChevronRight size={20} />
+                  {lang === 'en' ? 'Start 14-Day Free Trial' : '14-Din Free Trial Shuru Karein'} <ChevronRight size={20} />
                 </Button>
               </motion.div>
 

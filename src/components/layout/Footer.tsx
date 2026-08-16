@@ -23,7 +23,7 @@ export default function Footer() {
               <span className="text-[var(--text-primary)]">Click</span><span className="text-[var(--accent)]">Out</span>
             </div>
             <p className="text-sm text-[var(--text-secondary)] mb-4">
-              India ki sabse tez self-checkout app. ₹99/month se shuru.
+              India ki sabse tez self-checkout app. ₹299/month se shuru.
             </p>
             <div className="flex gap-3 text-xl">
               <a href="https://wa.me/919XXXXXXXXX?text=Namaste!%20Main%20ClickOut%20ke%20baare%20mein%20jaanna%20chahta%20hoon." target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">💬</a>

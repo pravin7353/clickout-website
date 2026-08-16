@@ -203,7 +203,7 @@ export default function Home() {
                   ['GST Auto-Invoice', '✅ 1-click', '⚠️ Manual', '⚠️ Manual', '✅ 1-click'],
                   ['Multi-Store Analytics', '✅ ₹699', '❌', '❌', '💰 ₹5000+'],
                   ['Staff Management', '✅', '❌', '❌', '✅'],
-                  ['Starting Price', '₹99', 'Free*', 'Free*', '₹3000+'],
+                  ['Starting Price', '₹299', 'Free*', 'Free*', '₹3000+'],
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-[var(--border-color)]">
                     <td className="py-4 px-4 font-medium text-[var(--text-primary)]">{row[0]}</td>
