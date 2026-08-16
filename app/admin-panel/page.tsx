@@ -22,19 +22,19 @@ export default function AdminPanelPage() {
   };
 
   const Section = ({ id, icon, title, children }: { id: string; icon: React.ReactNode; title: string; children: React.ReactNode }) => (
-    <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl overflow-hidden mb-6">
+    <div className="bg-(--bg-card) border border-(--border-color) rounded-2xl overflow-hidden mb-6">
       <button 
         onClick={() => toggleSection(id)}
-        className="w-full flex items-center justify-between p-6 text-left gap-4 hover:bg-[var(--bg-base)]/50 transition-colors"
+        className="w-full flex items-center justify-between p-6 text-left gap-4 hover:bg-background/50 transition-colors"
       >
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-[var(--accent-bg)] flex items-center justify-center text-[var(--accent)]">
+          <div className="w-10 h-10 rounded-xl bg-(--accent-bg) flex items-center justify-center text-(--accent)">
             {icon}
           </div>
           <span className="font-bold text-lg md:text-xl">{title}</span>
         </div>
         <motion.div animate={{ rotate: openSection === id ? 180 : 0 }}>
-          <ChevronDown size={20} className="text-[var(--text-secondary)]" />
+          <ChevronDown size={20} className="text-(--text-secondary)" />
         </motion.div>
       </button>
       <AnimatePresence>
@@ -45,7 +45,7 @@ export default function AdminPanelPage() {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-8 border-t border-[var(--border-color)] pt-6">
+            <div className="px-6 pb-8 border-t border-(--border-color) pt-6">
               {children}
             </div>
           </motion.div>
@@ -55,10 +55,10 @@ export default function AdminPanelPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Navbar />
       
-      <main className="pt-32 pb-24 px-6 md:px-8 max-w-[1100px] mx-auto">
+      <main className="pt-32 pb-24 px-6 md:px-8 max-w-275 mx-auto">
         
         {/* Header */}
         <div className="text-center mb-16">
@@ -84,7 +84,7 @@ export default function AdminPanelPage() {
           <h2 className="text-2xl font-bold mb-6 text-center">
             {lang === 'hi' ? 'ClickOut Kaise Kaam Karta Hai?' : 'How ClickOut Works?'}
           </h2>
-          <pre className="text-xs md:text-sm overflow-x-auto p-6 rounded-xl bg-[var(--bg-base)] border" style={{borderColor:'var(--border-color)', color:'var(--text-secondary)', lineHeight:'1.6'}}>
+          <pre className="text-xs md:text-sm overflow-x-auto p-6 rounded-xl bg-background border" style={{borderColor:'var(--border-color)', color:'var(--text-secondary)', lineHeight:'1.6'}}>
 {`
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                    CLICKOUT RETAIL ECOSYSTEM                             │
@@ -142,7 +142,7 @@ export default function AdminPanelPage() {
             
             <div className="grid md:grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-xl border" style={{background:'var(--bg-base)', borderColor:'var(--border-color)'}}>
-                <h4 className="font-bold mb-2 text-[var(--text-primary)]">
+                <h4 className="font-bold mb-2 text-foreground">
                   {lang === 'hi' ? 'Pehle (Bina ClickOut)' : 'Before (Without ClickOut)'}
                 </h4>
                 <ul className="space-y-2 text-sm">
@@ -153,7 +153,7 @@ export default function AdminPanelPage() {
                 </ul>
               </div>
               <div className="p-4 rounded-xl border" style={{background:'var(--accent-bg)', borderColor:'var(--accent)'}}>
-                <h4 className="font-bold mb-2 text-[var(--accent)]">
+                <h4 className="font-bold mb-2 text-(--accent)">
                   {lang === 'hi' ? 'Ab (ClickOut Ke Saath)' : 'Now (With ClickOut)'}
                 </h4>
                 <ul className="space-y-2 text-sm">
@@ -166,7 +166,7 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-6 p-4 rounded-xl border-l-4" style={{background:'var(--bg-base)', borderColor:'var(--accent)'}}>
-              <p className="font-bold text-[var(--text-primary)] mb-1">
+              <p className="font-bold text-foreground mb-1">
                 {lang === 'hi' ? 'Real Example:' : 'Real Example:'}
               </p>
               <p className="text-sm">
@@ -177,13 +177,13 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-4">
-              <p className="font-bold text-[var(--accent)]">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
+              <p className="font-bold text-(--accent)">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Har store owner ko ClickOut Admin chahiye — chahe dukaan chhoti ho ya badi. Ye aapki "CCTV nahi, par usse bhi zyada powerful" cheez hai.'
                   : 'Every store owner needs ClickOut Admin — whether store is small or big. This is "not CCTV, but even more powerful".'}
               </p>
-              <p className="font-bold text-[var(--text-primary)] mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
+              <p className="font-bold text-foreground mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Aaj hi login karo https://clickout-cfa95.web.app pe. Apni dukaan ka naam daalo. 5 minute mein system ready.'
@@ -205,12 +205,12 @@ export default function AdminPanelPage() {
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b-2" style={{borderColor:'var(--border-color)'}}>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--text-primary)]">{lang === 'hi' ? 'Role' : 'Role'}</th>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--text-primary)]">{lang === 'hi' ? 'Kaam' : 'Work'}</th>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--text-primary)]">{lang === 'hi' ? 'Kya Dekhta Hai?' : 'What They See?'}</th>
+                    <th className="text-left py-3 px-3 font-bold text-foreground">{lang === 'hi' ? 'Role' : 'Role'}</th>
+                    <th className="text-left py-3 px-3 font-bold text-foreground">{lang === 'hi' ? 'Kaam' : 'Work'}</th>
+                    <th className="text-left py-3 px-3 font-bold text-foreground">{lang === 'hi' ? 'Kya Dekhta Hai?' : 'What They See?'}</th>
                   </tr>
                 </thead>
-                <tbody className="text-[var(--text-secondary)]">
+                <tbody className="text-(--text-secondary)">
                   {[
                     [lang === 'hi' ? 'Super Admin' : 'Super Admin', lang === 'hi' ? 'Platform owner' : 'Platform owner', lang === 'hi' ? 'Saari dukaanein, billing, global stats' : 'All stores, billing, global stats'],
                     [lang === 'hi' ? 'Tenant Admin' : 'Tenant Admin', lang === 'hi' ? 'Dukaan owner' : 'Store owner', lang === 'hi' ? 'Apni dukaan, staff, reports' : 'Own store, staff, reports'],
@@ -221,7 +221,7 @@ export default function AdminPanelPage() {
                     [lang === 'hi' ? 'Inventory Admin' : 'Inventory Admin', lang === 'hi' ? 'Maal manage karna' : 'Manage stock', lang === 'hi' ? 'Product list, CSV import, expiry' : 'Product list, CSV import, expiry'],
                   ].map((row, i) => (
                     <tr key={i} className="border-b" style={{borderColor:'var(--border-color)'}}>
-                      <td className="py-3 px-3 font-medium text-[var(--text-primary)]">{row[0]}</td>
+                      <td className="py-3 px-3 font-medium text-foreground">{row[0]}</td>
                       <td className="py-3 px-3">{row[1]}</td>
                       <td className="py-3 px-3">{row[2]}</td>
                     </tr>
@@ -231,7 +231,7 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-4 p-4 rounded-xl border-l-4" style={{background:'var(--bg-base)', borderColor:'var(--accent)'}}>
-              <p className="font-bold text-[var(--text-primary)] mb-1">
+              <p className="font-bold text-foreground mb-1">
                 {lang === 'hi' ? 'Best Practice:' : 'Best Practice:'}
               </p>
               <p className="text-sm">
@@ -242,13 +242,13 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-4">
-              <p className="font-bold text-[var(--accent)]">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
+              <p className="font-bold text-(--accent)">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Chhoti dukaan mein 2 role kaafi hain: Admin (aap) aur Cashier. 2+ branches hain toh Manager role add karo.'
                   : 'Small store needs 2 roles: Admin (you) and Cashier. 2+ branches? Add Manager role.'}
               </p>
-              <p className="font-bold text-[var(--text-primary)] mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
+              <p className="font-bold text-foreground mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Admin panel mein "Staff" section mein jaake apne Cashier ka phone number daalo. Usse OTP aayega. Bas — uska account ban gaya.'
@@ -312,29 +312,29 @@ export default function AdminPanelPage() {
             ].map((engine, i) => (
               <div key={i} className="p-5 rounded-xl border" style={{background:'var(--bg-base)', borderColor:'var(--border-color)'}}>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-[var(--accent-bg)] flex items-center justify-center text-[var(--accent)]">
+                  <div className="w-8 h-8 rounded-lg bg-(--accent-bg) flex items-center justify-center text-(--accent)">
                     {engine.icon}
                   </div>
-                  <h4 className="font-bold text-[var(--text-primary)]">{engine.title}</h4>
+                  <h4 className="font-bold text-foreground">{engine.title}</h4>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <p><span className="font-semibold text-[var(--text-primary)]">{lang === 'hi' ? 'Kya karta hai:' : 'What it does:'}</span> {engine.what}</p>
-                  <p><span className="font-semibold text-[var(--text-primary)]">{lang === 'hi' ? 'Kyun powerful:' : 'Why powerful:'}</span> {engine.why}</p>
+                  <p><span className="font-semibold text-foreground">{lang === 'hi' ? 'Kya karta hai:' : 'What it does:'}</span> {engine.what}</p>
+                  <p><span className="font-semibold text-foreground">{lang === 'hi' ? 'Kyun powerful:' : 'Why powerful:'}</span> {engine.why}</p>
                   <p className="p-2 rounded-lg border-l-2" style={{background:'var(--bg-card)', borderColor:'var(--accent)'}}>
-                    <span className="font-semibold text-[var(--accent)]">{lang === 'hi' ? 'Example:' : 'Example:'}</span> {engine.example}
+                    <span className="font-semibold text-(--accent)">{lang === 'hi' ? 'Example:' : 'Example:'}</span> {engine.example}
                   </p>
                 </div>
               </div>
             ))}
 
             <div className="mt-4">
-              <p className="font-bold text-[var(--accent)]">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
+              <p className="font-bold text-(--accent)">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Ye 6 engines aapke backend mein already hain. Aapko kuch setup nahi karna. Bas Growth plan lo — tabhi ye sab activate hote hain.'
                   : 'These 6 engines are already in your backend. You need no setup. Just get Growth plan — that\'s when all activate.'}
               </p>
-              <p className="font-bold text-[var(--text-primary)] mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
+              <p className="font-bold text-foreground mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Admin dashboard pe "Daily Stats" section dekho. Wahan har engine ka result real-time dikhta hai.'
@@ -355,7 +355,7 @@ export default function AdminPanelPage() {
             <div className="grid md:grid-cols-3 gap-4 mt-4">
               <div className="p-4 rounded-xl border" style={{background:'var(--bg-base)', borderColor:'var(--border-color)'}}>
                 <div className="text-2xl mb-2">🛡️</div>
-                <h4 className="font-bold text-sm mb-2 text-[var(--text-primary)]">{lang === 'hi' ? 'Exit Gate Check' : 'Exit Gate Check'}</h4>
+                <h4 className="font-bold text-sm mb-2 text-foreground">{lang === 'hi' ? 'Exit Gate Check' : 'Exit Gate Check'}</h4>
                 <p className="text-xs" style={{color:'var(--text-secondary)'}}>
                   {lang === 'hi'
                     ? 'Har customer ke phone pe QR code aata hai. Guard scan karega — agar payment nahi hua, system "STOP" bolega.'
@@ -364,7 +364,7 @@ export default function AdminPanelPage() {
               </div>
               <div className="p-4 rounded-xl border" style={{background:'var(--bg-base)', borderColor:'var(--border-color)'}}>
                 <div className="text-2xl mb-2">⚖️</div>
-                <h4 className="font-bold text-sm mb-2 text-[var(--text-primary)]">{lang === 'hi' ? 'Weight Mismatch' : 'Weight Mismatch'}</h4>
+                <h4 className="font-bold text-sm mb-2 text-foreground">{lang === 'hi' ? 'Weight Mismatch' : 'Weight Mismatch'}</h4>
                 <p className="text-xs" style={{color:'var(--text-secondary)'}}>
                   {lang === 'hi'
                     ? 'System mein 5kg rice tha. Guard ne 4.2kg weigh kiya. 800g ka farq = automatic fraud alert.'
@@ -373,7 +373,7 @@ export default function AdminPanelPage() {
               </div>
               <div className="p-4 rounded-xl border" style={{background:'var(--bg-base)', borderColor:'var(--border-color)'}}>
                 <div className="text-2xl mb-2">📊</div>
-                <h4 className="font-bold text-sm mb-2 text-[var(--text-primary)]">{lang === 'hi' ? 'Cash vs UPI Match' : 'Cash vs UPI Match'}</h4>
+                <h4 className="font-bold text-sm mb-2 text-foreground">{lang === 'hi' ? 'Cash vs UPI Match' : 'Cash vs UPI Match'}</h4>
                 <p className="text-xs" style={{color:'var(--text-secondary)'}}>
                   {lang === 'hi'
                     ? 'Cashier ne UPI mark kiya, par customer ne cash diya. System ne "discrepancy" flag laga diya. Auditor ko alert.'
@@ -394,13 +394,13 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-4">
-              <p className="font-bold text-[var(--accent)]">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
+              <p className="font-bold text-(--accent)">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Basic plan mein bhi fraud detection hai. Growth plan mein AI fraud intelligence milti hai. Shuru karo Basic se, upgrade karo jab zaroorat ho.'
                   : 'Fraud detection is in Basic plan too. AI fraud intelligence comes in Growth plan. Start with Basic, upgrade when needed.'}
               </p>
-              <p className="font-bold text-[var(--text-primary)] mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
+              <p className="font-bold text-foreground mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Guard ko ek purana phone de do (₹3,000 ka). ClickOut Security app install karo. Bas — aapka gate secure.'
@@ -422,13 +422,13 @@ export default function AdminPanelPage() {
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b-2" style={{borderColor:'var(--border-color)'}}>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--text-primary)]">Technology</th>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--accent)]">ClickOut Ne Kyun Chuna?</th>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--text-secondary)]">Alternative</th>
-                    <th className="text-left py-3 px-3 font-bold text-[var(--text-secondary)]">Kyun Nahi Chuna?</th>
+                    <th className="text-left py-3 px-3 font-bold text-foreground">Technology</th>
+                    <th className="text-left py-3 px-3 font-bold text-(--accent)">ClickOut Ne Kyun Chuna?</th>
+                    <th className="text-left py-3 px-3 font-bold text-(--text-secondary)">Alternative</th>
+                    <th className="text-left py-3 px-3 font-bold text-(--text-secondary)">Kyun Nahi Chuna?</th>
                   </tr>
                 </thead>
-                <tbody className="text-[var(--text-secondary)]">
+                <tbody className="text-(--text-secondary)">
                   {[
                     ['Flutter Web', 'Ek code se Android, iOS, Web, Desktop sab. Admin panel web pe, par baad mein app bhi ban sakti hai.', 'React + React Native', 'Do alag codebases maintain karna padta. Flutter mein 1 team kaafi hai.'],
                     ['Firebase Auth', 'Phone OTP + Email + Custom Claims built-in. Role directly JWT token mein inject hota hai.', 'Auth0 / Cognito', 'Firebase Auth free tier mein 10k users/month. Auth0 mein pricing zyada hai.'],
@@ -438,7 +438,7 @@ export default function AdminPanelPage() {
                     ['fl_chart', 'Flutter native charting. 60fps smooth. WebView nahi chahiye.', 'Chart.js in WebView', 'WebView slow hota hai Flutter mein. Native chart better UX deta hai.'],
                   ].map((row, i) => (
                     <tr key={i} className="border-b" style={{borderColor:'var(--border-color)'}}>
-                      <td className="py-3 px-3 font-medium text-[var(--text-primary)]">{row[0]}</td>
+                      <td className="py-3 px-3 font-medium text-foreground">{row[0]}</td>
                       <td className="py-3 px-3">{row[1]}</td>
                       <td className="py-3 px-3">{row[2]}</td>
                       <td className="py-3 px-3">{row[3]}</td>
@@ -449,13 +449,13 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-4">
-              <p className="font-bold text-[var(--accent)]">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
+              <p className="font-bold text-(--accent)">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Ye tech stack "startup se enterprise" tak scale hota hai. Firebase free tier mein 50k reads/day deta hai. Paid mein unlimited. Aapko server manage karne ki tension nahi.'
                   : 'This tech stack scales from "startup to enterprise". Firebase free tier gives 50k reads/day. Paid is unlimited. No server management tension for you.'}
               </p>
-              <p className="font-bold text-[var(--text-primary)] mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
+              <p className="font-bold text-foreground mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Aapko koi tech decision nahi karna. Bas app use karo. Backend humne already bana diya hai.'
@@ -504,13 +504,13 @@ export default function AdminPanelPage() {
             </div>
 
             <div className="mt-4">
-              <p className="font-bold text-[var(--accent)]">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
+              <p className="font-bold text-(--accent)">✅ {lang === 'hi' ? 'Final Recommendation:' : 'Final Recommendation:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Ye mistakes sirf unke saath hoti hain jo ClickOut ke "best practices" nahi padhte. Aap ye page padh rahe ho — aap safe ho.'
                   : 'These mistakes only happen to those who don\'t read ClickOut "best practices". You are reading this page — you are safe.'}
               </p>
-              <p className="font-bold text-[var(--text-primary)] mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
+              <p className="font-bold text-foreground mt-2">🚀 {lang === 'hi' ? 'Action Item:' : 'Action Item:'}</p>
               <p className="text-sm">
                 {lang === 'hi'
                   ? 'Har naye staff ko onboard karte waqt "Common Mistakes" section 2 minute mein explain karo. Ya screenshot bhej do.'

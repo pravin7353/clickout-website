@@ -373,7 +373,7 @@ export default function Hero() {
                           }
                         }}
                         whileDrag={{ scale: 1.08 }}
-                        className="w-11 h-11 rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing relative z-10 flex-shrink-0"
+                        className="w-11 h-11 rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing relative z-10 shrink-0"
                         style={{
                           background: 'var(--text-primary)',
                           boxShadow: '0 2px 10px rgba(0,0,0,0.18)',
@@ -417,7 +417,7 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.45, duration: 0.5 }}
-                  className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-[1]"
+                  className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-none"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {lang === 'en' ? 'Queues.' : 'Line.'}
@@ -426,7 +426,7 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7, duration: 0.5 }}
-                  className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-[1]"
+                  className="text-6xl md:text-8xl font-bold font-modern tracking-tight leading-none"
                   style={{ color: 'var(--accent)' }}
                 >
                   {lang === 'en' ? 'Eliminated.' : 'Khatam.'}

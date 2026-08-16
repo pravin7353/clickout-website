@@ -30,7 +30,7 @@ export default function EcosystemClient() {
       </nav>
 
       <main className="pt-32 pb-24 px-6 md:px-8">
-        <div className="max-w-[1200px] mx-auto space-y-24">
+        <div className="max-w-300 mx-auto space-y-24">
           
           {/* Header Section */}
           <div className="text-center space-y-6 max-w-3xl mx-auto mb-20">
@@ -65,7 +65,7 @@ export default function EcosystemClient() {
             
             {/* 1. ClickOut Admin (Restored 3D Overlap) */}
             <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden group border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#00ff66] to-[#10b981]"></div>
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-linear-to-b from-[#00ff66] to-[#10b981]"></div>
               
               <div className="z-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00ff66]/10 border border-[#00ff66]/20 mb-6">
@@ -82,14 +82,14 @@ export default function EcosystemClient() {
                 </ul>
               </div>
 
-              <div className="relative h-[250px] sm:h-[350px] md:h-[400px] w-full mt-10 lg:mt-0 perspective-1000">
-                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[300px] h-[300px] bg-[#00ff66]/10 blur-[100px] rounded-full pointer-events-none" />
+              <div className="relative h-62.5 sm:h-87.5 md:h-100 w-full mt-10 lg:mt-0 perspective-1000">
+                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-75 h-75 bg-[#00ff66]/10 blur-[100px] rounded-full pointer-events-none" />
                 
-                <div className="absolute right-0 top-0 w-[85%] rounded-xl border border-white/10 opacity-30 shadow-xl transform hover:-translate-y-6 hover:-translate-x-4 hover:opacity-100 hover:rotate-[-2deg] transition-all duration-500 hover:z-40 cursor-pointer overflow-hidden">
+                <div className="absolute right-0 top-0 w-[85%] rounded-xl border border-white/10 opacity-30 shadow-xl transform hover:-translate-y-6 hover:-translate-x-4 hover:opacity-100 hover:-rotate-2 transition-all duration-500 hover:z-40 cursor-pointer overflow-hidden">
                   <Image src="/images/admin-procurement.jpg" alt="Procurement Screen" width={800} height={450} className="w-full h-auto object-cover" />
                 </div>
 
-                <div className="absolute right-4 top-6 w-[85%] rounded-xl border border-white/20 opacity-60 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transform hover:-translate-y-6 hover:-translate-x-2 hover:opacity-100 hover:rotate-[-1deg] transition-all duration-500 z-20 hover:z-40 cursor-pointer overflow-hidden">
+                <div className="absolute right-4 top-6 w-[85%] rounded-xl border border-white/20 opacity-60 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transform hover:-translate-y-6 hover:-translate-x-2 hover:opacity-100 hover:-rotate-1 transition-all duration-500 z-20 hover:z-40 cursor-pointer overflow-hidden">
                   <Image src="/images/admin-audit.jpg" alt="Super Auditor Screen" width={800} height={450} className="w-full h-auto object-cover" />
                 </div>
 
@@ -121,18 +121,18 @@ export default function EcosystemClient() {
                 </ul>
               </div>
 
-              <div className="relative h-[500px] w-full flex justify-center items-center mt-10 lg:mt-0">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#ff4d4d]/20 blur-[100px] rounded-full pointer-events-none" />
+              <div className="relative h-125 w-full flex justify-center items-center mt-10 lg:mt-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-75 h-75 bg-[#ff4d4d]/20 blur-[100px] rounded-full pointer-events-none" />
                 
-                <div className="absolute left-0 md:left-4 z-10 transform -rotate-6 scale-90 opacity-80 hover:opacity-100 hover:z-40 hover:scale-100 transition-all duration-500 shadow-2xl rounded-[2rem] overflow-hidden border-4 border-[#222]">
+                <div className="absolute left-0 md:left-4 z-10 transform -rotate-6 scale-90 opacity-80 hover:opacity-100 hover:z-40 hover:scale-100 transition-all duration-500 shadow-2xl rounded-4xl overflow-hidden border-4 border-[#222]">
                   <Image src="/images/customer-cart.png" alt="Cart Screen" width={220} height={450} className="object-cover" />
                 </div>
                 
-                <div className="absolute right-0 md:right-4 z-10 transform rotate-6 scale-90 opacity-80 hover:opacity-100 hover:z-40 hover:scale-100 transition-all duration-500 shadow-2xl rounded-[2rem] overflow-hidden border-4 border-[#222]">
+                <div className="absolute right-0 md:right-4 z-10 transform rotate-6 scale-90 opacity-80 hover:opacity-100 hover:z-40 hover:scale-100 transition-all duration-500 shadow-2xl rounded-4xl overflow-hidden border-4 border-[#222]">
                   <Image src="/images/customer-gatepass.png" alt="Gatepass Screen" width={220} height={450} className="object-cover" />
                 </div>
 
-                <div className="absolute z-30 transform hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden border-4 border-[#444]">
+                <div className="absolute z-30 transform hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-4xl overflow-hidden border-4 border-[#444]">
                   <Image src="/images/customer-scan.jpg" alt="Scan Screen" width={240} height={500} className="object-cover" />
                 </div>
               </div>
@@ -154,9 +154,9 @@ export default function EcosystemClient() {
                 </ul>
               </div>
 
-              <div className="relative h-[450px] w-full flex justify-center items-center mt-10 lg:mt-0 perspective-1000">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-[#00e5ff]/10 blur-[80px] rounded-full pointer-events-none" />
-                <div className="relative z-10 transform hover:-translate-y-4 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden border-4 border-[#333]">
+              <div className="relative h-112.5 w-full flex justify-center items-center mt-10 lg:mt-0 perspective-1000">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-62.5 h-62.5 bg-[#00e5ff]/10 blur-[80px] rounded-full pointer-events-none" />
+                <div className="relative z-10 transform hover:-translate-y-4 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-4xl overflow-hidden border-4 border-[#333]">
                   <Image src="/images/cashier-main.png" alt="Cashier Portal" width={240} height={500} className="object-cover" />
                 </div>
               </div>
@@ -164,14 +164,14 @@ export default function EcosystemClient() {
 
             {/* 4. ClickOut Security (Restored 2 Phones) */}
             <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
-              <div className="order-2 lg:order-1 relative h-[450px] w-full flex justify-center items-center mt-10 lg:mt-0">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-[#ffcc00]/10 blur-[80px] rounded-full pointer-events-none" />
+              <div className="order-2 lg:order-1 relative h-112.5 w-full flex justify-center items-center mt-10 lg:mt-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-62.5 h-62.5 bg-[#ffcc00]/10 blur-[80px] rounded-full pointer-events-none" />
                 
-                <div className="absolute left-0 md:left-10 z-10 transform -rotate-6 scale-90 opacity-70 hover:opacity-100 hover:z-30 hover:scale-95 transition-all duration-500 shadow-2xl rounded-[2rem] overflow-hidden border-4 border-[#222]">
+                <div className="absolute left-0 md:left-10 z-10 transform -rotate-6 scale-90 opacity-70 hover:opacity-100 hover:z-30 hover:scale-95 transition-all duration-500 shadow-2xl rounded-4xl overflow-hidden border-4 border-[#222]">
                   <Image src="/images/security-audit.jpg" alt="Spot Audit Screen" width={220} height={450} className="object-cover" />
                 </div>
 
-                <div className="absolute right-0 md:right-16 z-20 transform rotate-2 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden border-4 border-[#444]">
+                <div className="absolute right-0 md:right-16 z-20 transform rotate-2 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-4xl overflow-hidden border-4 border-[#444]">
                   <Image src="/images/security-approve.jpg" alt="Approve Exit Screen" width={230} height={470} className="object-cover" />
                 </div>
               </div>
@@ -193,14 +193,14 @@ export default function EcosystemClient() {
 
             {/* 5. ClickOut IDT (Restored 2 Phones) */}
             <div className="p-8 md:p-12 rounded-[2.5rem] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden border" style={{background:'var(--bg-card)', borderColor:'var(--border-color)', boxShadow:'var(--shadow-card)'}}>
-              <div className="order-2 lg:order-1 relative h-[450px] w-full flex justify-center items-center mt-10 lg:mt-0">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-[#00ff66]/10 blur-[80px] rounded-full pointer-events-none" />
+              <div className="order-2 lg:order-1 relative h-112.5 w-full flex justify-center items-center mt-10 lg:mt-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-62.5 h-62.5 bg-[#00ff66]/10 blur-[80px] rounded-full pointer-events-none" />
 
-                <div className="absolute left-0 md:left-10 z-10 transform -rotate-6 scale-90 opacity-70 hover:opacity-100 hover:z-30 hover:scale-95 transition-all duration-500 shadow-2xl rounded-[2rem] overflow-hidden border-4 border-[#222]">
+                <div className="absolute left-0 md:left-10 z-10 transform -rotate-6 scale-90 opacity-70 hover:opacity-100 hover:z-30 hover:scale-95 transition-all duration-500 shadow-2xl rounded-4xl overflow-hidden border-4 border-[#222]">
                   <Image src="/images/idt-home.jpg" alt="IDT Home Screen" width={220} height={450} className="object-cover" />
                 </div>
 
-                <div className="absolute right-0 md:right-16 z-20 transform rotate-2 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden border-4 border-[#444]">
+                <div className="absolute right-0 md:right-16 z-20 transform rotate-2 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.8)] rounded-4xl overflow-hidden border-4 border-[#444]">
                   <Image src="/images/idt-entry.jpg" alt="IDT Entry Screen" width={230} height={470} className="object-cover" />
                 </div>
               </div>
