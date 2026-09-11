@@ -261,10 +261,10 @@ export default function PricingPage() {
   const getPrice = (monthly: number) => isYearly ? Math.floor(monthly * 0.8) : monthly;
 
   const plans = [
-    { key: 'mini', price: 299, terminals: 1, txLimit: 500, popular: false },
-    { key: 'basic', price: 599, terminals: 3, txLimit: 2500, popular: true },
-    { key: 'growth', price: 999, terminals: 10, txLimit: 15000, popular: false },
-    { key: 'enterprise', price: 0, terminals: 'Unlimited', txLimit: 'Unlimited', popular: false, custom: true }
+    { key: 'mini', price: 299, baseStores: 1, extraStorePrice: null, baseTx: 500, extraStoreTx: 0, popular: false },
+    { key: 'pro', price: 599, baseStores: 1, extraStorePrice: 399, baseTx: 2500, extraStoreTx: 1500, popular: true },
+    { key: 'growth', price: 999, baseStores: 1, extraStorePrice: 299, baseTx: 5000, extraStoreTx: 2000, popular: false },
+    { key: 'business', price: 0, baseStores: 'Unlimited', extraStorePrice: null, baseTx: 'Unlimited', extraStoreTx: 0, popular: false, custom: true }
   ];
 
   const trustBadges = [
@@ -378,17 +378,29 @@ export default function PricingPage() {
                     }
                   </p>
 
-                  {/* Terminal & TX Info */}
+                  {/* Store & TX Info */}
                   {!plan.custom && (
-                    <div className="flex gap-2 mb-6">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       <span className="text-[10px] px-2 py-1 rounded-full font-bold border" 
                             style={{background:'var(--bg-base)', borderColor:'var(--border-color)', color:'var(--text-secondary)'}}>
-                        {plan.terminals} {t('pricing.terminals')}
+                        {plan.baseStores} Store{plan.baseStores !== 1 ? 's' : ''} included
                       </span>
+                      {plan.extraStorePrice !== null && (
+                        <span className="text-[10px] px-2 py-1 rounded-full font-bold border" 
+                              style={{background:'var(--bg-base)', borderColor:'var(--border-color)', color:'var(--text-secondary)'}}>
+                          +₹{plan.extraStorePrice}/extra store
+                        </span>
+                      )}
                       <span className="text-[10px] px-2 py-1 rounded-full font-bold border" 
                             style={{background:'var(--bg-base)', borderColor:'var(--border-color)', color:'var(--text-secondary)'}}>
-                        {typeof plan.txLimit === 'number' ? plan.txLimit.toLocaleString() : plan.txLimit} {t('pricing.txPerMonth')}
+                        {plan.baseTx} tx/mo base
                       </span>
+                      {typeof plan.extraStoreTx === 'number' && plan.extraStoreTx > 0 && (
+                        <span className="text-[10px] px-2 py-1 rounded-full font-bold border" 
+                              style={{background:'var(--bg-base)', borderColor:'var(--border-color)', color:'var(--text-secondary)'}}>
+                          +{plan.extraStoreTx} tx per extra store
+                        </span>
+                      )}
                     </div>
                   )}
 
@@ -404,7 +416,7 @@ export default function PricingPage() {
                     {/* Modules */}
                     <div className="pt-4 border-t mt-4" style={{borderColor:'var(--border-color)'}}>
                       <span className="text-[10px] font-bold tracking-wider uppercase mb-2 block" style={{color:'var(--accent)'}}>
-                        {plan.key === 'enterprise' ? t('pricing.includes') : t('pricing.modulesIncluded')}
+                        {plan.key === 'business' ? t('pricing.includes') : t('pricing.modulesIncluded')}
                       </span>
                       <span className="text-[11px] leading-relaxed" style={{color:'var(--text-secondary)'}}>
                         {t(`plan.${plan.key}.modules`) as string}
