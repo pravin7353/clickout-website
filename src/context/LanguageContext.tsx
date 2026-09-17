@@ -206,7 +206,7 @@ const translations: Record<Lang, Record<string, TranslationValue>> = {
     'eco.heroLabel': 'THE COMPLETE SUITE',
     'eco.heroTitle': 'One Ecosystem. Five Applications.',
     'eco.heroDesc': 'ClickOut isn\'t just a self-checkout feature. It is a highly engineered, interconnected suite of five independent applications working in perfect sync.',
-    
+
     'eco.stat1': '500+ Stores',
     'eco.stat2': '17 Sec Checkout',
     'eco.stat3': '60% Less Fraud',
@@ -478,7 +478,7 @@ const translations: Record<Lang, Record<string, TranslationValue>> = {
     'eco.heroLabel': 'POORA SUITE',
     'eco.heroTitle': 'Ek Ecosystem. Paanch Apps.',
     'eco.heroDesc': 'ClickOut sirf self-checkout nahi hai. Yeh paanch alag-alag apps ka interconnected system hai jo aapki poori dukaan ko automate kar deta hai.',
-    
+
     'eco.stat1': '500+ Dukaanein',
     'eco.stat2': '17 Sec Checkout',
     'eco.stat3': '60% Kam Fraud',
