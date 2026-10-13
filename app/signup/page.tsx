@@ -32,19 +32,19 @@ function SignupContent() {
       name: 'Spark Plan',
       price: billing === 'annual' ? '₹319/mo (₹3,828/yr)' : '₹399/mo',
       badge: 'Single Store',
-      desc: 'Chhoti dukaan ka perfect start with 500 tx/mo and full self-checkout + POS.',
+      desc: 'Chhoti dukaan ka perfect start with 1 store (no add-ons), 500 txns/mo, 5 staff accounts, and 1 POS billing counter.',
     },
     pro: {
       name: 'Pro Plan',
       price: billing === 'annual' ? '₹639/mo (₹7,668/yr)' : '₹799/mo',
       badge: '⭐ Most Popular',
-      desc: 'Puri dukaan, ek dashboard with 2,500 tx/mo, HR workforce, AI fraud detection and CA-grade reports.',
+      desc: 'Puri dukaan, ek dashboard with 1 store base (up to 2 extra @ ₹299/mo each), 2,500 base txns/mo (+2,500 per extra store), HR module, 15 staff accounts, and 2 POS counters.',
     },
     growth: {
       name: 'Growth Plan',
       price: billing === 'annual' ? '₹1,199/mo (₹14,388/yr)' : '₹1,499/mo',
       badge: 'Multi-Store',
-      desc: 'Multiple stores, ek dimag with 3 stores, 6,000 tx/mo, multi-store transfer and churn radar.',
+      desc: 'Multi-store retail chain with 1 store base (up to 4 extra @ ₹399/mo each), 6,000 base txns/mo (+6,000 per extra store), HR + Finance modules, 50 staff accounts, and 5 POS counters.',
     },
   };
 

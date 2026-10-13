@@ -64,10 +64,10 @@ export default function PricingClient() {
       category: 'Finance',
       rows: [
         { feature: 'Basic GST Reports', spark: 'yes', pro: 'yes', growth: 'yes' },
-        { feature: 'Advanced GST Reports (CA-grade)', spark: 'no', pro: 'yes', growth: 'yes' },
-        { feature: 'General Ledger & Day Book', spark: 'no', pro: 'yes', growth: 'yes' },
-        { feature: 'Auditor & CA Export Panel', spark: 'no', pro: 'yes', growth: 'yes' },
-        { feature: 'Refunds & Returns Management', spark: 'no', pro: 'yes', growth: 'yes' },
+        { feature: 'Advanced GST Reports (CA-grade)', spark: 'no', pro: 'no', growth: 'yes' },
+        { feature: 'General Ledger & Day Book', spark: 'no', pro: 'no', growth: 'yes' },
+        { feature: 'Auditor & CA Export Panel', spark: 'no', pro: 'no', growth: 'yes' },
+        { feature: 'Refunds & Returns Management', spark: 'no', pro: 'no', growth: 'yes' },
       ],
     },
     {
@@ -92,7 +92,7 @@ export default function PricingClient() {
     {
       category: 'Multi-Store',
       rows: [
-        { feature: 'Extra Stores Add-on', spark: 'no', pro: 'Add-on (₹299/mo)', growth: 'Add-on (₹399/mo)' },
+        { feature: 'Extra Stores Add-on', spark: 'Not available', pro: 'Up to 2 add-ons (₹299/mo each, +2,500 txns)', growth: 'Up to 4 add-ons (₹399/mo each, +6,000 txns)' },
         { feature: 'Cross-Store Inventory Transfer', spark: 'no', pro: 'no', growth: 'yes' },
         { feature: 'Consolidated Owner Dashboard', spark: 'no', pro: 'no', growth: 'yes' },
       ],
@@ -100,10 +100,10 @@ export default function PricingClient() {
     {
       category: 'Limits',
       rows: [
-        { feature: 'Transactions / month included', spark: '500 base', pro: '2,500 base', growth: '6,000 base' },
+        { feature: 'Transactions / month included', spark: '500 txns / month', pro: '2,500 base + 2,500 per extra store', growth: '6,000 base + 6,000 per extra store' },
         { feature: 'Staff Accounts included', spark: '5 accounts', pro: '15 accounts', growth: '50 accounts' },
         { feature: 'POS Billing Counters included', spark: '1 counter', pro: '2 counters', growth: '5 counters' },
-        { feature: 'Stores Included in Base Plan', spark: '1 store', pro: '1 store', growth: '3 stores' },
+        { feature: 'Stores Included in Base Plan', spark: '1 store', pro: '1 store', growth: '1 store' },
       ],
     },
   ];
@@ -111,11 +111,13 @@ export default function PricingClient() {
   // Section 4: Add-Ons
   const addOns = [
     {
-      title: 'Extra Store',
+      title: 'Extra Store Add-on',
       price: '₹299–₹399',
-      period: '/month',
-      desc: 'Add extra branch locations to your Pro or Growth workspace with shared master catalog.',
+      period: '/store/month',
+      desc: 'Add extra branch locations. Each store includes its own transaction quota. Pro: max 2 stores. Growth: max 4 stores.',
       badge: 'Scale Branches',
+      proPrice: 'Pro: ₹299/mo per store (+2,500 txns)',
+      growthPrice: 'Growth: ₹399/mo per store (+6,000 txns)',
     },
     {
       title: 'Extra POS Counter',
@@ -157,12 +159,16 @@ export default function PricingClient() {
   // Section 5: FAQs
   const faqs = [
     {
-      q: 'Kya 14-day free trial ke baad card charge hoga?',
-      a: 'Nahi. Trial khatam hone par aap automatically Spark Lite (free forever) par aa jaoge. Upgrade sirf aap khud choose karoge.',
+      q: 'What happens after my 15-day trial?',
+      a: "If you don't choose a paid plan, your account automatically moves to our free Spark Lite plan — 1 store, 100 transactions/month, forever free. You can upgrade anytime.",
     },
     {
-      q: 'Transaction limit kya hoti hai aur kya hoga agar exceed ho?',
-      a: 'Spark mein 500 txn/month base hai. Exceed hone par ₹29 per 100 extra transactions auto-charge hoti hai — aapka store kabhi block nahi hoga. Spark Lite (free plan) mein 200 txn hard limit hai, next month reset hoti hai.',
+      q: 'Do extra stores get their own transaction quota?',
+      a: 'Yes. On Pro, each extra store adds 2,500 transactions/month to your account. On Growth, each extra store adds 6,000 transactions/month.',
+    },
+    {
+      q: 'What is the maximum number of stores I can have?',
+      a: 'Pro supports up to 3 stores total (1 base + 2 add-ons). Growth supports up to 5 stores total (1 base + 4 add-ons). For more, contact us for Enterprise.',
     },
     {
       q: 'GST invoice milega?',
@@ -171,10 +177,6 @@ export default function PricingClient() {
     {
       q: 'Kya main plans beech mein change kar sakta hu?',
       a: 'Haan, anytime upgrade kar sakte ho. Downgrade next billing cycle se effective hoti hai.',
-    },
-    {
-      q: 'Multi-store ke liye kya karna hoga?',
-      a: 'Pro plan mein ₹299/extra store add kar sakte ho. Growth mein 3 stores included hain, phir ₹399/store. 5+ stores ke liye contact karo.',
     },
     {
       q: 'Annual plan refund hoga agar band karna ho?',
@@ -381,7 +383,7 @@ export default function PricingClient() {
                 {/* Prominent Specs Banner */}
                 <div className="p-3.5 rounded-xl bg-[var(--bg-base)] border border-[var(--border-color)] mb-6 flex items-center justify-between text-xs font-semibold">
                   <span className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
-                    <Store size={15} className="text-[var(--accent)]" /> 1 Store
+                    <Store size={15} className="text-[var(--accent)]" /> 1 Store (no add-ons)
                   </span>
                   <span className="text-xs font-bold text-[var(--accent)] bg-[var(--accent-bg)] px-2.5 py-1 rounded-md">
                     500 txn/month
@@ -392,11 +394,19 @@ export default function PricingClient() {
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>1 Store</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>1 Store included (no add-ons)</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
                     <span className="font-medium" style={{ color: 'var(--text-primary)' }}>500 transactions/month</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>5 Staff Accounts</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>1 POS Billing Counter</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
@@ -412,27 +422,15 @@ export default function PricingClient() {
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Inventory Management</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Inventory Management &amp; Low-Stock Alerts</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Low-Stock Alerts</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Procurement &amp; Suppliers</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Procurement &amp; Suppliers Directory</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
                     <span style={{ color: 'var(--text-secondary)' }}>Basic GST Reports</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>5 Staff Accounts</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>1 POS Counter</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
@@ -443,15 +441,19 @@ export default function PricingClient() {
                   <div className="pt-2 border-t border-[var(--border-color)]/60 space-y-2.5 opacity-60">
                     <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
                       <Lock size={15} className="shrink-0 mt-0.5" />
-                      <span>HR &amp; Workforce (Pro only)</span>
+                      <span>No HR module (Pro only)</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
+                      <Lock size={15} className="shrink-0 mt-0.5" />
+                      <span>No Finance module (Growth only)</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
+                      <Lock size={15} className="shrink-0 mt-0.5" />
+                      <span>Extra Store add-ons not available</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
                       <Lock size={15} className="shrink-0 mt-0.5" />
                       <span>AI Fraud Detection (Pro only)</span>
-                    </div>
-                    <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
-                      <Lock size={15} className="shrink-0 mt-0.5" />
-                      <span>Growth Radar (Pro only)</span>
                     </div>
                   </div>
                 </div>
@@ -533,9 +535,9 @@ export default function PricingClient() {
                 {/* Prominent Specs Banner */}
                 <div className="p-3.5 rounded-xl bg-[var(--accent-bg)] border border-[var(--accent)]/30 mb-6 flex items-center justify-between text-xs font-bold">
                   <span className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
-                    <Store size={15} className="text-[var(--accent)]" /> 1 Store (+₹299/extra)
+                    <Store size={15} className="text-[var(--accent)] shrink-0" /> 1 Store (+2 extra @ ₹299/mo each, +2,500 txns each)
                   </span>
-                  <span className="text-xs font-bold text-[var(--accent)] bg-[var(--bg-card)] px-2.5 py-1 rounded-md shadow-xs border border-[var(--accent)]/30">
+                  <span className="text-xs font-bold text-[var(--accent)] bg-[var(--bg-card)] px-2.5 py-1 rounded-md shadow-xs border border-[var(--accent)]/30 shrink-0 ml-2">
                     2,500 txn/month
                   </span>
                 </div>
@@ -548,21 +550,43 @@ export default function PricingClient() {
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>1 Store (+₹299/extra store)</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>1 Store included base</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>2,500 transactions/month</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>2,500 transactions/month base</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>
-                      Full HR &amp; Workforce (Attendance, Leaves, Salary, Incentives)
+                    <span style={{ color: 'var(--text-secondary)' }}>Extra Store add-on: up to 2 stores @ ₹299/mo each</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Each extra store includes +2,500 transactions/month</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--accent-bg)] text-[var(--accent)] border border-[var(--accent)]/30">
+                      Max 2 extra stores — Need more? Upgrade to Growth
                     </span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>AI Fraud Detection</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>15 Staff Accounts</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>2 POS Billing Counters</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>
+                      HR module included (Attendance, Leaves, Salary, Overtime &amp; Incentives)
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>AI Fraud Detection &amp; Risk Engine</span>
                   </div>
                   <div className="p-3 rounded-xl bg-[var(--bg-base)] border border-[var(--border-color)] space-y-2">
                     <div className="text-xs font-bold text-[var(--accent)] flex items-center gap-1.5">
@@ -592,31 +616,11 @@ export default function PricingClient() {
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>General Ledger + Auditor</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
                     <span style={{ color: 'var(--text-secondary)' }}>Guard Console &amp; IDT Deposits</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Advanced GST Reports (CA-grade)</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Risk Engine</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Refunds Management</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>15 Staff Accounts</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>2 POS Counters</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Basic GST Reports</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
@@ -627,7 +631,11 @@ export default function PricingClient() {
                   <div className="pt-2 border-t border-[var(--border-color)]/60 space-y-2.5 opacity-60">
                     <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
                       <Lock size={15} className="shrink-0 mt-0.5" />
-                      <span>Multi-Store Dashboard (Growth)</span>
+                      <span>No Finance module (General Ledger, CA Export &amp; Returns) (Growth)</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
+                      <Lock size={15} className="shrink-0 mt-0.5" />
+                      <span>Multi-Store Dashboard &amp; Stock Transfer (Growth)</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs text-[var(--text-muted)]">
                       <Lock size={15} className="shrink-0 mt-0.5" />
@@ -711,9 +719,9 @@ export default function PricingClient() {
                 {/* Prominent Specs Banner */}
                 <div className="p-3.5 rounded-xl bg-[var(--bg-base)] border border-[var(--border-color)] mb-6 flex items-center justify-between text-xs font-semibold">
                   <span className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
-                    <Store size={15} className="text-[var(--accent)]" /> 3 Stores Included
+                    <Store size={15} className="text-[var(--accent)] shrink-0" /> 1 Store (+4 extra @ ₹399/mo each, +6,000 txns each)
                   </span>
-                  <span className="text-xs font-bold text-[var(--accent)] bg-[var(--accent-bg)] px-2.5 py-1 rounded-md">
+                  <span className="text-xs font-bold text-[var(--accent)] bg-[var(--accent-bg)] px-2.5 py-1 rounded-md shrink-0 ml-2">
                     6,000 txn/month
                   </span>
                 </div>
@@ -726,39 +734,25 @@ export default function PricingClient() {
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>3 Stores included (+₹399/extra store)</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>1 Store included base</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>6,000 transactions/month (across stores)</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>6,000 transactions/month base</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Multi-Store Analytics Dashboard</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Extra Store add-on: up to 4 stores @ ₹399/mo each</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Cross-Store Inventory Transfer</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Each extra store includes +6,000 transactions/month</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Churn Radar</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Auto Winback Campaigns</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Consolidated P&amp;L (all branches)</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Combined GST Reports (all branches)</span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Growth Lock Tracker (renewal discount)</span>
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--accent-bg)] text-[var(--accent)] border border-[var(--accent)]/30">
+                      Max 4 extra stores — Need more? Contact us for Enterprise
+                    </span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
@@ -766,15 +760,43 @@ export default function PricingClient() {
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>5 POS Counters</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>5 POS Billing Counters</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Dedicated Account Manager</span>
+                    <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      HR module + Finance module included
+                    </span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                    <span style={{ color: 'var(--text-secondary)' }}>Monthly Review Call</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>
+                      Full Finance &amp; CA Module (General Ledger, Day Book, CA Export, Refunds)
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Multi-Store Analytics Dashboard &amp; Consolidated P&amp;L</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Cross-Store Inventory Transfer</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Advanced CA-Grade GST Reports &amp; Combined GST</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Churn Radar &amp; Auto Winback Campaigns</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Growth Lock Tracker (renewal discount)</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span style={{ color: 'var(--text-secondary)' }}>Dedicated Account Manager &amp; Monthly Review Call</span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <Check size={17} className="text-[var(--accent)] shrink-0 mt-0.5" />
@@ -926,6 +948,19 @@ export default function PricingClient() {
                   <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {addon.desc}
                   </p>
+
+                  {(addon as any).proPrice && (
+                    <div className="mt-3 pt-3 border-t border-[var(--border-color)]/60 text-[11px] font-semibold space-y-1">
+                      <div className="text-[var(--text-primary)] flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                        {(addon as any).proPrice}
+                      </div>
+                      <div className="text-[var(--text-primary)] flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                        {(addon as any).growthPrice}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
