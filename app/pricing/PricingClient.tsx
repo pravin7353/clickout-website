@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { 
-  Check, X, Sparkles, Shield, Zap, ArrowRight, Lock, 
-  HelpCircle, ChevronDown, Store, Users, ShoppingCart, 
+import {
+  Check, X, Sparkles, Shield, Zap, ArrowRight, Lock,
+  HelpCircle, ChevronDown, Store, Users, ShoppingCart,
   MessageSquare, PhoneCall, Headphones, Clock, Gift
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
@@ -13,8 +13,8 @@ import ROICalculator from '@/components/pricing/ROICalculator';
 
 // Pricing data structures
 const prices = {
-  spark:  { monthly: 399,  annual: 319,  annualTotal: 3828  },
-  pro:    { monthly: 799,  annual: 639,  annualTotal: 7668  },
+  spark: { monthly: 399, annual: 319, annualTotal: 3828 },
+  pro: { monthly: 799, annual: 639, annualTotal: 7668 },
   growth: { monthly: 1499, annual: 1199, annualTotal: 14388 },
 };
 
@@ -45,7 +45,7 @@ export default function PricingClient() {
     {
       category: 'Inventory & Procurement',
       rows: [
-        { feature: 'Products Catalog', spark: 'Unlimited', pro: 'Unlimited', growth: 'Unlimited' },
+        { feature: 'Products / Services Catalog', spark: 'Unlimited', pro: 'Unlimited', growth: 'Unlimited' },
         { feature: 'Vendors / Suppliers Directory', spark: 'yes', pro: 'yes', growth: 'yes' },
         { feature: 'Low-Stock Alerts (SMS & App)', spark: 'yes', pro: 'yes', growth: 'yes' },
         { feature: 'Purchase Orders & GRN', spark: 'yes', pro: 'yes', growth: 'yes' },
@@ -253,11 +253,10 @@ export default function PricingClient() {
               <button
                 type="button"
                 onClick={() => setBilling('monthly')}
-                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                  billing === 'monthly'
-                    ? 'bg-[var(--text-primary)] text-[var(--bg-base)] shadow-sm'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                }`}
+                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer ${billing === 'monthly'
+                  ? 'bg-[var(--text-primary)] text-[var(--bg-base)] shadow-sm'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  }`}
               >
                 Monthly
               </button>
@@ -265,11 +264,10 @@ export default function PricingClient() {
               <button
                 type="button"
                 onClick={() => setBilling('annual')}
-                className={`flex items-center gap-2 px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                  billing === 'annual'
-                    ? 'bg-[var(--text-primary)] text-[var(--bg-base)] shadow-sm'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                }`}
+                className={`flex items-center gap-2 px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer ${billing === 'annual'
+                  ? 'bg-[var(--text-primary)] text-[var(--bg-base)] shadow-sm'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  }`}
               >
                 <span>Annual</span>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[var(--accent)] text-black">
@@ -879,11 +877,10 @@ export default function PricingClient() {
 
                     {/* Category Detail Rows */}
                     {group.rows.map((row, rowIndex) => (
-                      <tr 
-                        key={row.feature} 
-                        className={`border-b border-[var(--border-color)]/60 hover:bg-[var(--bg-base)]/40 transition-colors ${
-                          rowIndex === group.rows.length - 1 && groupIndex === comparisonCategories.length - 1 ? 'border-b-0' : ''
-                        }`}
+                      <tr
+                        key={row.feature}
+                        className={`border-b border-[var(--border-color)]/60 hover:bg-[var(--bg-base)]/40 transition-colors ${rowIndex === group.rows.length - 1 && groupIndex === comparisonCategories.length - 1 ? 'border-b-0' : ''
+                          }`}
                       >
                         <td className="py-4 px-6 text-xs sm:text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
                           {row.feature}
@@ -935,7 +932,7 @@ export default function PricingClient() {
                   <h3 className="text-lg font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
                     {addon.title}
                   </h3>
-                  
+
                   <div className="flex items-baseline gap-1 mb-3">
                     <span className="text-2xl font-extrabold" style={{ color: 'var(--text-primary)' }}>
                       {addon.price}
@@ -998,9 +995,8 @@ export default function PricingClient() {
                     <span>{faq.q}</span>
                     <ChevronDown
                       size={18}
-                      className={`text-[var(--accent)] shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
+                      className={`text-[var(--accent)] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
+                        }`}
                     />
                   </button>
 
